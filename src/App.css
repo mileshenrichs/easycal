@@ -4,11 +4,22 @@
 	clear: both;
 }
 
+body {
+	font-family: 'Chivo', sans-serif;
+	color: #003300;
+	margin-top: 110px;
+}
+
 .Header {
 	border-bottom: 1px solid #b5c4b7;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 	padding: 10px 0;
-	font-family: 'Chivo', sans-serif;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background: white;
+	z-index: 1000;
 }
 
 .Header img {
@@ -45,4 +56,156 @@
 
 .nav__today-link:hover {
 	background-color: #0bbb28;
+}
+
+.DayView {
+	width: 70%;
+	margin: 0 auto;
+}
+
+.MealGroup {
+	margin-bottom: 60px;
+}
+
+.MealGroup__header {
+	background-color: #efefef;
+	padding: 9px 28px;
+	border-radius: 8px;
+}
+
+.MealGroup__header--edit {
+	width: 18px;
+	position: relative;
+	bottom: 1px;
+	margin-right: 39px;
+	opacity: 0.7;
+}
+
+.MealGroup__header--type {
+	font-weight: bold;
+	font-size: 17px;
+	position: relative;
+	top: 2px;
+	display: inline-block;
+	width: 360px;
+}
+
+.MealGroup__header--macros img {
+	max-height: 26px;
+	margin-right: 100px;
+}
+
+.MealGroup__header--macros img:last-child {
+	margin: 0;
+}
+
+.MealGroup__header--caltotal {
+	font-size: 22px;
+	font-weight: bold;
+	float: right;
+	position: relative;
+	bottom: 2px;
+}
+
+.MealItem {
+	border-bottom: 1px solid #b5c4b7;
+	padding: 17px 30px 17px 30px;
+}
+
+.MealItem:hover {
+	background-color: #fafafa;
+}
+
+.MealItem__edit {
+	float: left;
+	width: 18px;
+	cursor: pointer;
+	margin-right: 38px;
+	position: relative;
+	top: 9px;
+	visibility: hidden;
+}
+
+.MealItem:hover .MealItem__edit {
+	visibility: visible;
+}
+
+.MealItem__food {
+	width: 356px;
+	display: block;
+	float: left;
+}
+
+.MealItem__food span {
+	display: block;
+	line-height: 20px;
+}
+
+.MealItem__food--quantity {
+	font-size: 13px;
+	color: #8b9b8b;
+}
+
+.MealItem__macros,
+.MealItem__calories {
+	position: relative;
+	top: 8px;
+}
+
+.MealItem__macros,
+.MealTotals__macros {
+	display: block;
+	float: left;
+	width: 400px;
+}
+
+.MealItem__macros span,
+.MealTotals__macros span {
+	width: 33px;
+	display: inline-block;
+	text-align: center;
+	margin-right: 98px;
+}
+
+.MealItem__macros span:last-child {
+	margin: 0;
+}
+
+.MealItem__calories {
+	float: right;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.AddFoodItem {
+	border-bottom: 1px solid #b5c4b7;
+	padding: 18px 30px 18px 23px;
+}
+
+.AddFoodItem:hover {
+	color: #08ae23;
+	cursor: pointer;
+}
+
+.AddFoodItem img {
+	width: 25px;
+	margin-right: 40px;
+}
+
+.MealTotalsRow {
+	padding: 10px 30px 10px 88px;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.MealTotalsRow__label {
+	float: left;
+	display: block;
+	width: 356px;
+	font-size: 16px;
+	cursor: default;
+}
+
+.MealTotals__calories {
+	float: right;
 }
