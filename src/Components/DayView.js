@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import update from 'immutability-helper';
 import MealGroup from './MealGroup';
+import ActivityInput from './ActivityInput';
+import NetCalories from './NetCalories';
 
 class DayView extends Component {
 
@@ -50,9 +53,75 @@ class DayView extends Component {
         lunch: {
           items: [],
           totals: {}
+        },
+        dinner: {
+          items: [],
+          totals: {}
+        },
+        snacks: {
+          items: [],
+          totals: {}
         }
-      }
+      },
+      caloriesEaten: 2400,
+      caloriesBurned: undefined,
+      netCalories: undefined
     }
+  }
+
+  componentDidMount() {
+    this.recalculateTotals(); // will not be needed once initial DB call is in place (totals pre-computed)
+  }
+
+  /**
+   * Recalculates totals for each meal being displayed.
+   * Sets state of meal totals and caloriesEaten.
+  */
+  recalculateTotals() {
+    let newMealTotals = [];
+    let newCaloriesEaten = 0;
+    for(var mealName in this.state.meals) {
+      let totalCals, totalCarbs, totalFat, totalProtein;
+      totalCals = totalCarbs = totalFat = totalProtein = 0;
+      let meal = this.state.meals[mealName];
+      meal.items.forEach(item => {
+        totalCals += item.calories;
+        totalCarbs += item.carbs;
+        totalFat += item.fat;
+        totalProtein += item.protein;
+      });
+      newMealTotals.push({
+        calories: totalCals,
+        carbs: totalCarbs,
+        fat: totalFat,
+        protein: totalProtein
+      });
+      newCaloriesEaten += totalCals;
+    }
+
+    let newState = update(this.state, {
+      meals: {
+        breakfast: {
+          totals: {$set: newMealTotals[0]}
+        },
+        lunch: {
+          totals: {$set: newMealTotals[1]}
+        },
+        dinner: {
+          totals: {$set: newMealTotals[2]}
+        },
+        snacks: {
+          totals: {$set: newMealTotals[3]}
+        }
+      },
+      caloriesEaten: {$set: newCaloriesEaten}
+    });
+    this.setState(newState);
+  }
+
+  handleActivityChanged(calories) {
+    let caloriesInt = Number(calories);
+    this.setState({caloriesBurned: caloriesInt});
   }
 
   render() {
@@ -67,6 +136,25 @@ class DayView extends Component {
           type="Lunch"
           items={this.state.meals.lunch.items}
           totals={this.state.meals.lunch.totals}
+        />
+        <MealGroup 
+          type="Dinner"
+          items={this.state.meals.dinner.items}
+          totals={this.state.meals.dinner.totals}
+        />
+        <MealGroup 
+          type="Snacks"
+          items={this.state.meals.snacks.items}
+          totals={this.state.meals.snacks.totals}
+        />
+
+        <ActivityInput
+          caloriesBurned={this.state.caloriesBurned} 
+          handleActivityChanged={this.handleActivityChanged.bind(this)}
+        />
+        <NetCalories
+          caloriesEaten={this.state.caloriesEaten}
+          caloriesBurned={this.state.caloriesBurned} 
         />
       </div>
     );

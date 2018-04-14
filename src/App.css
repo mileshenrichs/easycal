@@ -209,3 +209,101 @@ body {
 .MealTotals__calories {
 	float: right;
 }
+
+.ActivityInput {
+	margin-bottom: 70px;
+}
+
+.ActivityInput img {
+	width: 40px;
+	margin-right: 10px;
+}
+
+.ActivityInput span {
+	font-size: 20px;
+	position: relative;
+	top: 3px;
+}
+
+span.ActivityInput__calslabel {
+	font-size: 24px;
+	color: #767676;
+	position: relative;
+	top: 0;
+}
+
+span.ActivityInput__calslabel.active {
+	color: #070000;
+}
+
+.ActivityInput input {
+	border-left: none;
+	border-right: none;
+	border-top: none;
+	border-bottom: 2px solid #98a299;
+	width: 60px;
+	text-align: center;
+	margin-left: 10px;
+	font-size: 24px;
+}
+
+.ActivityInput input.active {
+	border-color: #08ae23;
+}
+
+.NetCalories {
+	margin-bottom: 150px;
+	padding: 0 28px 0 0;
+	color: #222722;
+}
+
+.NetCalories__number {
+	font-size: 44px;
+	font-weight: bold;
+	padding-right: 18px;
+}
+
+.NetCalories__label {
+	position: relative;
+	bottom: 9px;
+}
+
+.NetCalories__equation {
+	display: block;
+	width: 100%;
+}
+
+.NetCalories__number.food {
+	color: #c22317;
+}
+
+.NetCalories__number.exercise {
+	color: #08ae23;
+}
+
+.NetCalories__number.net {
+	font-size: 54px;
+	float: right;
+	padding: 0;
+}
+
+.NetCalories__minussign,
+.NetCalories__equals {
+	font-size: 54px;
+	font-weight: bold;
+	padding: 0 34px;
+}
+
+.NetCalories__equals {
+	padding: 0 0 0 56px;
+}
+
+.NetCalories__goaldifference {
+	display: block;
+	float: right;
+	color: green;
+	font-weight: bold;
+	font-size: 30px;
+	position: relative;
+	bottom: 20px;
+}

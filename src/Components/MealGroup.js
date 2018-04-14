@@ -15,7 +15,7 @@ class MealGroup extends Component {
   	if(this.props.items) {
   		mealItems = this.props.items.map(item => {
   			return (
-  				<MealItem item={item} />
+  				<MealItem key={item.id} item={item} />
 				);
   		});
   	}
@@ -36,7 +36,7 @@ class MealGroup extends Component {
   		</div>
   		{mealItems}
   		<AddFoodItem />
-  		<MealTotalsRow totals={this.props.totals} />
+  		{this.props.items.length > 0 && <MealTotalsRow totals={this.props.totals} />}
       </div>
     );
   }

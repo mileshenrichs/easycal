@@ -10,7 +10,7 @@ class Header extends Component {
       			<img src={logo} alt="EasyCal" />
       		</a>
       		<nav>
-      			<a href="#" className="nav__today-link">Today (2150 cal)</a>
+      			<a href="#" className="nav__today-link">Today (2,150 cal)</a>
       			<a href="#">Stats</a>
       			<a href="#">My Account</a>
       		</nav>

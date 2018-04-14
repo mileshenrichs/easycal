@@ -6,7 +6,7 @@ class AddFoodItem extends Component {
     return (
       <div className="AddFoodItem">
         <img src={plusIcon} alt="+" />
-  		  <span>Add Food Item</span>
+        <span>Add Food Item</span>
       </div>
     );
   }
