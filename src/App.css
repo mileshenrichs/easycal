@@ -37,13 +37,52 @@ body {
 }
 
 .Header nav a {
-	margin-left: 100px;
+	margin-left: 80px;
 	color: #003300;
 }
 
 .Header nav a:hover {
 	text-decoration: none;
 	color: #08ae23;
+}
+
+.Footer {
+	border-top: 1px solid #b6bdb5;
+	margin: 100px auto 20px auto;
+	padding-top: 10px;
+	color: #737972;
+}
+
+.Footer p,
+.Footer__links {
+	float: right;
+}
+
+.Footer__links {
+	font-size: 14px;
+	margin-right: 80px;
+	position: relative;
+	bottom: 5px;
+}
+
+.Footer__links a {
+	color: #737972;
+}
+
+.Footer__links a:hover {
+	text-decoration: none;
+	color: #535a52;
+}
+
+.Footer__link-separator {
+	font-size: 20px;
+	margin: 0 14px;
+	position: relative;
+	top: 1px;
+}
+
+.Footer img {
+	height: 26px;
 }
 
 .nav__today-link {
@@ -61,6 +100,114 @@ body {
 .DayView {
 	width: 70%;
 	margin: 0 auto;
+}
+
+.DaySelect {
+	margin: 0 0 0 84px;
+	width: 300px;
+	position: relative;
+	float: left;
+}
+
+.DaySelect__arrow {
+	width: 18px;
+	height: 30px;
+	cursor: pointer;
+	display: inline-block;
+	position: relative;
+	bottom: 8px;
+}
+
+.DaySelect__arrow.left {
+	margin-right: 26px;
+	background: url('resources/left-arrow-icon.png') left no-repeat;
+	background-size: 90%;
+}
+
+.DaySelect__arrow.left:hover {
+	background-image: url('resources/left-arrow-icon-hover.png');
+}
+
+.DaySelect__arrow.right {
+	margin-left: 26px;
+	background: url('resources/right-arrow-icon.png') left no-repeat;
+	background-size: 90%;
+}
+
+.DaySelect__arrow.right:hover {
+	background-image: url('resources/right-arrow-icon-hover.png');
+}
+
+.DaySelect__choose {
+	cursor: pointer;
+}
+
+.DaySelect__choose:hover .DaySelect__calendar {
+	background-image: url('resources/calendar-icon-hover.png');
+}
+
+.DaySelect__calendar {
+	width: 46px;
+	height: 50px;
+	background: url('resources/calendar-icon.png') left no-repeat;
+	background-size: 100%;
+	margin-right: 20px;
+	display: inline-block;
+}
+
+.DaySelect__daytext {
+	font-size: 18px;
+	position: relative;
+	bottom: 16px;
+}
+
+.DayPicker {
+	position: absolute;
+	top: -8px;
+	left: 40px;
+	background: white;
+	border-radius: 8px;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	z-index: 1;
+	box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+.Calotron {
+	float: right;
+	text-align: right;
+	margin-right: 28px;
+	position: relative;
+	bottom: 12px;
+}
+
+.Calotron__net {
+	display: block;
+	font-size: 54px;
+	font-weight: bold;
+	color: #222722;
+}
+
+.Calotron__plusminuscontainer {
+	display: block;
+	position: relative;
+	bottom: 10px;
+}
+
+.Calotron__plusminus {
+	display: block;
+	width: 125px;
+	margin: 0 auto;
+	text-align: center;
+	font-size: 15px;
+}
+
+.Calotron__plusminus--food {
+	color: red;
+	margin-right: 20px;
+}
+
+.Calotron__plusminus--exercise {
+	color: green;
 }
 
 .MealGroup {
@@ -252,7 +399,6 @@ span.ActivityInput__calslabel.active {
 }
 
 .NetCalories {
-	margin-bottom: 150px;
 	padding: 0 28px 0 0;
 	color: #222722;
 }
@@ -306,4 +452,47 @@ span.ActivityInput__calslabel.active {
 	font-size: 30px;
 	position: relative;
 	bottom: 20px;
+}
+
+.MacroTotals {
+	padding: 0 28px 0 0;
+}
+
+.MacroTotals__macro {
+	margin-right: 50px;
+}
+
+.MacroTotals__macro.protein {
+	margin-right: 0;
+}
+
+.MacroTotals__label {
+	font-size: 20px;
+	margin-right: 30px;
+}
+
+.MacroTotals__macro img {
+	max-height: 26px;
+	position: relative;
+	bottom: 4px;
+	margin-right: 12px;
+}
+
+.MacroTotals__macro--value {
+	font-weight: bold;
+	font-size: 22px;
+	color: #222722;
+	margin-right: 8px;
+}
+
+.MacroTotals__macro--goaldifference {
+	color: #6c6c6c;
+	position: relative;
+	bottom: 2px;
+}
+
+.MacroTotals__caloriesgoal {
+	float: right;
+	font-size: 20px;
+	color: #6c6c6c;
 }

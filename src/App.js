@@ -3,6 +3,7 @@ import './App.css';
 import Header from './Components/Header';
 import Favicon from 'react-favicon';
 import DayView from './Components/DayView';
+import Footer from './Components/Footer';
 import appFavicon from './resources/favicon.png';
 
 class App extends Component {
@@ -12,7 +13,8 @@ class App extends Component {
         <Favicon url={appFavicon} />
         <Header />
         <DayView />
-      </div>
+        <Footer />
+    	</div>
     );
   }
 }

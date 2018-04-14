@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import update from 'immutability-helper';
+import DaySelect from './DaySelect';
+import Calotron from './Calotron';
 import MealGroup from './MealGroup';
 import ActivityInput from './ActivityInput';
 import NetCalories from './NetCalories';
+import MacroTotals from './MacroTotals';
 
 class DayView extends Component {
 
@@ -127,6 +130,10 @@ class DayView extends Component {
   render() {
     return (
       <div className="DayView">
+        <DaySelect />
+        <Calotron />
+        <div className="clearfix"></div>
+
         <MealGroup 
           type="Breakfast"
           items={this.state.meals.breakfast.items}
@@ -156,6 +163,7 @@ class DayView extends Component {
           caloriesEaten={this.state.caloriesEaten}
           caloriesBurned={this.state.caloriesBurned} 
         />
+        <MacroTotals />
       </div>
     );
   }
