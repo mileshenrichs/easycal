@@ -5,6 +5,7 @@ import Header from './Components/Header';
 import Favicon from 'react-favicon';
 import DayView from './Components/DayView';
 import AddFoodView from './Components/AddFoodView';
+import CreateFoodView from './Components/CreateFoodView';
 import Footer from './Components/Footer';
 import appFavicon from './resources/favicon.png';
 
@@ -29,6 +30,13 @@ class App extends Component {
                   <AddFoodView />
                   <div className="FoodsPanel__cancel-link"><Link to="/">Cancel</Link></div>
                 </div>
+              )}
+          />
+
+          <Route
+            exact path="/createfood"
+            component={() => (
+                <CreateFoodView />
               )}
           />
         </Switch>

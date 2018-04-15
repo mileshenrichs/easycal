@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import SearchResults from './SearchResults';
 import MyFoods from './MyFoods';
 import RecentFoods from './RecentFoods';
@@ -40,7 +41,9 @@ class FoodsPanel extends Component {
         	<span 
         		className={'FoodsPanel__tab--myfoods' + (this.state.currentTab === 2 ? ' current' : '')}
         		onClick={this.switchTabs.bind(this)}>My Foods</span>
+    		<Link to="/createfood">
         	<span className={'FoodsPanel__tab--createfoodbutton' + (this.state.currentTab === 2 ? ' current' : '')}>+ New</span>
+      	</Link>
         </div>
 
         <div className="FoodsPanel__header">

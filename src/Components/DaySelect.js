@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
-import leftArrow from '../resources/left-arrow-icon.png';
-import rightArrow from '../resources/right-arrow-icon.png';
-import calendarIcon from '../resources/calendar-icon.png';
 
 class DaySelect extends Component {
 
@@ -14,8 +11,26 @@ class DaySelect extends Component {
     }
   }
 
+  componentDidUpdate() {
+    if(this.state.pickerVisible) {
+      document.body.addEventListener('click', this.handleClick.bind(this), true);
+    }
+  }
+
   handleDayChange(day) {
     this.setState({pickerVisible: false});
+  }
+
+  /**
+   * Hide DayPicker popup if clicked outside
+   */
+  handleClick(e) {
+    if(document.querySelector('.DayPicker')) {
+      if(!document.querySelector('.DayPicker').contains(e.target)) {
+        document.body.removeEventListener('click', this.handleClick.bind(this), true);
+        this.setState({pickerVisible: false});
+      }  
+    }
   }
 
   render() {

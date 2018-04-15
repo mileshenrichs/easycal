@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Chivo:300,400,700');
+@import url('https://fonts.googleapis.com/css?family=Chivo:400,700');
 
 .clearfix {
 	clear: both;
@@ -548,6 +548,7 @@ h1.page-title {
 }
 
 span.FoodsPanel__tab--createfoodbutton {
+	text-transform: lowercase;
 	padding: 4px 10px 4px 10px;
 	margin-right: 34px;
 	font-size: 14px;
@@ -611,12 +612,108 @@ span.FoodsPanel__tab--createfoodbutton.current {
 	bottom: 0%;
 	width: 100%;
 	background: white;
-	padding: 10px 0 10px 202px;
+	padding: 18px 0 18px 202px;
 	border-top: 1px solid #b5c4b7;
 	box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.03);
 	z-index: 1;
 }
 
 .FoodsPanel__cancel-link a {
+	color: #c22317;
+}
+
+.CreateFoodView__form {
+	margin-top: 20px;
+}
+
+.CreateFoodView__form label {
+	margin: 0 0 3px 10px
+}
+
+.CreateFoodView__form input {
+	display: block;
+	border-radius: 3px;
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	height: 36px;
+	width: 50%;
+	padding: 0 10px;
+	margin-bottom: 20px;
+}
+
+.CreateFoodView__form input:focus {
+	border-color: #08ae23;
+	box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.CreateFoodView__form input#servingsize {
+	width: 25%;
+}
+
+.CreateFoodView__nutrition-separator {
+	display: block;
+	margin: 50px 0 26px 80px;
+	font-weight: bold;
+}
+
+.CreateFoodView__nutrition-separator:before {
+	display: block;
+	width: 70px;
+	content: "";
+	border-top: 3px solid #003300;
+	position: relative;
+	top: 14px;
+	right: 78px;
+}
+
+.CreateFoodView__nutrition-separator:after {
+	display: block;
+	width: 90%;
+	content: "";
+	border-top: 3px solid #003300;
+	position: relative;
+	bottom: 13px;
+	left: 98px;
+}
+
+.CreateFoodView__inputgroup {
+	width: 50%;
+	float: left;
+	margin-bottom: 40px;
+}
+
+.CreateFoodView__input img {
+	width: 100%;
+}
+
+.CreateFoodView__input--image {
+	display: block;
+	height: 30px;
+	width: 30px;
+	float: left;
+	position: relative;
+	top: 29px;
+	margin-right: 18px;
+}
+
+.CreateFoodView__input input {
+	width: 65%;
+}
+
+.CreateFoodView__submit-button {
+	background-color: #08ae23;
+	color: white;
+	padding: 12px 20px;
+	border-radius: 3px;
+	border: none;
+	cursor: pointer;
+	margin-right: 30px;
+}
+
+.CreateFoodView__submit-button:hover {
+	background-color: #039b1c;
+}
+
+.cancel-link,
+.cancel-link:hover {
 	color: #c22317;
 }
