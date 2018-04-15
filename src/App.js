@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Route, Switch, Link} from 'react-router-dom';
 import './App.css';
 import Header from './Components/Header';
 import Favicon from 'react-favicon';
@@ -13,9 +14,24 @@ class App extends Component {
       <div className="App">
         <Favicon url={appFavicon} />
         <Header />
-        {/* <DayView />*/}
-        <AddFoodView />
-        <div className="FoodsPanel__cancel-link"><a href="#">Cancel</a></div>
+        <Switch>
+          <Route
+            exact path="/"
+            component={() => (
+                  <DayView />
+              )}
+          />
+
+          <Route
+            exact path="/add"
+            component={() => (
+                <div>
+                  <AddFoodView />
+                  <div className="FoodsPanel__cancel-link"><Link to="/">Cancel</Link></div>
+                </div>
+              )}
+          />
+        </Switch>
         <Footer />
     	</div>
     );

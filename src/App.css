@@ -329,9 +329,14 @@ body {
 	padding: 18px 30px 18px 23px;
 }
 
-.AddFoodItem:hover {
+.AddFoodItem__link {
+	color: #003300;
+}
+
+.AddFoodItem__link:hover {
 	color: #08ae23;
 	cursor: pointer;
+	text-decoration: none;
 }
 
 .AddFoodItem img {

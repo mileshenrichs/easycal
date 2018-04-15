@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import logo from '../resources/logo.png';
 
 class Header extends Component {
@@ -6,13 +7,13 @@ class Header extends Component {
     return (
       <header className="Header">
       	<div className="container">
-      		<a href="#">
+      		<Link to="/">
       			<img src={logo} alt="EasyCal" />
-      		</a>
+      		</Link>
       		<nav>
-      			<a href="#" className="nav__today-link">Today (2,150 cal)</a>
-      			<a href="#">Stats</a>
-      			<a href="#">My Account</a>
+      			<Link to="/" className="nav__today-link">Today (2,150 cal)</Link>
+      			<Link to="/stats">Stats</Link>
+      			<Link to="/me">My Account</Link>
       		</nav>
       		<div className="clearfix"></div>
       	</div>
