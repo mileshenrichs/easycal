@@ -406,7 +406,7 @@ span.ActivityInput__calslabel.active {
 }
 
 .NetCalories {
-	padding: 0 28px 0 0;
+	padding: 0;
 	color: #222722;
 }
 
@@ -462,7 +462,7 @@ span.ActivityInput__calslabel.active {
 }
 
 .MacroTotals {
-	padding: 0 28px 0 0;
+	padding: 0;
 }
 
 .MacroTotals__macro {
@@ -919,4 +919,36 @@ span.FoodsPanel__tab--createfoodbutton.current {
 .WeekAverages__table .WeekAverages__nutrient-row:last-child {
 	border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10px;
+}
+
+.MyAccountView h1 {
+	margin-bottom: 30px;
+}
+
+.MyGoals__form--input {
+	width: 25%;
+	float: left;
+}
+
+.MyGoals__form label {
+	margin: 0 0 3px 10px
+}
+
+.MyGoals__form input {
+	display: block;
+	border-radius: 3px;
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	height: 36px;
+	width: 80%;
+	padding: 0 10px;
+	margin-bottom: 20px;
+}
+
+.MyGoals__form input:focus {
+	border-color: #08ae23;
+	box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.MyGoals__form button {
+	margin-top: 25px;
 }
