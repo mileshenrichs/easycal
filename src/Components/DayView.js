@@ -129,7 +129,7 @@ class DayView extends Component {
 
   render() {
     return (
-      <div className="DayView">
+      <div className="DayView content-container">
         <DaySelect />
         <Calotron />
         <div className="clearfix"></div>
