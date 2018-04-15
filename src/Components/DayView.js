@@ -74,7 +74,7 @@ class DayView extends Component {
 
   componentDidMount() {
     this.recalculateTotals(); // will not be needed once initial DB call is in place (totals pre-computed)
-    document.title = 'EasyCal: Today';
+    document.title = 'EasyCal';
   }
 
   /**

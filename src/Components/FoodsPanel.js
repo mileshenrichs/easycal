@@ -42,7 +42,7 @@ class FoodsPanel extends Component {
         		className={'FoodsPanel__tab--myfoods' + (this.state.currentTab === 2 ? ' current' : '')}
         		onClick={this.switchTabs.bind(this)}>My Foods</span>
     		<Link to="/createfood">
-        	<span className={'FoodsPanel__tab--createfoodbutton' + (this.state.currentTab === 2 ? ' current' : '')}>+ New</span>
+        	<span className={'FoodsPanel__tab--createfoodbutton small-button' + (this.state.currentTab === 2 ? ' current' : '')}>+ New</span>
       	</Link>
         </div>
 

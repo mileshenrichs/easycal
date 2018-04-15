@@ -67,21 +67,21 @@ class CreateFoodView extends Component {
                 <img src={fiberIcon} alt="Fiber" />
               </span>
               <label htmlFor="fiber">Fiber</label>
-              <input type="text" name="fiber" id="fiber" placeholder="80 g" />
+              <input type="text" name="fiber" id="fiber" placeholder="4 g" />
             </div>
             <div className="CreateFoodView__input">
               <span className="CreateFoodView__input--image">
                 <img src={sugarIcon} alt="Sugar" />
               </span>
               <label htmlFor="sugar">Sugar</label>
-              <input type="text" name="sugar" id="sugar" placeholder="16 g" />
+              <input type="text" name="sugar" id="sugar" placeholder="20 g" />
             </div>
             <div className="CreateFoodView__input">
               <span className="CreateFoodView__input--image">
                 <img src={sodiumIcon} alt="Sodium" />
               </span>
               <label htmlFor="sodium">Sodium</label>
-              <input type="text" name="sodium" id="sodium" placeholder="33 g" />
+              <input type="text" name="sodium" id="sodium" placeholder="400 mg" />
             </div>
           </div>
 
