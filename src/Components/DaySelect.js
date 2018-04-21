@@ -44,7 +44,7 @@ class DaySelect extends Component {
         <div className="DaySelect__arrow right"></div>
 
         {this.state.pickerVisible && <DayPicker onDayClick={this.handleDayChange.bind(this)} />}
-        <div class="clearfix"></div>
+        <div className="clearfix"></div>
       </div>
     );
   }

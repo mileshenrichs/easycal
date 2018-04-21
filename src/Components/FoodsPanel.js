@@ -52,7 +52,6 @@ class FoodsPanel extends Component {
 	  				<img src={fatIcon} alt="Fat" title="Fat" />
 	  				<img src={proteinIcon} alt="Protein" title="Protein" />
 	  			</span>
-	  			<span className="MealGroup__header--caltotal">200</span>
   			</div>
 
   			{this.state.currentTab === 0 && <SearchResults />}

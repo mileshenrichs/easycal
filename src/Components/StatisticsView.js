@@ -20,6 +20,7 @@ class StatisticsView extends Component {
 
   componentDidMount() {
     document.title = 'EasyCal: Statistics';
+    window.scrollTo(0, 0);
   }
 
   render() {
