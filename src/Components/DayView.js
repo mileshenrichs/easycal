@@ -45,45 +45,31 @@ class DayView extends Component {
               sugar: 0,
               sodium: 0
             }
-          ],
-          totals: {
-            carbs: 24,
-            fat: 42,
-            protein: 32,
-            calories: 350
-          }
+          ]
         },
         lunch: {
-          items: [],
-          totals: {}
+          items: []
         },
         dinner: {
-          items: [],
-          totals: {}
+          items: []
         },
         snacks: {
-          items: [],
-          totals: {}
+          items: []
         }
       },
-      caloriesEaten: 2400,
-      caloriesBurned: undefined,
-      netCalories: undefined
+      caloriesBurned: undefined
     }
   }
 
   componentDidMount() {
-    this.recalculateTotals(); // will not be needed once initial DB call is in place (totals pre-computed)
     document.title = 'EasyCal';
   }
 
   /**
-   * Recalculates totals for each meal being displayed.
-   * Sets state of meal totals and caloriesEaten.
+   * Calculates totals for each meal being displayed.
   */
-  recalculateTotals() {
+  calculateMealTotals() {
     let newMealTotals = [];
-    let newCaloriesEaten = 0;
     for(var mealName in this.state.meals) {
       let totalCals, totalCarbs, totalFat, totalProtein;
       totalCals = totalCarbs = totalFat = totalProtein = 0;
@@ -100,27 +86,19 @@ class DayView extends Component {
         fat: totalFat,
         protein: totalProtein
       });
-      newCaloriesEaten += totalCals;
     }
+    return newMealTotals;
+  }
 
-    let newState = update(this.state, {
-      meals: {
-        breakfast: {
-          totals: {$set: newMealTotals[0]}
-        },
-        lunch: {
-          totals: {$set: newMealTotals[1]}
-        },
-        dinner: {
-          totals: {$set: newMealTotals[2]}
-        },
-        snacks: {
-          totals: {$set: newMealTotals[3]}
-        }
-      },
-      caloriesEaten: {$set: newCaloriesEaten}
-    });
-    this.setState(newState);
+  calculateDayTotals() {
+    let dayTotals = {
+      caloriesEaten: 2400,
+      netCalories: 2250,
+      carbs: 27,
+      fat: 56,
+      protein: 38
+    }
+    return dayTotals;
   }
 
   handleActivityChanged(calories) {
@@ -129,6 +107,9 @@ class DayView extends Component {
   }
 
   render() {
+    let mealTotals = this.calculateMealTotals();
+    let dayTotals = this.calculateDayTotals();
+
     return (
       <div className="DayView content-container">
         <DaySelect />
@@ -138,22 +119,22 @@ class DayView extends Component {
         <MealGroup 
           type="Breakfast"
           items={this.state.meals.breakfast.items}
-          totals={this.state.meals.breakfast.totals}
+          totals={mealTotals[0]}
         />
         <MealGroup 
           type="Lunch"
           items={this.state.meals.lunch.items}
-          totals={this.state.meals.lunch.totals}
+          totals={mealTotals[1]}
         />
         <MealGroup 
           type="Dinner"
           items={this.state.meals.dinner.items}
-          totals={this.state.meals.dinner.totals}
+          totals={mealTotals[2]}
         />
         <MealGroup 
           type="Snacks"
           items={this.state.meals.snacks.items}
-          totals={this.state.meals.snacks.totals}
+          totals={mealTotals[3]}
         />
 
         <ActivityInput
@@ -161,7 +142,7 @@ class DayView extends Component {
           handleActivityChanged={this.handleActivityChanged.bind(this)}
         />
         <NetCalories
-          caloriesEaten={this.state.caloriesEaten}
+          caloriesEaten={dayTotals.caloriesEaten}
           caloriesBurned={this.state.caloriesBurned} 
         />
         <MacroTotals />

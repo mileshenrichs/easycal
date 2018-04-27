@@ -11,7 +11,7 @@ class Header extends Component {
       			<img src={logo} alt="EasyCal" />
       		</Link>
       		<nav>
-      			<Link to="/" className="nav__today-link">Today (2,150 cal)</Link>
+      			<Link to="/" className="nav__today-link">Today's Log</Link>
       			<Link to="/stats">Stats</Link>
       			<Link to="/me">My Account</Link>
       		</nav>
