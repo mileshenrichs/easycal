@@ -13,6 +13,7 @@ class ServingSelect extends Component {
     this.setState({
       quantityValue: e.target.value
     });
+    this.props.handleQuantityChange(e.target.value);
   }
 
   handleSizeChange(e) {

@@ -22,10 +22,17 @@ class MealItem extends Component {
     this.setState(prevState => ({
       editMode: !prevState.editMode
     }));
+    this.props.handleNewServingSave();
   }
 
   handleSizeChange(servingSizeId) {
-    alert(servingSizeId);
+    // convert string option value into integer id
+    let servingSizeInt = parseInt(servingSizeId, 10);
+    this.props.handleSizeChange(servingSizeInt, this.props.id);
+  }
+
+  handleQuantityChange(quantity) {
+    this.props.handleQuantityChange(quantity, this.props.id);
   }
 
   render() {
@@ -43,8 +50,7 @@ class MealItem extends Component {
   		  <span className="MealItem__food">
           <span className="MealItem__food--name">{this.props.name}</span>
           <span className="MealItem__food--quantity">
-            {this.props.selectedServing.quantity} 
-            {' ' + this.props.selectedServing.servingSize.label + (this.props.selectedServing.quantity !== 1 ? 's' : '')}
+            {this.props.selectedServing.quantity} {this.props.selectedServing.servingSize.label}
           </span>
         </span>
         <span className="MealItem__macros">
@@ -58,6 +64,7 @@ class MealItem extends Component {
           <ServingSelect 
             selectedServing={this.props.selectedServing}
             servingSizes={this.props.servingSizes} 
+            handleQuantityChange={this.handleQuantityChange.bind(this)}
             handleSizeChange={this.handleSizeChange.bind(this)}
           />}
       </div>

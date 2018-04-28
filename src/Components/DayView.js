@@ -65,6 +65,32 @@ class DayView extends Component {
               fiber: 0.00,
               sugar: 0.48,
               sodium: 653.00
+            },
+            {
+              id: '45094321',
+              name: 'Grilled Chicken Strips',
+              selectedServing: {
+                servingSize: {
+                  id: 7,
+                  label: 'strips | about',
+                  ratio: 0.14
+                },
+                quantity: 8
+              },
+              servingSizes: [
+                {
+                  id: 7,
+                  label: 'strips | about',
+                  ratio: 0.14
+                }
+              ],
+              calories: 141.00,
+              carbs: 5.88,
+              fat: 3.53,
+              protein: 23.53,
+              fiber: 2.40,
+              sugar: 0.00,
+              sodium: 412.00
             }
           ]
         },
@@ -72,7 +98,34 @@ class DayView extends Component {
           items: []
         },
         dinner: {
-          items: []
+          items: [
+            {
+              id: '45094321',
+              name: 'Grilled Chicken Strips',
+              selectedServing: {
+                servingSize: {
+                  id: 7,
+                  label: 'strips | about',
+                  ratio: 0.14
+                },
+                quantity: 3
+              },
+              servingSizes: [
+                {
+                  id: 7,
+                  label: 'strips | about',
+                  ratio: 0.14
+                }
+              ],
+              calories: 141.00,
+              carbs: 5.88,
+              fat: 3.53,
+              protein: 23.53,
+              fiber: 2.40,
+              sugar: 0.00,
+              sodium: 412.00
+            }
+          ]
         },
         snacks: {
           items: []
@@ -87,7 +140,7 @@ class DayView extends Component {
   }
 
   /**
-   * Calculates totals for each meal being displayed.
+   * Calculates totals for each meal being displayed
   */
   calculateMealTotals() {
     let newMealTotals = [];
@@ -113,15 +166,39 @@ class DayView extends Component {
     return newMealTotals;
   }
 
-  calculateDayTotals() {
-    let dayTotals = {
-      caloriesEaten: 2400,
-      netCalories: 2250,
-      carbs: 27,
-      fat: 56,
-      protein: 38
+  calculateDayTotals(mealTotals) {
+    // calculate consumption totals (nutrients & calories)
+    let caloriesEaten, carbs, fat, protein;
+    caloriesEaten = carbs = fat = protein = 0;
+    mealTotals.forEach(mealTotal => {
+      caloriesEaten += mealTotal.calories;
+      carbs += mealTotal.carbs;
+      fat += mealTotal.fat;
+      protein += mealTotal.protein;
+    });
+
+    // calculate net calories (consumption - activity)
+    let netCalories = caloriesEaten - (this.state.caloriesBurned ? this.state.caloriesBurned : 0);
+    return {
+      caloriesEaten: caloriesEaten,
+      netCalories: netCalories,
+      carbs: carbs,
+      fat: fat,
+      protein: protein
     }
-    return dayTotals;
+  }
+
+  /**
+   * Merge changed MealGroup states with DayView state
+   * (sync with new serving size/quantity)
+  */
+  handleServingUpdate(newItemsList, mealType) {
+    let newState = update(this.state, {
+      meals: {
+        [mealType]: {$set: newItemsList}
+      }
+    });
+    this.setState(newState);
   }
 
   handleActivityChanged(calories) {
@@ -131,33 +208,37 @@ class DayView extends Component {
 
   render() {
     let mealTotals = this.calculateMealTotals();
-    let dayTotals = this.calculateDayTotals();
+    let dayTotals = this.calculateDayTotals(mealTotals);
 
     return (
       <div className="DayView content-container">
         <DaySelect />
-        <Calotron />
+        <Calotron 
+          netCalories={dayTotals.netCalories}
+          caloriesEaten={dayTotals.caloriesEaten}
+          caloriesBurned={this.state.caloriesBurned}
+        />
         <div className="clearfix"></div>
 
         <MealGroup 
           type="Breakfast"
           items={this.state.meals.breakfast.items}
-          totals={mealTotals[0]}
+          handleServingUpdate={this.handleServingUpdate.bind(this)}
         />
         <MealGroup 
           type="Lunch"
           items={this.state.meals.lunch.items}
-          totals={mealTotals[1]}
+          handleServingUpdate={this.handleServingUpdate.bind(this)}
         />
         <MealGroup 
           type="Dinner"
           items={this.state.meals.dinner.items}
-          totals={mealTotals[2]}
+          handleServingUpdate={this.handleServingUpdate.bind(this)}
         />
         <MealGroup 
           type="Snacks"
           items={this.state.meals.snacks.items}
-          totals={mealTotals[3]}
+          handleServingUpdate={this.handleServingUpdate.bind(this)}
         />
 
         <ActivityInput
@@ -166,9 +247,14 @@ class DayView extends Component {
         />
         <NetCalories
           caloriesEaten={dayTotals.caloriesEaten}
-          caloriesBurned={this.state.caloriesBurned} 
+          caloriesBurned={this.state.caloriesBurned}
+          netCalories={dayTotals.netCalories} 
         />
-        <MacroTotals />
+        <MacroTotals 
+          totalCarbs={dayTotals.carbs}
+          totalFat={dayTotals.fat}
+          totalProtein={dayTotals.protein}
+        />
       </div>
     );
   }

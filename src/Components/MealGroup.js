@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import update from 'immutability-helper';
 import MealItem from './MealItem';
 import AddFoodItem from './AddFoodItem';
 import MealTotalsRow from './MealTotalsRow';
@@ -9,11 +10,81 @@ import proteinIcon from '../resources/steak-emoji.png';
 
 class MealGroup extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: this.props.items
+    }
+  }
+
+  /**
+   * Update current serving size information within context of MealGroup 
+   * (will be propagated up to DayView when checkmark clicked)
+  */
+  handleSizeChange(newServingSizeId, mealItemId) {
+    let mealItem = this.state.items.find(item => item.id === mealItemId);
+    let mealItemIndex = this.state.items.indexOf(mealItem);
+    let newServingSize = mealItem.servingSizes.find(servingSize => servingSize.id === newServingSizeId);
+    
+    let newState = update(this.state, {
+      items: {
+        [mealItemIndex]: {
+          selectedServing: {
+            servingSize: {$set: newServingSize}
+          }
+        }
+      }
+    });
+    this.setState(newState);
+  }
+
+  handleQuantityChange(newServingQuantity, mealItemId) {
+    let mealItem = this.state.items.find(item => item.id === mealItemId);
+    let mealItemIndex = this.state.items.indexOf(mealItem);
+    
+    let newState = update(this.state, {
+      items: {
+        [mealItemIndex]: {
+          selectedServing: {
+            quantity: {$set: newServingQuantity}
+          }
+        }
+      }
+    });
+    this.setState(newState);
+  }
+
+  calculateItemTotals() {
+    let totalCals, totalCarbs, totalFat, totalProtein;
+    totalCals = totalCarbs = totalFat = totalProtein = 0;
+    this.state.items.forEach(item => {
+      let servingSizeMultiplier = item.selectedServing.quantity * item.selectedServing.servingSize.ratio;
+
+      totalCals += Math.round(item.calories * servingSizeMultiplier);
+      totalCarbs += Math.round(item.carbs * servingSizeMultiplier);
+      totalFat += Math.round(item.fat * servingSizeMultiplier);
+      totalProtein += Math.round(item.protein * servingSizeMultiplier);
+    });
+    return {
+      calories: totalCals,
+      carbs: totalCarbs,
+      fat: totalFat,
+      protein: totalProtein
+    };
+  }
+
+  handleNewServingSave() {
+    // pass cloned state object up to DayView
+    this.props.handleServingUpdate(JSON.parse(JSON.stringify(this.state)), this.props.type.toLowerCase());
+  }
+
   render() {
 
+    let itemTotals = this.calculateItemTotals();
+
   	let mealItems;
-  	if(this.props.items) {
-  		mealItems = this.props.items.map(item => {
+  	if(this.state.items) {
+  		mealItems = this.state.items.map(item => {
 
         let servingSizeMultiplier = item.selectedServing.quantity * item.selectedServing.servingSize.ratio;
         let nutritionValues = {
@@ -22,15 +93,18 @@ class MealGroup extends Component {
           protein: Math.round(item.protein * servingSizeMultiplier),
           calories: Math.round(item.calories * servingSizeMultiplier)
         };
-        console.log(nutritionValues);
 
   			return (
   				<MealItem 
             key={item.id} 
+            id={item.id}
             name={item.name}
             nutritionValues={nutritionValues}
             selectedServing={item.selectedServing}
             servingSizes={item.servingSizes}
+            handleQuantityChange={this.handleQuantityChange.bind(this)}
+            handleSizeChange={this.handleSizeChange.bind(this)}
+            handleNewServingSave={this.handleNewServingSave.bind(this)}
           />
 				);
   		});
@@ -47,12 +121,12 @@ class MealGroup extends Component {
   				<img src={proteinIcon} alt="Protein" title="Protein" />
   			</span>
   			<span className="MealGroup__header--caltotal">
-  				{this.props.totals.calories ? this.props.totals.calories : '--'}
+  				{itemTotals.calories ? itemTotals.calories : '--'}
   			</span>
   		</div>
   		{mealItems}
   		<AddFoodItem />
-  		{this.props.items.length > 0 && <MealTotalsRow totals={this.props.totals} />}
+  		{this.props.items.length > 0 && <MealTotalsRow totals={itemTotals} />}
       </div>
     );
   }
