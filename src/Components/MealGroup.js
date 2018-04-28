@@ -14,8 +14,24 @@ class MealGroup extends Component {
   	let mealItems;
   	if(this.props.items) {
   		mealItems = this.props.items.map(item => {
+
+        let servingSizeMultiplier = item.selectedServing.quantity * item.selectedServing.servingSize.ratio;
+        let nutritionValues = {
+          carbs: Math.round(item.carbs * servingSizeMultiplier),
+          fat: Math.round(item.fat * servingSizeMultiplier),
+          protein: Math.round(item.protein * servingSizeMultiplier),
+          calories: Math.round(item.calories * servingSizeMultiplier)
+        };
+        console.log(nutritionValues);
+
   			return (
-  				<MealItem key={item.id} item={item} />
+  				<MealItem 
+            key={item.id} 
+            name={item.name}
+            nutritionValues={nutritionValues}
+            selectedServing={item.selectedServing}
+            servingSizes={item.servingSizes}
+          />
 				);
   		});
   	}

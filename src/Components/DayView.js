@@ -16,34 +16,55 @@ class DayView extends Component {
         breakfast: {
           items: [
             {
-              id: 1,
-              name: 'Eggs, Scrambled',
-              servingSize: {
-                quantity: 3,
-                unit: 'whole egg'
+              id: '01009',
+              name: 'Cheese, cheddar',
+              selectedServing: {
+                servingSize: {
+                  id: 6,
+                  label: 'slice (1 oz)',
+                  ratio: 0.28
+                },
+                quantity: 5
               },
-              calories: 220,
-              carbs: 15,
-              fat: 20,
-              protein: 18,
-              fiber: 0,
-              sugar: 0,
-              sodium: 0
-            },
-            {
-              id: 2,
-              name: 'Sausage Links',
-              servingSize: {
-                quantity: 4,
-                unit: 'link'
-              },
-              calories: 130,
-              carbs: 9,
-              fat: 22,
-              protein: 14,
-              fiber: 0,
-              sugar: 0,
-              sodium: 0
+              servingSizes: [
+                {
+                  id: 1,
+                  label: 'cup, diced',
+                  ratio: 1.32
+                },
+                {
+                  id: 2,
+                  label: 'cup, melted',
+                  ratio: 2.44
+                },
+                {
+                  id: 3,
+                  label: 'cup, shredded',
+                  ratio: 1.13
+                },
+                {
+                  id: 4,
+                  label: 'oz',
+                  ratio: 0.28
+                },
+                {
+                  id: 5,
+                  label: 'cubic inch',
+                  ratio: 0.17
+                },
+                {
+                  id: 6,
+                  label: 'slice (1 oz)',
+                  ratio: 0.28
+                },
+              ],
+              calories: 403.00,
+              carbs: 3.37,
+              fat: 33.31,
+              protein: 22.87,
+              fiber: 0.00,
+              sugar: 0.48,
+              sodium: 653.00
             }
           ]
         },
@@ -75,10 +96,12 @@ class DayView extends Component {
       totalCals = totalCarbs = totalFat = totalProtein = 0;
       let meal = this.state.meals[mealName];
       meal.items.forEach(item => {
-        totalCals += item.calories;
-        totalCarbs += item.carbs;
-        totalFat += item.fat;
-        totalProtein += item.protein;
+        let servingSizeMultiplier = item.selectedServing.quantity * item.selectedServing.servingSize.ratio;
+
+        totalCals += Math.round(item.calories * servingSizeMultiplier);
+        totalCarbs += Math.round(item.carbs * servingSizeMultiplier);
+        totalFat += Math.round(item.fat * servingSizeMultiplier);
+        totalProtein += Math.round(item.protein * servingSizeMultiplier);
       });
       newMealTotals.push({
         calories: totalCals,
