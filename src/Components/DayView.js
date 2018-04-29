@@ -14,129 +14,33 @@ class DayView extends Component {
     this.state = {
       meals: {
         breakfast: {
-          items: [
-            {
-              id: '01009',
-              name: 'Cheese, cheddar',
-              selectedServing: {
-                servingSize: {
-                  id: 6,
-                  label: 'slice (1 oz)',
-                  ratio: 0.28
-                },
-                quantity: 5
-              },
-              servingSizes: [
-                {
-                  id: 1,
-                  label: 'cup, diced',
-                  ratio: 1.32
-                },
-                {
-                  id: 2,
-                  label: 'cup, melted',
-                  ratio: 2.44
-                },
-                {
-                  id: 3,
-                  label: 'cup, shredded',
-                  ratio: 1.13
-                },
-                {
-                  id: 4,
-                  label: 'oz',
-                  ratio: 0.28
-                },
-                {
-                  id: 5,
-                  label: 'cubic inch',
-                  ratio: 0.17
-                },
-                {
-                  id: 6,
-                  label: 'slice (1 oz)',
-                  ratio: 0.28
-                },
-              ],
-              calories: 403.00,
-              carbs: 3.37,
-              fat: 33.31,
-              protein: 22.87,
-              fiber: 0.00,
-              sugar: 0.48,
-              sodium: 653.00
-            },
-            {
-              id: '45094321',
-              name: 'Grilled Chicken Strips',
-              selectedServing: {
-                servingSize: {
-                  id: 7,
-                  label: 'strips | about',
-                  ratio: 0.14
-                },
-                quantity: 8
-              },
-              servingSizes: [
-                {
-                  id: 7,
-                  label: 'strips | about',
-                  ratio: 0.14
-                }
-              ],
-              calories: 141.00,
-              carbs: 5.88,
-              fat: 3.53,
-              protein: 23.53,
-              fiber: 2.40,
-              sugar: 0.00,
-              sodium: 412.00
-            }
-          ]
+          items: []
         },
         lunch: {
           items: []
         },
         dinner: {
-          items: [
-            {
-              id: '45094321',
-              name: 'Grilled Chicken Strips',
-              selectedServing: {
-                servingSize: {
-                  id: 7,
-                  label: 'strips | about',
-                  ratio: 0.14
-                },
-                quantity: 3
-              },
-              servingSizes: [
-                {
-                  id: 7,
-                  label: 'strips | about',
-                  ratio: 0.14
-                }
-              ],
-              calories: 141.00,
-              carbs: 5.88,
-              fat: 3.53,
-              protein: 23.53,
-              fiber: 2.40,
-              sugar: 0.00,
-              sodium: 412.00
-            }
-          ]
+          items: []
         },
         snacks: {
           items: []
         }
       },
-      caloriesBurned: undefined
+      caloriesBurned: undefined,
+      loading: true
     }
   }
 
   componentDidMount() {
     document.title = 'EasyCal';
+    fetch('/api/consumptions?userId=1&date=2018-04-20')
+      .then((resp) => resp.json())
+      .then(meals => {
+        this.setState({
+          meals: meals,
+          loading: false
+        });
+    });
   }
 
   /**
@@ -217,6 +121,7 @@ class DayView extends Component {
           netCalories={dayTotals.netCalories}
           caloriesEaten={dayTotals.caloriesEaten}
           caloriesBurned={this.state.caloriesBurned}
+          loading={this.state.loading}
         />
         <div className="clearfix"></div>
 

@@ -180,6 +180,11 @@ body {
 	bottom: 12px;
 }
 
+.Calotron img {
+	width: 110px;
+	margin: 32px 0 50px 0;
+}
+
 .Calotron__net {
 	display: block;
 	font-size: 54px;

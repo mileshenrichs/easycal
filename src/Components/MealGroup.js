@@ -17,6 +17,10 @@ class MealGroup extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({items: nextProps.items});
+  }
+
   /**
    * Update current serving size information within context of MealGroup 
    * (will be propagated up to DayView when checkmark clicked)
