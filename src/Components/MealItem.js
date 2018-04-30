@@ -28,11 +28,15 @@ class MealItem extends Component {
   handleSizeChange(servingSizeId) {
     // convert string option value into integer id
     let servingSizeInt = parseInt(servingSizeId, 10);
-    this.props.handleSizeChange(servingSizeInt, this.props.id);
+    this.props.handleSizeChange(servingSizeInt, this.props.consumptionId);
   }
 
   handleQuantityChange(quantity) {
-    this.props.handleQuantityChange(quantity, this.props.id);
+    this.props.handleQuantityChange(quantity, this.props.consumptionId);
+  }
+
+  handleItemRemove() {
+    this.props.handleItemRemove(this.props.consumptionId);
   }
 
   render() {
@@ -66,6 +70,8 @@ class MealItem extends Component {
             servingSizes={this.props.servingSizes} 
             handleQuantityChange={this.handleQuantityChange.bind(this)}
             handleSizeChange={this.handleSizeChange.bind(this)}
+            handleItemRemove={this.handleItemRemove.bind(this)}
+            removingItem={this.props.removingItem}
           />}
       </div>
     );

@@ -20,6 +20,10 @@ class ServingSelect extends Component {
     this.props.handleSizeChange(e.target.value);
   }
 
+  handleItemRemove() {
+    this.props.handleItemRemove();
+  }
+
   render() {
 
     let servingUnitOptions;
@@ -32,6 +36,8 @@ class ServingSelect extends Component {
       });
     }
 
+    let removeButtonText = this.props.removingItem ? 'Removing...' : 'Remove'
+
     return (
       <div className="ServingSelect animated fadeInDown" id="ServingSelect">
         <input type="text" name="servingAmt" id="servingAmt" placeholder="1" value={this.state.quantityValue} onChange={this.handleQuantityChange.bind(this)} />
@@ -39,6 +45,7 @@ class ServingSelect extends Component {
           {servingUnitOptions}
         </select> 
         <button className="ServingSelect__add-button">Add</button>
+        <button className={'ServingSelect__remove-button' + (this.props.removingItem ? ' removing' : '')} onClick={this.handleItemRemove.bind(this)}>{removeButtonText}</button>
       </div>
     );
   }

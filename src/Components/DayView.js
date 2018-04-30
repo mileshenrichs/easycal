@@ -27,7 +27,8 @@ class DayView extends Component {
         }
       },
       caloriesBurned: undefined,
-      loading: true
+      loadingItems: true,
+      removingItem: false
     }
   }
 
@@ -38,9 +39,40 @@ class DayView extends Component {
       .then(meals => {
         this.setState({
           meals: meals,
-          loading: false
+          loadingItems: false
         });
-    });
+      });
+  }
+
+  removeItem(consumptionId) {
+    this.setState({removingItem: true});
+    fetch('/api/consumptions/' + consumptionId, {method: 'DELETE'})
+      .then(res => {
+        if(res.ok) {
+          let mealItemIndex, meal;
+          for(var mealName in this.state.meals) {
+            this.state.meals[mealName].items.forEach(item => {
+              if(item.consumptionId === consumptionId) {
+                mealItemIndex = this.state.meals[mealName].items.indexOf(item);
+                meal = mealName;
+              }
+            });
+            // if already found the meal item, don't need to keep searching
+            if(mealItemIndex != undefined) break
+          }
+          let newState = update(this.state, {
+            meals: {
+              [meal]: {
+                items: {$splice: [[mealItemIndex, 1]]}
+              }
+            }
+          });
+          this.setState(newState);
+        } else {
+          alert('This item couldn\'t be removed :(');
+        }
+        this.setState({removingItem: false});
+      });
   }
 
   /**
@@ -121,7 +153,7 @@ class DayView extends Component {
           netCalories={dayTotals.netCalories}
           caloriesEaten={dayTotals.caloriesEaten}
           caloriesBurned={this.state.caloriesBurned}
-          loading={this.state.loading}
+          loading={this.state.loadingItems}
         />
         <div className="clearfix"></div>
 
@@ -129,21 +161,29 @@ class DayView extends Component {
           type="Breakfast"
           items={this.state.meals.breakfast.items}
           handleServingUpdate={this.handleServingUpdate.bind(this)}
+          handleItemRemove={this.removeItem.bind(this)}
+          removingItem={this.state.removingItem}
         />
         <MealGroup 
           type="Lunch"
           items={this.state.meals.lunch.items}
           handleServingUpdate={this.handleServingUpdate.bind(this)}
+          handleItemRemove={this.removeItem.bind(this)}
+          removingItem={this.state.removingItem}
         />
         <MealGroup 
           type="Dinner"
           items={this.state.meals.dinner.items}
           handleServingUpdate={this.handleServingUpdate.bind(this)}
+          handleItemRemove={this.removeItem.bind(this)}
+          removingItem={this.state.removingItem}
         />
         <MealGroup 
           type="Snacks"
           items={this.state.meals.snacks.items}
           handleServingUpdate={this.handleServingUpdate.bind(this)}
+          handleItemRemove={this.removeItem.bind(this)}
+          removingItem={this.state.removingItem}
         />
 
         <ActivityInput

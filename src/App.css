@@ -367,11 +367,16 @@ body {
 	display: none;
 }
 
+.AddableFoodItem .ServingSelect .ServingSelect__remove-button {
+	display: none;
+}
+
 .AddableFoodItem .ServingSelect {
 	margin: 18px 0 0 74px;
 }
 
-.ServingSelect__add-button {
+.ServingSelect__add-button,
+.ServingSelect__remove-button {
 	background-color: #08ae23;
 	color: white;
 	padding: 6px 20px;
@@ -381,8 +386,27 @@ body {
 	margin-right: 30px;
 }
 
+.ServingSelect__remove-button {
+	background-color: white;
+	color: #c22317;
+	text-decoration: underline;
+}
+
+.ServingSelect__remove-button.removing {
+	color: #8F8F8F;
+	text-decoration: none;
+}
+
+.ServingSelect__remove-button:focus {
+	outline: none;
+}
+
 .ServingSelect__add-button:hover {
 	background-color: #039b1c;
+}
+
+.ServingSelect__remove-button:hover {
+	text-decoration: none;
 }
 
 .ServingSelect input {

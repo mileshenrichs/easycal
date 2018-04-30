@@ -25,8 +25,8 @@ class MealGroup extends Component {
    * Update current serving size information within context of MealGroup 
    * (will be propagated up to DayView when checkmark clicked)
   */
-  handleSizeChange(newServingSizeId, mealItemId) {
-    let mealItem = this.state.items.find(item => item.id === mealItemId);
+  handleSizeChange(newServingSizeId, consumptionId) {
+    let mealItem = this.state.items.find(item => item.consumptionId === consumptionId);
     let mealItemIndex = this.state.items.indexOf(mealItem);
     let newServingSize = mealItem.servingSizes.find(servingSize => servingSize.id === newServingSizeId);
     
@@ -42,8 +42,8 @@ class MealGroup extends Component {
     this.setState(newState);
   }
 
-  handleQuantityChange(newServingQuantity, mealItemId) {
-    let mealItem = this.state.items.find(item => item.id === mealItemId);
+  handleQuantityChange(newServingQuantity, consumptionId) {
+    let mealItem = this.state.items.find(item => item.consumptionId === consumptionId);
     let mealItemIndex = this.state.items.indexOf(mealItem);
     
     let newState = update(this.state, {
@@ -82,6 +82,10 @@ class MealGroup extends Component {
     this.props.handleServingUpdate(JSON.parse(JSON.stringify(this.state)), this.props.type.toLowerCase());
   }
 
+  handleItemRemove(consumptionId) {
+    this.props.handleItemRemove(consumptionId);
+  }
+
   render() {
 
     let itemTotals = this.calculateItemTotals();
@@ -100,8 +104,9 @@ class MealGroup extends Component {
 
   			return (
   				<MealItem 
-            key={item.id} 
-            id={item.id}
+            key={item.consumptionId} 
+            foodItemId={item.foodItemId}
+            consumptionId={item.consumptionId}
             name={item.name}
             nutritionValues={nutritionValues}
             selectedServing={item.selectedServing}
@@ -109,6 +114,8 @@ class MealGroup extends Component {
             handleQuantityChange={this.handleQuantityChange.bind(this)}
             handleSizeChange={this.handleSizeChange.bind(this)}
             handleNewServingSave={this.handleNewServingSave.bind(this)}
+            handleItemRemove={this.handleItemRemove.bind(this)}
+            removingItem={this.props.removingItem}
           />
 				);
   		});
