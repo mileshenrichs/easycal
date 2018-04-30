@@ -125,16 +125,35 @@ class DayView extends Component {
   }
 
   /**
-   * Merge changed MealGroup states with DayView state
-   * (sync with new serving size/quantity)
+   * Merge changed MealGroup states with DayView state,
+   * send PUT request to backend
   */
   handleServingUpdate(newItemsList, mealType) {
-    let newState = update(this.state, {
-      meals: {
-        [mealType]: {$set: newItemsList}
+    let updatedConsumption;
+    // determine consumption for which serving was updated
+    this.state.meals[mealType].items.forEach(item => {
+      let correspondingNewItem = newItemsList.items[this.state.meals[mealType].items.indexOf(item)];
+      if(item.selectedServing.servingSize.id != correspondingNewItem.selectedServing.servingSize.id
+          || item.selectedServing.quantity != correspondingNewItem.selectedServing.quantity) {
+        updatedConsumption = correspondingNewItem;
       }
     });
-    this.setState(newState);
+    fetch('/api/consumptions/' + updatedConsumption.consumptionId, {
+      method: 'PUT',
+      body: JSON.stringify(updatedConsumption)
+    })
+      .then(res => {
+        if(res.ok) {
+          let newState = update(this.state, {
+            meals: {
+              [mealType]: {$set: newItemsList}
+            }
+          });
+          this.setState(newState);
+        } else {
+          alert('There was a problem updating this serving size.');
+        }
+      })
   }
 
   handleActivityChanged(calories) {

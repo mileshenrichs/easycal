@@ -11,7 +11,7 @@ class NetCalories extends Component {
           <span className="NetCalories__number exercise">{this.props.caloriesBurned ? new Intl.NumberFormat().format(this.props.caloriesBurned) : '0'}</span>
           <span className="NetCalories__label">calories from exercise</span>
           <span className="NetCalories__equals">=</span>
-          <span className="NetCalories__number net">{this.props.netCalories}</span>
+          <span className="NetCalories__number net">{new Intl.NumberFormat().format(this.props.netCalories)}</span>
         </span>
         <div className="clearfix"></div>
 

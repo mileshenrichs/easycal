@@ -10,7 +10,7 @@ class Calotron extends Component {
       );
     } else {
       netCalories = (
-        <span className="Calotron__net">{this.props.netCalories}</span>
+        <span className="Calotron__net">{new Intl.NumberFormat().format(this.props.netCalories)}</span>
       )
     }
 
