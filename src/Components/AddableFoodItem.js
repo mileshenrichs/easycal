@@ -10,7 +10,7 @@ class AddableFoodItem extends Component {
     super(props);
     this.state = {
       adding: false,
-      item: undefined,
+      item: this.props.completeItem ? this.props.completeItem : undefined,
       loading: false
     }
   }
@@ -94,6 +94,15 @@ class AddableFoodItem extends Component {
   }
 
   render() {
+    let foodName;
+    if(this.props.completeItem) {
+      foodName = this.state.item.name;
+    } else if(this.props.item) {
+      foodName = this.props.item.name;
+    } else {
+      foodName = 'Name';
+    }
+
     let itemTotals;
     if(this.state.item) {
       itemTotals = this.calculateItemTotals();
@@ -105,7 +114,7 @@ class AddableFoodItem extends Component {
       <div className={'AddableFoodItem' + (this.state.adding ? ' adding' : '')} onClick={this.handleItemClick.bind(this)}>
       	<img src={plusButtonImg} alt="Add" className="AddableFoodItem__plus" />
 			  <span className="MealItem__food">
-	  		 <span className="MealItem__food--name">{this.props.item ? this.props.item.name : 'Name'}</span>
+	  		 <span className="MealItem__food--name">{foodName}</span>
         </span>
 
         {this.state.item && 

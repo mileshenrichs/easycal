@@ -40,7 +40,7 @@ class DayView extends Component {
 
   getConsumptions() {
     let date = this.state.selectedDay.toISOString().split('T')[0];
-    fetch('/api/consumptions?userId=1&date=' + date)
+    fetch('/api/consumptions?type=day&userId=1&date=' + date)
       .then((resp) => resp.json())
       .then(meals => {
         this.setState({

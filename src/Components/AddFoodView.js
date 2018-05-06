@@ -10,8 +10,22 @@ class AddFoodView extends Component {
 			searchTerm: '',
 			searchResults: [],
 			searchError: false,
-			foodsPanelTab: 1
+			foodsPanelTab: 1,
+			recentFoods: [],
+			loading: true
 		}
+	}
+
+	componentDidMount() {
+		// get recent consumptions
+		fetch('/api/consumptions?type=recent&userId=1')
+			.then((resp) => resp.json())
+			.then(recentFoods => {
+				this.setState({
+					recentFoods: recentFoods,
+					loading: false
+				});
+			});
 	}
 
 	switchTabs(tabNumber) {
@@ -68,6 +82,8 @@ class AddFoodView extends Component {
       		handleSwitchTab={this.switchTabs.bind(this)} 
       		searchResults={this.state.searchResults}
       		searchError={this.state.searchError}
+      		recentFoods={this.state.recentFoods}
+      		loading={this.state.loading}
     		/>
       </div>
     );

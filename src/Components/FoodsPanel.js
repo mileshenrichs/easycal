@@ -6,6 +6,7 @@ import RecentFoods from './RecentFoods';
 import carbsIcon from '../resources/bread-emoji.png';
 import fatIcon from '../resources/bacon-strip-emoji.png';
 import proteinIcon from '../resources/steak-emoji.png';
+import loader from '../resources/loader.gif';
 
 class FoodsPanel extends Component {
 
@@ -41,9 +42,10 @@ class FoodsPanel extends Component {
         	<span 
         		className={'FoodsPanel__tab--myfoods' + (this.props.currentTab === 2 ? ' current' : '')}
         		onClick={this.handleSwitchTab.bind(this)}>My Foods</span>
-    		<Link to="/createfood">
-        	<span className={'FoodsPanel__tab--createfoodbutton small-button' + (this.props.currentTab === 2 ? ' current' : '')}>+ New</span>
-      	</Link>
+      		<Link to="/createfood">
+          	<span className={'FoodsPanel__tab--createfoodbutton small-button' + (this.props.currentTab === 2 ? ' current' : '')}>+ New</span>
+        	</Link>
+          {this.props.loading && <img id="FoodsPanel__tabs--loader" src={loader} alt="loading" />}
         </div>
 
         {this.shouldDisplayPanelHeader() && 
@@ -62,7 +64,11 @@ class FoodsPanel extends Component {
             error={this.props.searchError} 
             mealName={this.props.mealName}
           />}
-  			{this.props.currentTab === 1 && <RecentFoods />}
+  			{this.props.currentTab === 1 && 
+          <RecentFoods 
+            foods={this.props.recentFoods} 
+            mealName={this.props.mealName}
+          />}
   			{this.props.currentTab === 2 && <MyFoods />}
       </div>
     );

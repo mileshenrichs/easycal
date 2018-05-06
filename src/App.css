@@ -676,7 +676,13 @@ span.FoodsPanel__tab--createfoodbutton {
 	text-transform: lowercase;
 	margin-right: 34px;
 	margin-left: 14px;
-	visibility: hidden;
+	display: none;
+}
+
+#FoodsPanel__tabs--loader {
+	width: 100px;
+	position: relative;
+	bottom: 4px;
 }
 
 span.small-button {
@@ -694,7 +700,7 @@ span.small-button {
 }
 
 span.FoodsPanel__tab--createfoodbutton.current {
-	visibility: visible;
+	display: inline-block;
 	font-weight: normal;
 	border: none;
 }

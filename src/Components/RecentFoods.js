@@ -3,11 +3,21 @@ import AddableFoodItem from './AddableFoodItem';
 
 class RecentFoods extends Component {
   render() {
+  	let foods;
+  	if(this.props.foods) {
+  		foods = this.props.foods.map(food => {
+  			return (
+  				<AddableFoodItem 
+  					key={food.foodItemId} 
+  					completeItem={food}
+  					mealName={this.props.mealName} />
+				);
+  		});
+  	}
+
     return (
       <div className="RecentFoods">
-        <AddableFoodItem /> {/* map over props to get a list of these */}
-        <AddableFoodItem />
-        <AddableFoodItem />
+        {foods}
       </div>
     );
   }
