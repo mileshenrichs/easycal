@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import update from 'immutability-helper';
+import queryString from 'query-string';
 import DaySelect from './DaySelect';
 import Calotron from './Calotron';
 import MealGroup from './MealGroup';
@@ -35,11 +36,16 @@ class DayView extends Component {
 
   componentDidMount() {
     document.title = 'EasyCal';
-    this.getConsumptions();
+    let dayParam = queryString.parse(this.props.location.search).day;
+    if(dayParam) {
+      this.setState({selectedDay: this.convertQueryStringToDate(dayParam)});
+    }
+    let selectedDay = dayParam ? this.convertQueryStringToDate(dayParam) : this.state.selectedDay;
+    this.getConsumptions(selectedDay);
   }
 
-  getConsumptions() {
-    let date = this.state.selectedDay.toISOString().split('T')[0];
+  getConsumptions(day) {
+    let date = day.toISOString().split('T')[0];
     fetch('/api/consumptions?type=day&userId=1&date=' + date)
       .then((resp) => resp.json())
       .then(meals => {
@@ -51,7 +57,7 @@ class DayView extends Component {
   }
 
   changeSelectedDay(newDay) {
-    this.setState({selectedDay: newDay}, () => this.getConsumptions());
+    this.setState({selectedDay: newDay}, () => this.getConsumptions(newDay));
   }
 
   removeItem(consumptionId) {
@@ -171,6 +177,23 @@ class DayView extends Component {
     this.setState({caloriesBurned: caloriesInt});
   }
 
+  convertQueryStringToDate(queryStr) {
+    let year = parseInt(queryStr.substring(0, 4), 10);
+    let month = queryStr.substring(5, 7);
+    if(month.charAt(0) === '0') {
+      month = parseInt(month.charAt(1), 10) - 1;
+    } else {
+      month = parseInt(month) - 1;
+    }
+    let day = queryStr.substring(8);
+    if(day.charAt(0) === '0') {
+      day = parseInt(day.charAt(1), 10);
+    } else {
+      day = parseInt(day);
+    }
+    return new Date(year, month, day);
+  }
+
   render() {
     let mealTotals = this.calculateMealTotals();
     let dayTotals = this.calculateDayTotals(mealTotals);
@@ -195,6 +218,7 @@ class DayView extends Component {
           handleServingUpdate={this.handleServingUpdate.bind(this)}
           handleItemRemove={this.removeItem.bind(this)}
           removingItem={this.state.removingItem}
+          day={this.state.selectedDay}
         />
         <MealGroup 
           type="Lunch"
@@ -202,6 +226,7 @@ class DayView extends Component {
           handleServingUpdate={this.handleServingUpdate.bind(this)}
           handleItemRemove={this.removeItem.bind(this)}
           removingItem={this.state.removingItem}
+          day={this.state.selectedDay}
         />
         <MealGroup 
           type="Dinner"
@@ -209,6 +234,7 @@ class DayView extends Component {
           handleServingUpdate={this.handleServingUpdate.bind(this)}
           handleItemRemove={this.removeItem.bind(this)}
           removingItem={this.state.removingItem}
+          day={this.state.selectedDay}
         />
         <MealGroup 
           type="Snacks"
@@ -216,6 +242,7 @@ class DayView extends Component {
           handleServingUpdate={this.handleServingUpdate.bind(this)}
           handleItemRemove={this.removeItem.bind(this)}
           removingItem={this.state.removingItem}
+          day={this.state.selectedDay}
         />
 
         <ActivityInput

@@ -80,13 +80,14 @@ class AddableFoodItem extends Component {
     let consumption = JSON.parse(JSON.stringify(this.state.item));
     consumption.userId = 1;
     consumption.meal = this.props.mealName;
+    consumption.day = this.props.day;
     fetch('/api/consumptions', {
       method: 'POST',
       body: JSON.stringify(consumption)
     })
     .then(res => {
       if(res.ok) {
-        window.location = '/';
+        window.location = '/?day=' + this.props.day;
       } else {
         alert('There was a problem adding this food to your log.');
       }

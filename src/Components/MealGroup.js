@@ -136,7 +136,7 @@ class MealGroup extends Component {
   			</span>
   		</div>
   		{mealItems}
-  		<AddFoodItem meal={this.props.type} />
+  		<AddFoodItem meal={this.props.type} day={this.props.day} />
   		{this.props.items.length > 0 && 
         <MealTotalsRow 
           totals={itemTotals} />}

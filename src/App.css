@@ -7,7 +7,7 @@
 body {
 	font-family: 'Chivo', sans-serif;
 	color: #003300;
-	margin-top: 110px;
+	margin-top: 114px;
 }
 
 .Header {
@@ -107,6 +107,12 @@ body {
 	width: 300px;
 	position: relative;
 	float: left;
+}
+
+.DaySelect--today-button {
+	position: absolute;
+	top: -26px;
+	left: 127px;
 }
 
 .DaySelect__arrow {

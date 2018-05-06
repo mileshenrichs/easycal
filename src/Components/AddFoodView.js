@@ -84,6 +84,7 @@ class AddFoodView extends Component {
       		searchError={this.state.searchError}
       		recentFoods={this.state.recentFoods}
       		loading={this.state.loading}
+      		day={this.props.day}
     		/>
       </div>
     );

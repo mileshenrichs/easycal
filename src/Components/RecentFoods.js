@@ -10,7 +10,8 @@ class RecentFoods extends Component {
   				<AddableFoodItem 
   					key={food.foodItemId} 
   					completeItem={food}
-  					mealName={this.props.mealName} />
+  					mealName={this.props.mealName}
+            day={this.props.day} />
 				);
   		});
   	}

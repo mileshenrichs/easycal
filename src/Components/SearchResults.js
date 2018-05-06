@@ -19,6 +19,7 @@ class SearchResults extends Component {
             key={result.foodItemId} 
             item={result} 
             mealName={this.props.mealName}
+            day={this.props.day}
           />
 				);	
   		});

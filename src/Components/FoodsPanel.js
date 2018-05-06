@@ -63,11 +63,13 @@ class FoodsPanel extends Component {
             results={this.props.searchResults} 
             error={this.props.searchError} 
             mealName={this.props.mealName}
+            day={this.props.day}
           />}
   			{this.props.currentTab === 1 && 
           <RecentFoods 
             foods={this.props.recentFoods} 
             mealName={this.props.mealName}
+            day={this.props.day}
           />}
   			{this.props.currentTab === 2 && <MyFoods />}
       </div>

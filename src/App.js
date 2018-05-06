@@ -20,9 +20,7 @@ class App extends Component {
         <Switch>
           <Route
             exact path="/"
-            component={() => (
-                <DayView />
-              )}
+            component={DayView}
           />
 
           <Route
