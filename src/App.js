@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import {Route, Switch, Link} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import './App.css';
 import Header from './Components/Header';
 import Favicon from 'react-favicon';
 import DayView from './Components/DayView';
-import AddFoodView from './Components/AddFoodView';
+import AddFoodViewContainer from './Components/AddFoodViewContainer';
 import CreateFoodView from './Components/CreateFoodView';
 import StatisticsView from './Components/StatisticsView';
 import MyAccountView from './Components/MyAccountView';
@@ -27,12 +27,7 @@ class App extends Component {
 
           <Route
             exact path="/add"
-            component={() => (
-                <div>
-                  <AddFoodView />
-                  <div className="FoodsPanel__cancel-link"><Link to="/">Cancel</Link></div>
-                </div>
-              )}
+            component={AddFoodViewContainer}
           />
 
           <Route

@@ -34,7 +34,8 @@ class DayView extends Component {
 
   componentDidMount() {
     document.title = 'EasyCal';
-    fetch('/api/consumptions?userId=1&date=2018-04-20')
+    let dateToday = new Date().toISOString().split('T')[0];
+    fetch('/api/consumptions?userId=1&date=' + dateToday)
       .then((resp) => resp.json())
       .then(meals => {
         this.setState({
@@ -58,7 +59,7 @@ class DayView extends Component {
               }
             });
             // if already found the meal item, don't need to keep searching
-            if(mealItemIndex != undefined) break
+            if(mealItemIndex !== undefined) break
           }
           let newState = update(this.state, {
             meals: {
@@ -133,8 +134,8 @@ class DayView extends Component {
     // determine consumption for which serving was updated
     this.state.meals[mealType].items.forEach(item => {
       let correspondingNewItem = newItemsList.items[this.state.meals[mealType].items.indexOf(item)];
-      if(item.selectedServing.servingSize.id != correspondingNewItem.selectedServing.servingSize.id
-          || item.selectedServing.quantity != correspondingNewItem.selectedServing.quantity) {
+      if(item.selectedServing.servingSize.id !== correspondingNewItem.selectedServing.servingSize.id
+          || item.selectedServing.quantity !== correspondingNewItem.selectedServing.quantity) {
         updatedConsumption = correspondingNewItem;
       }
     });

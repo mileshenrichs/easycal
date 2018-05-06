@@ -4,16 +4,71 @@ import FoodsPanel from './FoodsPanel';
 
 class AddFoodView extends Component {
 
-	componentDidMount() {
-		document.title = 'EasyCal: Add a Food';
-		window.scrollTo(0, 0);
+	constructor(props) {
+		super(props);
+		this.state = {
+			searchTerm: '',
+			searchResults: [],
+			searchError: false,
+			foodsPanelTab: 1
+		}
+	}
+
+	switchTabs(tabNumber) {
+		this.setState({foodsPanelTab: tabNumber});
+	}
+
+	handleSearchChange(term) {
+		this.setState({
+			searchTerm: term,
+			foodsPanelTab: 0
+		});
+
+		// use timeout to prevent excessive/premature API calls
+		if(this.apiCallTimeout) {
+			clearTimeout(this.apiCallTimeout);
+		}
+		// force API call when term length is 4 (for responsiveness to new/adjusted searches)
+		if(term.length !== 4) {
+			this.apiCallTimeout = setTimeout(() => this.getSearchResults(term), 300);
+		} else {
+			this.getSearchResults(term);
+		}
+	}
+
+	getSearchResults(searchTerm) {
+		let term = searchTerm.replace(/\s/g, "_");
+			fetch('/api/foods?q=' + term)
+			.then((resp) => {
+				if(resp.ok) {
+					resp.json()
+						.then(results => {
+							this.setState({
+								searchResults: results,
+								searchError: false
+							});
+						});
+				} else {
+					this.setState({searchError: true});
+				}
+			});
 	}
 
   render() {
     return (
       <div className="AddFoodView content-container">
-        <SearchFood />
-        <FoodsPanel />
+        <SearchFood 
+        	mealName={this.props.mealName}
+        	searchTerm={this.state.searchTerm}
+        	handleSearchChange={this.handleSearchChange.bind(this)}
+      	 />
+        <FoodsPanel 
+        	mealName={this.props.mealName}
+        	currentTab={this.state.foodsPanelTab}
+      		handleSwitchTab={this.switchTabs.bind(this)} 
+      		searchResults={this.state.searchResults}
+      		searchError={this.state.searchError}
+    		/>
       </div>
     );
   }

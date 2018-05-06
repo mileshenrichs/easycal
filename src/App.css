@@ -308,7 +308,7 @@ body {
 }
 
 .MealItem__food {
-	width: 356px;
+	width: 310px;
 	display: block;
 	float: left;
 }
@@ -321,6 +321,10 @@ body {
 .MealItem__food--quantity {
 	font-size: 13px;
 	color: #8b9b8b;
+}
+
+.MealItem__macros {
+	margin-left: 46px;
 }
 
 .MealItem__macros,
@@ -643,6 +647,11 @@ h1.page-title {
 	box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.05);
 }
 
+.SearchResults__error {
+	margin-top: 60px;
+	text-align: center;
+}
+
 .FoodsPanel__tabs {
 	margin-bottom: 26px;
 }
@@ -706,7 +715,7 @@ span.FoodsPanel__tab--createfoodbutton.current {
 
 .AddableFoodItem {
 	border-bottom: 1px solid #b5c4b7;
-	padding: 17px 30px 17px 30px;
+	padding: 17px 30px;
 }
 
 .AddableFoodItem:hover {
@@ -720,6 +729,16 @@ span.FoodsPanel__tab--createfoodbutton.current {
 	margin-right: 38px;
 	position: relative;
 	top: 3px;
+}
+
+.AddableFoodItem .MealItem__food {
+	display: table;
+	height: 40px;
+}
+
+.AddableFoodItem .MealItem__food--name {
+	display: table-cell;
+	vertical-align: middle;
 }
 
 .FoodsPanel__cancel-link {

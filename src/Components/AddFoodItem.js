@@ -5,7 +5,7 @@ import plusIcon from '../resources/plus-icon.png';
 class AddFoodItem extends Component {
   render() {
     return (
-    	<Link to="/add" className="AddFoodItem__link">
+    	<Link to={'/add?m=' + this.props.meal.toLowerCase()} className="AddFoodItem__link">
       	<div className="AddFoodItem">
 	        <img src={plusIcon} alt="+" />
 	        <span>Add Food Item</span>

@@ -17,7 +17,7 @@ class Calotron extends Component {
     return (
       <div className="Calotron">
   		  {netCalories}
-        {!this.props.loading && this.props.caloriesEaten !== 0 && this.props.caloriesBurned != 0 &&
+        {!this.props.loading && this.props.caloriesEaten !== 0 && this.props.caloriesBurned !== 0 &&
 
           <span className="Calotron__plusminuscontainer">
           <span className="Calotron__plusminus">

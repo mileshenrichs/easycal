@@ -17,11 +17,24 @@ class ServingSelect extends Component {
   }
 
   handleSizeChange(e) {
-    this.props.handleSizeChange(e.target.value);
+    this.props.handleSizeChange(parseInt(e.target.value, 10));
   }
 
   handleItemRemove() {
     this.props.handleItemRemove();
+  }
+
+  /**
+  * Click handler to prevent propogation up to AddableFoodItem
+  * (prevent the item from hiding <ServingSelect />)
+  */
+  handleInputClick(e) {
+    e.stopPropagation();
+  }
+
+  handleAddClick(e) {
+    e.stopPropagation();
+    this.props.handleAddClick(this.props.itemId);
   }
 
   render() {
@@ -40,11 +53,13 @@ class ServingSelect extends Component {
 
     return (
       <div className="ServingSelect animated fadeInDown" id="ServingSelect">
-        <input type="text" name="servingAmt" id="servingAmt" placeholder="1" value={this.state.quantityValue} onChange={this.handleQuantityChange.bind(this)} />
-        <select name="servingUnit" id="servingUnit" onChange={this.handleSizeChange.bind(this)}>
+        <input className="servingAmt" type="text" name="servingAmt" id="servingAmt" placeholder="1" 
+          value={this.state.quantityValue} onChange={this.handleQuantityChange.bind(this)} onClick={this.handleInputClick.bind(this)} />
+        <select className="servingAmt" name="servingUnit" id="servingUnit" 
+          onChange={this.handleSizeChange.bind(this)} onClick={this.handleInputClick.bind(this)}>
           {servingUnitOptions}
         </select> 
-        <button className="ServingSelect__add-button">Add</button>
+        <button className="ServingSelect__add-button" onClick={this.handleAddClick.bind(this)}>Add</button>
         <button className={'ServingSelect__remove-button' + (this.props.removingItem ? ' removing' : '')} onClick={this.handleItemRemove.bind(this)}>{removeButtonText}</button>
       </div>
     );
