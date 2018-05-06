@@ -19,6 +19,34 @@ class DaySelect extends Component {
 
   handleDayChange(day) {
     this.setState({pickerVisible: false});
+    this.props.changeSelectedDay(day);
+  }
+
+  changeToDayBefore() {
+    let newDay = this.props.selectedDay;
+    newDay.setDate(newDay.getDate() - 1);
+    this.handleDayChange(newDay);
+  }
+
+  changeToDayAfter() {
+    let newDay = this.props.selectedDay;
+    newDay.setDate(newDay.getDate() + 1);
+    this.handleDayChange(newDay);
+  }
+
+  formatDayText() {
+    if(this.selectedDayIsToday()) {
+      return 'Today';
+    }
+    let date = this.props.selectedDay;
+    const delimiter = '/';
+    return [date.getMonth() + 1, date.getDate(), date.getFullYear()].join(delimiter);
+  }
+
+  selectedDayIsToday() {
+    let date = this.props.selectedDay;
+    let today = new Date();
+    return date.toISOString().split('T')[0] === today.toISOString().split('T')[0];
   }
 
   /**
@@ -34,16 +62,23 @@ class DaySelect extends Component {
   }
 
   render() {
+    let dayText = this.formatDayText();
     return (
       <div className="DaySelect">
-  		  <div className="DaySelect__arrow left"></div>
+  		  <div className="DaySelect__arrow left" onClick={this.changeToDayBefore.bind(this)}></div>
         <span className="DaySelect__choose" onClick={() => this.setState({pickerVisible: true})}>
           <div className="DaySelect__calendar"></div>
-          <span className="DaySelect__daytext">Today</span>
+          <span className="DaySelect__daytext">{dayText}</span>
         </span>
-        <div className="DaySelect__arrow right"></div>
+        {!this.selectedDayIsToday() && 
+          <div className="DaySelect__arrow right" onClick={this.changeToDayAfter.bind(this)}></div>}
 
-        {this.state.pickerVisible && <DayPicker onDayClick={this.handleDayChange.bind(this)} />}
+        {this.state.pickerVisible && 
+          <DayPicker 
+            onDayClick={this.handleDayChange.bind(this)} 
+            selectedDays={this.props.selectedDay}
+            month={new Date(this.props.selectedDay.getFullYear(), this.props.selectedDay.getMonth())}
+          />}
         <div className="clearfix"></div>
       </div>
     );

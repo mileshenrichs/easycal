@@ -12,6 +12,7 @@ class DayView extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedDay: new Date(),
       meals: {
         breakfast: {
           items: []
@@ -34,8 +35,12 @@ class DayView extends Component {
 
   componentDidMount() {
     document.title = 'EasyCal';
-    let dateToday = new Date().toISOString().split('T')[0];
-    fetch('/api/consumptions?userId=1&date=' + dateToday)
+    this.getConsumptions();
+  }
+
+  getConsumptions() {
+    let date = this.state.selectedDay.toISOString().split('T')[0];
+    fetch('/api/consumptions?userId=1&date=' + date)
       .then((resp) => resp.json())
       .then(meals => {
         this.setState({
@@ -43,6 +48,10 @@ class DayView extends Component {
           loadingItems: false
         });
       });
+  }
+
+  changeSelectedDay(newDay) {
+    this.setState({selectedDay: newDay}, () => this.getConsumptions());
   }
 
   removeItem(consumptionId) {
@@ -168,7 +177,10 @@ class DayView extends Component {
 
     return (
       <div className="DayView content-container">
-        <DaySelect />
+        <DaySelect 
+          selectedDay={this.state.selectedDay}
+          changeSelectedDay={this.changeSelectedDay.bind(this)}
+        />
         <Calotron 
           netCalories={dayTotals.netCalories}
           caloriesEaten={dayTotals.caloriesEaten}

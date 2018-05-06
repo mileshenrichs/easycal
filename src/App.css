@@ -172,6 +172,10 @@ body {
 	box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.15);
 }
 
+.DayPicker .DayPicker-Day--selected {
+	background-color: #08ae23 !important;
+}
+
 .Calotron {
 	float: right;
 	text-align: right;
