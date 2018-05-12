@@ -42,6 +42,7 @@ class DayView extends Component {
     }
     let selectedDay = dayParam ? this.convertQueryStringToDate(dayParam) : this.state.selectedDay;
     this.getConsumptions(selectedDay);
+    this.getActivity(selectedDay);
   }
 
   getConsumptions(day) {
@@ -56,8 +57,24 @@ class DayView extends Component {
       });
   }
 
+  getActivity(day) {
+    let date = day.toISOString().split('T')[0];
+    fetch('/api/exercise?userId=1&date=' + date)
+      .then((resp) => resp.json())
+      .then(activity => {
+        if(activity.caloriesBurned === 0) {
+          this.setState({caloriesBurned: undefined});
+        } else {
+          this.setState({caloriesBurned: activity.caloriesBurned});
+        }
+      });
+  }
+
   changeSelectedDay(newDay) {
-    this.setState({selectedDay: newDay}, () => this.getConsumptions(newDay));
+    this.setState({selectedDay: newDay}, () => {
+      this.getConsumptions(newDay);
+      this.getActivity(newDay);
+    });
   }
 
   removeItem(consumptionId) {
@@ -154,27 +171,53 @@ class DayView extends Component {
         updatedConsumption = correspondingNewItem;
       }
     });
-    fetch('/api/consumptions/' + updatedConsumption.consumptionId, {
-      method: 'PUT',
-      body: JSON.stringify(updatedConsumption)
-    })
-      .then(res => {
-        if(res.ok) {
-          let newState = update(this.state, {
-            meals: {
-              [mealType]: {$set: newItemsList}
-            }
-          });
-          this.setState(newState);
-        } else {
-          alert('There was a problem updating this serving size.');
-        }
+    if(updatedConsumption) {
+      fetch('/api/consumptions/' + updatedConsumption.consumptionId, {
+        method: 'PUT',
+        body: JSON.stringify(updatedConsumption)
       })
+        .then(res => {
+          if(res.ok) {
+            let newState = update(this.state, {
+              meals: {
+                [mealType]: {$set: newItemsList}
+              }
+            });
+            this.setState(newState);
+          } else {
+            alert('There was a problem updating this serving size.');
+          }
+        })
+    }
   }
 
   handleActivityChanged(calories) {
-    let caloriesInt = Number(calories);
+    let caloriesInt = parseInt(calories, 10);
     this.setState({caloriesBurned: caloriesInt});
+
+    // use timeout to prevent an activity entry from making multiple POST requests
+    if(this.apiPostTimeout) {
+      clearTimeout(this.apiPostTimeout);
+    }
+    this.apiPostTimeout = setTimeout(() => this.postActivityChange(calories), 500);
+  }
+
+  postActivityChange(calories) {
+    let calsBurned = calories ? calories : 0;
+    let activityObj = {
+      userId: 1,
+      caloriesBurned: calsBurned,
+      day: this.state.selectedDay
+    }
+    fetch('/api/exercise', {
+      method: 'POST',
+      body: JSON.stringify(activityObj)
+    })
+    .then(res => {
+      if(!res.ok) {
+        alert('Something went wrong while saving this activity.');
+      }
+    })
   }
 
   convertQueryStringToDate(queryStr) {
