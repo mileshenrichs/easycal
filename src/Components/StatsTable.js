@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import StatsDayItem from './StatsDayItem';
-import AddFoodItem from './AddFoodItem';
 import StatsTotalsRow from './StatsTotalsRow';
 import carbsIcon from '../resources/bread-emoji.png';
 import fatIcon from '../resources/bacon-strip-emoji.png';

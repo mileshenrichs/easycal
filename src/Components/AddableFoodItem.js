@@ -49,9 +49,10 @@ class AddableFoodItem extends Component {
         fetch('/api/foods/' + this.props.item.foodItemId)
         .then((resp) => resp.json())
         .then(item => {
+          let processedItem = this.setDefaultServingQuantity(item);
           this.setState({
             adding: true,
-            item: item,
+            item: processedItem,
             loading: false
           })
         });
@@ -65,6 +66,17 @@ class AddableFoodItem extends Component {
         deleting: !prevState.deleting
       }));
     }
+  }
+
+  /**
+   * Sets initial serving quantity for 100 g for foods whose only
+   * serving size is 1 gram
+  */
+  setDefaultServingQuantity(item) {
+    if(item.selectedServing.servingSize.label === 'g' && item.selectedServing.quantity === 1) {
+      item.selectedServing.quantity = 100;
+    }
+    return item;
   }
 
   calculateItemTotals() {
