@@ -30,9 +30,7 @@ class App extends Component {
 
           <Route
             exact path="/createfood"
-            component={() => (
-                <CreateFoodView />
-              )}
+            component={CreateFoodView}
           />
 
           <Route

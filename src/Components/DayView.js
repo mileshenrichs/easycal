@@ -183,13 +183,13 @@ class DayView extends Component {
     if(month.charAt(0) === '0') {
       month = parseInt(month.charAt(1), 10) - 1;
     } else {
-      month = parseInt(month) - 1;
+      month = parseInt(month, 10) - 1;
     }
     let day = queryStr.substring(8);
     if(day.charAt(0) === '0') {
       day = parseInt(day.charAt(1), 10);
     } else {
-      day = parseInt(day);
+      day = parseInt(day, 10);
     }
     return new Date(year, month, day);
   }

@@ -48,7 +48,7 @@ body {
 
 .Footer {
 	border-top: 1px solid #b6bdb5;
-	margin: 100px auto 60px auto;
+	margin: 100px auto 18px auto;
 	padding-top: 10px;
 	color: #737972;
 }
@@ -98,7 +98,7 @@ body {
 }
 
 .content-container {
-	width: 70%;
+	width: 950px;
 	margin: 0 auto;
 }
 
@@ -281,6 +281,11 @@ body {
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+.AddableFoodItem.deleting {
+	border-bottom-color: #c22317;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
 .MealItem:hover,
 .StatsDayItem:hover {
 	background-color: #fafafa;
@@ -385,7 +390,8 @@ body {
 	display: none;
 }
 
-.AddableFoodItem .ServingSelect {
+.AddableFoodItem .ServingSelect,
+.AddableFoodItem .ItemDeleteButton {
 	margin: 18px 0 0 74px;
 }
 
@@ -448,6 +454,19 @@ body {
 
 .ServingSelect select:focus {
 	border-color: #08ae23;
+}
+
+.ItemDeleteButton {
+	cursor: pointer;
+	background: #c22317;
+	padding: 8px 24px;
+	border-radius: 6px;
+	color: white;
+	width: 40%;
+}
+
+.ItemDeleteButton:hover {
+	background-color: #B22015;
 }
 
 .AddFoodItem {
@@ -680,8 +699,8 @@ h1.page-title {
 
 span.FoodsPanel__tab--createfoodbutton {
 	text-transform: lowercase;
-	margin-right: 34px;
 	margin-left: 14px;
+	margin-right: 0;
 	display: none;
 }
 
@@ -709,6 +728,48 @@ span.FoodsPanel__tab--createfoodbutton.current {
 	display: inline-block;
 	font-weight: normal;
 	border: none;
+}
+
+span.FoodsPanel__edit-foods {
+	padding: 0;
+	margin: 0 0 0 34px;
+	color: #c22317;
+	border-bottom: 0px solid #D9291C;
+	font-size: 15px;
+	display: none;
+}
+
+span.FoodsPanel__edit-foods.current {
+	display: inline-block;
+	font-weight: normal;
+	border-bottom: 0px solid #D9291C;
+}
+
+span.FoodsPanel__edit-foods:hover {
+	border-bottom-width: 1px;
+	color: #D9291C;
+}
+
+span.FoodsPanel__edit-foods.current.edit-mode {
+	font-size: 15px;
+	color: #003300;
+	padding: 6px 24px;
+	border: 2px solid #c22317;
+	border-radius: 6px;
+	cursor: default;
+}
+
+span.FoodsPanel__edit-foods--done-link {
+	padding: 0 0 0 4px;
+	margin: 0;
+	font-size: 15px;
+	color: #07961E;
+	text-decoration: underline;
+}
+
+span.FoodsPanel__edit-foods--done-link:hover {
+	color: #067D19;
+	text-decoration: none;
 }
 
 .FoodsPanel__header {
@@ -763,7 +824,7 @@ span.FoodsPanel__tab--createfoodbutton.current {
 	bottom: 0%;
 	width: 100%;
 	background: white;
-	padding: 18px 0 18px 202px;
+	padding: 22px 0 22px 202px;
 	border-top: 1px solid #b5c4b7;
 	box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.03);
 	z-index: 1;

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import update from 'immutability-helper';
 import ServingSelect from './ServingSelect';
+import ItemDeleteButton from './ItemDeleteButton';
 import plusIcon from '../resources/plus-icon.png';
 import loadingSpinner from '../resources/spinning-loader.gif';
+import trashIcon from '../resources/trash-icon.png';
 
 class AddableFoodItem extends Component {
 
@@ -11,7 +13,8 @@ class AddableFoodItem extends Component {
     this.state = {
       adding: false,
       item: this.props.completeItem ? this.props.completeItem : undefined,
-      loading: false
+      loading: false,
+      deleting: false
     }
   }
 
@@ -40,20 +43,26 @@ class AddableFoodItem extends Component {
   }
 
   handleItemClick(e) {
-    if(!this.state.adding && !this.state.item) {
-      this.setState({loading: true});
-      fetch('/api/foods/' + this.props.item.foodItemId)
-      .then((resp) => resp.json())
-      .then(item => {
-        this.setState({
-          adding: true,
-          item: item,
-          loading: false
-        })
-      });
-    } else {
+    if(!this.props.editMode) { // if not in edit mode, get item details for ServingSelect
+      if(!this.state.adding && !this.state.item) {
+        this.setState({loading: true});
+        fetch('/api/foods/' + this.props.item.foodItemId)
+        .then((resp) => resp.json())
+        .then(item => {
+          this.setState({
+            adding: true,
+            item: item,
+            loading: false
+          })
+        });
+      } else {
+        this.setState(prevState => ({
+          adding: !prevState.adding
+        }));
+      }
+    } else { // if in edit mode, activate deleting state
       this.setState(prevState => ({
-        adding: !prevState.adding
+        deleting: !prevState.deleting
       }));
     }
   }
@@ -94,6 +103,10 @@ class AddableFoodItem extends Component {
     })
   }
 
+  deleteUserFoodItem() {
+    this.props.deleteUserFoodItem(this.state.item.foodItemId);
+  }
+
   render() {
     let foodName;
     if(this.props.completeItem) {
@@ -109,10 +122,16 @@ class AddableFoodItem extends Component {
       itemTotals = this.calculateItemTotals();
     }
 
-    let plusButtonImg = this.state.loading ? loadingSpinner : plusIcon;
+    // set plus icon if in loading/editing state
+    let plusButtonImg;
+    if(this.props.editMode) {
+      plusButtonImg = trashIcon;
+    } else {
+      plusButtonImg = this.state.loading ? loadingSpinner : plusIcon
+    }
 
     return (
-      <div className={'AddableFoodItem' + (this.state.adding ? ' adding' : '')} onClick={this.handleItemClick.bind(this)}>
+      <div className={'AddableFoodItem' + (this.state.adding ? ' adding' : '') + (this.state.deleting ? ' deleting' : '')} onClick={this.handleItemClick.bind(this)}>
       	<img src={plusButtonImg} alt="Add" className="AddableFoodItem__plus" />
 			  <span className="MealItem__food">
 	  		 <span className="MealItem__food--name">{foodName}</span>
@@ -139,6 +158,9 @@ class AddableFoodItem extends Component {
             handleSizeChange={this.handleSizeChange.bind(this)}
             handleAddClick={this.addConsumption.bind(this)}
           /> }
+
+        {this.state.deleting && 
+          <ItemDeleteButton deleteItem={this.deleteUserFoodItem.bind(this)} />}
       </div> 
     );
   }

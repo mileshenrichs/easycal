@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import queryString from 'query-string';
 import carbsIcon from '../resources/bread-emoji.png';
 import fatIcon from '../resources/bacon-strip-emoji.png';
 import proteinIcon from '../resources/steak-emoji.png';
@@ -14,15 +15,32 @@ class CreateFoodView extends Component {
 	}
 
   handleSubmit(e) {
+    let meal = queryString.parse(this.props.location.search).for;
+    let day = queryString.parse(this.props.location.search).from;
+
     e.preventDefault();
-    let name = e.target[0].value;
-    let servingsize = e.target[1].value;
-    let carbs = e.target[2].value;
-    let fat = e.target[3].value;
-    let protein = e.target[4].value;
-    let fiber = e.target[5].value;
-    let sugar = e.target[6].value;
-    let sodium = e.target[7].value;
+    let newFood = {
+      userId: 1,
+      name: e.target[0].value,
+      servingsize: e.target[1].value,
+      carbs: e.target[2].value,
+      fat: e.target[3].value,
+      protein: e.target[4].value,
+      fiber: e.target[5].value,
+      sugar: e.target[6].value,
+      sodium: e.target[7].value
+    };
+    fetch('/api/foods', {
+      method: 'POST',
+      body: JSON.stringify(newFood)
+    })
+      .then(res => {
+        if(res.ok) {
+          window.location = '/add?m=' + meal + '&day=' + day + '&t=2';
+        } else {
+          alert('fuck.');
+        }
+      })
   }
 
   render() {
@@ -84,9 +102,8 @@ class CreateFoodView extends Component {
               <input type="text" name="sodium" id="sodium" placeholder="400 mg" />
             </div>
           </div>
-
-          <button className="CreateFoodView__submit-button" type="submit">Create and Add</button>
-          <Link to="/add" className="cancel-link" >Cancel</Link>
+          <button className="CreateFoodView__submit-button" type="submit">Create Food</button>
+          <Link to="/add" className="cancel-link">Cancel</Link>
         </form>
         <div className="clearfix"></div>
       </div>

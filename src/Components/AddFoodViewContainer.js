@@ -13,9 +13,10 @@ class AddFoodViewContainer extends Component {
   render() {
     let mealName = queryString.parse(this.props.location.search).m;
     let day = queryString.parse(this.props.location.search).day;
+    let tab = parseInt(queryString.parse(this.props.location.search).t, 10);
     return (
       <div className="AddFoodViewContainer">
-        <AddFoodView mealName={mealName} day={day} />
+        <AddFoodView mealName={mealName} day={day} tab={tab} />
         <div className="FoodsPanel__cancel-link"><Link to="/">Cancel</Link></div>
       </div>
     );

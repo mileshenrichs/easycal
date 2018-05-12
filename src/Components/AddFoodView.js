@@ -10,8 +10,9 @@ class AddFoodView extends Component {
 			searchTerm: '',
 			searchResults: [],
 			searchError: false,
-			foodsPanelTab: 1,
+			foodsPanelTab: this.props.tab ? this.props.tab : 1,
 			recentFoods: [],
+			myFoods: [],
 			loading: true
 		}
 	}
