@@ -2,6 +2,19 @@ import React, { Component } from 'react';
 
 class NetCalories extends Component {
   render() {
+    let goalDifference = this.props.netCalories - this.props.caloriesGoal;
+
+    let calsDifference;
+    if(goalDifference > 0) {
+      calsDifference = (
+        <span className="NetCalories__goaldifference over">(+{new Intl.NumberFormat().format(goalDifference)})</span>
+      );
+    } else {
+      calsDifference = (
+        <span className="NetCalories__goaldifference under">({new Intl.NumberFormat().format(goalDifference)})</span>
+      );
+    }
+
     return (
       <div className="NetCalories">
         <span className="NetCalories__equation">
@@ -15,7 +28,7 @@ class NetCalories extends Component {
         </span>
         <div className="clearfix"></div>
 
-        <span className="NetCalories__goaldifference">(-50)</span>
+        {calsDifference}
         <div className="clearfix"></div>
       </div>
     );

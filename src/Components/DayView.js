@@ -28,6 +28,7 @@ class DayView extends Component {
           items: []
         }
       },
+      goals: {},
       caloriesBurned: undefined,
       loadingItems: true,
       removingItem: false
@@ -47,6 +48,7 @@ class DayView extends Component {
     let selectedDay = dayParam ? this.convertQueryStringToDate(dayParam) : this.state.selectedDay;
     this.getConsumptions(selectedDay);
     this.getActivity(selectedDay);
+    this.getGoals();
   }
 
   getConsumptions(day) {
@@ -71,6 +73,14 @@ class DayView extends Component {
         } else {
           this.setState({caloriesBurned: activity.caloriesBurned});
         }
+      });
+  }
+
+  getGoals() {
+    fetch('/api/goals/1')
+      .then((resp) => resp.json())
+      .then(goals => {
+        this.setState({goals: goals});
       });
   }
 
@@ -300,11 +310,13 @@ class DayView extends Component {
           caloriesEaten={dayTotals.caloriesEaten}
           caloriesBurned={this.state.caloriesBurned}
           netCalories={dayTotals.netCalories} 
+          caloriesGoal={this.state.goals.calories}
         />
         <MacroTotals 
           totalCarbs={dayTotals.carbs}
           totalFat={dayTotals.fat}
           totalProtein={dayTotals.protein}
+          goals={this.state.goals}
         />
       </div>
     );

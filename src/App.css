@@ -597,11 +597,18 @@ span.ActivityInput__calslabel.active {
 .NetCalories__goaldifference {
 	display: block;
 	float: right;
-	color: green;
 	font-weight: bold;
 	font-size: 30px;
 	position: relative;
 	bottom: 20px;
+}
+
+.NetCalories__goaldifference.under {
+	color: green;
+}
+
+.NetCalories__goaldifference.over {
+	color: #c22317;
 }
 
 .MacroTotals {
@@ -636,9 +643,16 @@ span.ActivityInput__calslabel.active {
 }
 
 .MacroTotals__macro--goaldifference {
-	color: #6c6c6c;
 	position: relative;
 	bottom: 2px;
+}
+
+.MacroTotals__macro--goaldifference.under {
+	color: #487F3D;
+}
+
+.MacroTotals__macro--goaldifference.over {
+	color: #854040;
 }
 
 .MacroTotals__caloriesgoal {
