@@ -38,7 +38,7 @@ class CreateFoodView extends Component {
         if(res.ok) {
           window.location = '/add?m=' + meal + '&day=' + day + '&t=2';
         } else {
-          alert('fuck.');
+          alert('For some reason, this food could not be created.');
         }
       })
   }

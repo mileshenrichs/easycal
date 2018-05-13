@@ -1158,3 +1158,17 @@ span.FoodsPanel__edit-foods--done-link:hover {
 .MyGoals__form button {
 	margin-top: 25px;
 }
+
+.MyGoals__form button.saving {
+	background-color: #BDBDBD;
+	cursor: default;
+}
+
+.MyGoals__form--save-success {
+	color: #056E46;
+}
+
+#save-success-message {
+	animation-duration: 1.8s;
+	-moz-animation-duration: 1.8s;
+}

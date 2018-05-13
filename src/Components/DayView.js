@@ -13,7 +13,7 @@ class DayView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedDay: new Date(),
+      selectedDay: this.getTodaysDate(),
       meals: {
         breakfast: {
           items: []
@@ -32,6 +32,10 @@ class DayView extends Component {
       loadingItems: true,
       removingItem: false
     }
+  }
+
+  getTodaysDate() {
+    return new Date(Date.now() - (60000 * new Date().getTimezoneOffset()));
   }
 
   componentDidMount() {

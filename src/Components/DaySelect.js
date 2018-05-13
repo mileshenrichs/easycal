@@ -45,7 +45,7 @@ class DaySelect extends Component {
 
   selectedDayIsToday() {
     let date = this.props.selectedDay;
-    let today = new Date();
+    let today = new Date(Date.now() - (60000 * new Date().getTimezoneOffset()));
     return date.toISOString().split('T')[0] === today.toISOString().split('T')[0];
   }
 
