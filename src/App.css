@@ -165,6 +165,10 @@ body {
 	position: relative;
 	bottom: 16px;
 	padding-left: 20px;
+	-webkit-user-select: none;     
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .DayPicker {
@@ -269,16 +273,28 @@ body {
 	bottom: 2px;
 }
 
+.MealItem {
+	height: 90px;
+	padding: 0 30px;
+}
+
 .MealItem,
 .StatsDayItem {
 	border-bottom: 1px solid #b5c4b7;
-	padding: 17px 30px 17px 30px;
+}
+
+.StatsDayItem {
+	padding: 17px 30px;
 }
 
 .MealItem.editing,
 .AddableFoodItem.adding {
 	border-bottom-color: #08ae23;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.MealItem.editing {
+	height: 150px;
 }
 
 .AddableFoodItem.deleting {
@@ -306,7 +322,7 @@ body {
 	width: 18px;
 	margin-right: 38px;
 	position: relative;
-	top: 9px;
+	top: 34px;
 	visibility: hidden;
 }
 
@@ -314,7 +330,7 @@ body {
 	width: 26px;
 	margin-right: 30px;
 	position: relative;
-	top: 9px;
+	top: 34px;
 	right: 6px;
 }
 
@@ -324,8 +340,14 @@ body {
 
 .MealItem__food {
 	width: 310px;
-	display: block;
+	height: 90px;
+	display: table;
 	float: left;
+}
+
+.MealItem__food .MealItem__food--info {
+	display: table-cell;
+	vertical-align: middle;
 }
 
 .MealItem__food span {
@@ -345,7 +367,7 @@ body {
 .MealItem__macros,
 .MealItem__calories {
 	position: relative;
-	top: 8px;
+	top: 31px;
 }
 
 .MealItem__macros,
@@ -379,7 +401,7 @@ body {
 }
 
 .MealItem .ServingSelect {
-	margin: 18px 0 0 56px;
+	margin: 0 0 0 56px;
 }
 
 .MealItem .ServingSelect .ServingSelect__add-button {

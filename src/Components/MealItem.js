@@ -52,9 +52,11 @@ class MealItem extends Component {
       <div className={'MealItem' + (this.state.editMode ? ' editing' : '')}>
         {icon}
   		  <span className="MealItem__food">
-          <span className="MealItem__food--name">{this.props.name}</span>
-          <span className="MealItem__food--quantity">
-            {this.props.selectedServing.quantity} {this.props.selectedServing.servingSize.label}
+          <span className="MealItem__food--info">
+            <span className="MealItem__food--name">{this.props.name}</span>
+            <span className="MealItem__food--quantity">
+              {this.props.selectedServing.quantity} {this.props.selectedServing.servingSize.label}
+            </span>
           </span>
         </span>
         <span className="MealItem__macros">
