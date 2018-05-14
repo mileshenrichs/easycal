@@ -367,7 +367,13 @@ body {
 .MealItem__macros,
 .MealItem__calories {
 	position: relative;
-	top: 31px;
+	top: 8px;
+}
+
+.DayView .MealItem__macros,
+.DayView .MealItem__calories {
+	position: relative;
+	top: 32px;
 }
 
 .MealItem__macros,
@@ -509,6 +515,11 @@ body {
 .AddFoodItem img {
 	width: 25px;
 	margin-right: 40px;
+}
+
+.AddFoodItem span {
+	position: relative;
+	top: 1px;
 }
 
 .MealTotalsRow {
@@ -967,15 +978,35 @@ span.FoodsPanel__edit-foods--done-link:hover {
 }
 
 .StatisticsView .page-title {
-	width: 200px;
+	width: 254px;
 	float: left;
 }
 
-.StatisticsView .DaySelect {
-	margin-left: 54px;
+.StatisticsView__week-select {
+	width: 600px;
 	float: left;
+}
+
+.StatisticsView .DayPickerInput input {
+	width: 120px;
+	text-align: center;
+	margin: 0 10px;
+}
+
+.StatisticsView__refresh-button {
+	width: 26px;
 	position: relative;
-	bottom: 12px;
+	bottom: 2px;
+	left: 14px;
+	cursor: pointer;
+}
+
+.StatisticsView__refresh-button.inactive {
+	cursor: default;
+}
+
+.StatisticsView__refresh-button.refreshing {
+	width: 66px;
 }
 
 .StatsTable {
@@ -1155,7 +1186,8 @@ span.FoodsPanel__edit-foods--done-link:hover {
 
 .WeekAverages__difference {
 	font-size: 17px;
-	margin-left: 6px;
+	margin-left: 10px;
+	font-weight: normal;
 }
 
 .WeekAverages__table .WeekAverages__nutrient-row:last-child {

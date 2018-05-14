@@ -4,16 +4,16 @@ class StatsDayItem extends Component {
   render() {
     return (
       <div className="StatsDayItem">
-  		  <span className="StatsDayItem__day">Monday, April 9</span>
+  		  <span className="StatsDayItem__day">{this.props.day}</span>
         <span className="StatsDayItem__macros">
-          <span>20</span>
-          <span>18</span>
-          <span>34</span>
-          <span>7</span>
-          <span>24</span>
-          <span>2100</span>
+          <span>{this.props.carbs}</span>
+          <span>{this.props.fat}</span>
+          <span>{this.props.protein}</span>
+          <span>{this.props.fiber}</span>
+          <span>{this.props.sugar}</span>
+          <span>{this.props.sodium}</span>
         </span>
-        <span className="StatsDayItem__calories">260</span>
+        <span className="StatsDayItem__calories">{this.props.calories}</span>
         <div className="clearfix"></div>
       </div>
     );

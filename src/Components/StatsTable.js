@@ -10,6 +10,25 @@ import sodiumIcon from '../resources/fries-emoji.png';
 
 class StatsTable extends Component {
   render() {
+    let statsDayItems;
+    if(this.props.totals) {
+      statsDayItems = this.props.totals.map(total => {
+        return (
+          <StatsDayItem 
+            key={this.props.totals.indexOf(total)}
+            day={total.day}
+            carbs={total.carbs}
+            fat={total.fat}
+            protein={total.protein}
+            fiber={total.fiber}
+            sugar={total.sugar}
+            sodium={total.sodium}
+            calories={total.calories}
+          />
+        );
+      });
+    }
+
     return (
       <div className="MealGroup StatsTable">
   		<div className="MealGroup__header">
@@ -22,9 +41,8 @@ class StatsTable extends Component {
           <img src={sodiumIcon} alt="Sodium" title="Sodium" />
   			</span>
   		</div>
-  		<StatsDayItem />
-      <StatsDayItem />
-  		<StatsTotalsRow />
+  		{statsDayItems}
+  		<StatsTotalsRow totals={this.props.overallTotals} />
       </div>
     );
   }

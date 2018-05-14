@@ -66,7 +66,9 @@ class DaySelect extends Component {
     return (
       <div className="DaySelect">
         {!this.selectedDayIsToday() && 
-          <a href={'/?day=' + new Date().toISOString().split('T')[0]}><span className="DaySelect--today-button small-button">Today</span></a>}
+          <a href={'/?day=' + new Date(Date.now() - (60000 * new Date().getTimezoneOffset())).toISOString().split('T')[0]}>
+            <span className="DaySelect--today-button small-button">Today</span>
+          </a>}
   		  <div className="DaySelect__arrow left" onClick={this.changeToDayBefore.bind(this)}></div>
         <span className="DaySelect__choose" onClick={() => this.setState({pickerVisible: true})}>
           <div className="DaySelect__calendar"></div>
