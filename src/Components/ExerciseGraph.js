@@ -77,7 +77,7 @@ class ExerciseGraph extends Component {
   }
 
   static buildSeries(dayFrom, dayTo, totals, exercise) {
-    let numberOfDays = moment(dayTo).diff(moment(dayFrom), 'days');
+    let numberOfDays = moment(ExerciseGraph.convertDate(dayTo)).diff(moment(ExerciseGraph.convertDate(dayFrom)), 'days');
     // start series with a 0 (for some reason Highcharts doesn't display first element)
     let caloriesEatenSeries = [0];
     let caloriesBurnedSeries = [0];
