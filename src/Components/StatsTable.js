@@ -16,7 +16,7 @@ class StatsTable extends Component {
         return (
           <StatsDayItem 
             key={this.props.totals.indexOf(total)}
-            day={total.day}
+            day={total.displayDay}
             carbs={total.carbs}
             fat={total.fat}
             protein={total.protein}

@@ -109,7 +109,11 @@ class StatisticsView extends Component {
           to={this.state.dayTo}
           averages={this.state.averages}
           goals={this.state.goals} />
-        <ExerciseGraph />
+        <ExerciseGraph 
+          from={this.state.dayFrom}
+          to={this.state.dayTo}
+          totals={this.state.totals}
+          exercise={this.state.exercise} />
       </div>
     );
   }

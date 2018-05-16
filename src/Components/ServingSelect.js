@@ -42,10 +42,7 @@ class ServingSelect extends Component {
     let servingUnitOptions;
     if(this.props.servingSizes) {
       servingUnitOptions = this.props.servingSizes.map(servingSize => {
-        if(servingSize.id === this.props.selectedServing.servingSize.id) { // set selected option to be current choice
-          return (<option value={servingSize.id} selected>{servingSize.label}</option>);
-        }
-        return (<option value={servingSize.id}>{servingSize.label}</option>);
+        return (<option key={servingSize.id} value={servingSize.id}>{servingSize.label}</option>);
       });
     }
 
@@ -55,7 +52,7 @@ class ServingSelect extends Component {
       <div className="ServingSelect animated fadeInDown" id="ServingSelect">
         <input className="servingAmt" type="text" name="servingAmt" id="servingAmt" placeholder="1" 
           value={this.state.quantityValue} onChange={this.handleQuantityChange.bind(this)} onClick={this.handleInputClick.bind(this)} />
-        <select className="servingAmt" name="servingUnit" id="servingUnit" 
+        <select className="servingAmt" name="servingUnit" id="servingUnit" defaultValue={this.props.selectedServing.servingSize.id}
           onChange={this.handleSizeChange.bind(this)} onClick={this.handleInputClick.bind(this)}>
           {servingUnitOptions}
         </select> 

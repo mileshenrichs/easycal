@@ -5,7 +5,15 @@ class MyGoals extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      goals: {},
+      goals: {
+        calories: '',
+        carbs: '',
+        fat: '',
+        protein: '',
+        fiber: '',
+        sugar: '',
+        sodium: ''
+      },
       saving: false,
       finishedSaving: false
     }
@@ -17,7 +25,7 @@ class MyGoals extends Component {
       .then(goals => {
         for(var goalCategory in goals) {
           if(goals[goalCategory] === -1) {
-            goals[goalCategory] = undefined;
+            goals[goalCategory] = '';
           }
         }
         this.setState({goals: goals});

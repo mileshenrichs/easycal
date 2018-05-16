@@ -44,6 +44,9 @@ class CreateFoodView extends Component {
   }
 
   render() {
+    let meal = queryString.parse(this.props.location.search).for;
+    let day = queryString.parse(this.props.location.search).from;
+    
     return (
       <div className="CreateFoodView content-container">
         <h1 className="page-title">Create Food</h1>
@@ -103,7 +106,7 @@ class CreateFoodView extends Component {
             </div>
           </div>
           <button className="CreateFoodView__submit-button" type="submit">Create Food</button>
-          <Link to="/add" className="cancel-link">Cancel</Link>
+          <Link to={'/add?m=' + meal + '&day=' + day + '&t=2'} className="cancel-link">Cancel</Link>
         </form>
         <div className="clearfix"></div>
       </div>
