@@ -17,7 +17,11 @@ class AddFoodViewContainer extends Component {
     return (
       <div className="AddFoodViewContainer">
         <AddFoodView mealName={mealName} day={day} tab={tab} />
-        <div className="FoodsPanel__cancel-link"><Link to="/">Cancel</Link></div>
+        <div className="FoodsPanel__cancel-link">
+          <div className="container">
+            <Link to="/">Cancel</Link>
+          </div>
+        </div>
       </div>
     );
   }

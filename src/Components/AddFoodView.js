@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import decodeToken from '../Auth/authUtil';
+import update from 'immutability-helper';
 import SearchFood from './SearchFood';
 import FoodsPanel from './FoodsPanel';
 
@@ -18,8 +20,9 @@ class AddFoodView extends Component {
 	}
 
 	componentDidMount() {
+		const userId = decodeToken(localStorage.getItem('token')).userId;
 		// get recent consumptions
-		fetch('/api/consumptions?type=recent&userId=1')
+		fetch('/api/consumptions?type=recent&userId=' + userId)
 			.then((resp) => resp.json())
 			.then(recentFoods => {
 				this.setState({
@@ -69,6 +72,33 @@ class AddFoodView extends Component {
 			});
 	}
 
+	getUserFoods() {
+		const userId = decodeToken(localStorage.getItem('token')).userId;
+
+		// get user foods
+    fetch('/api/foods/user/' + userId)
+      .then((resp) => resp.json())
+      .then(userFoods => {
+        this.setState({myFoods: userFoods});
+      });
+	}
+
+	deleteUserFoodItem(foodItemId) {
+		fetch('/api/foods/' + foodItemId, {method: 'DELETE'})
+      .then(res => {
+        if(res.ok) {
+          let foodItem = this.state.myFoods.find(food => food.foodItemId === foodItemId);
+          let foodItemIndex = this.state.myFoods.indexOf(foodItem);
+          let newState = update(this.state, {
+            myFoods: {$splice: [[foodItemIndex, 1]]}
+          });
+          this.setState(newState);
+        } else {
+          alert('This food item could not be deleted.');
+        }
+      });
+	}
+
   render() {
     return (
       <div className="AddFoodView content-container">
@@ -84,6 +114,9 @@ class AddFoodView extends Component {
       		searchResults={this.state.searchResults}
       		searchError={this.state.searchError}
       		recentFoods={this.state.recentFoods}
+      		getUserFoods={this.getUserFoods.bind(this)}
+      		myFoods={this.state.myFoods}
+      		deleteUserFoodItem={this.deleteUserFoodItem.bind(this)}
       		loading={this.state.loading}
       		day={this.props.day}
     		/>

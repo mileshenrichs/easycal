@@ -7,7 +7,140 @@
 body {
 	font-family: 'Chivo', sans-serif;
 	color: #003300;
-	margin-top: 114px;
+}
+
+.AuthLoader {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	background-color: white;
+	z-index: 1000;
+	display: table;
+}
+
+.AuthLoader__loader-container {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+
+.AuthLoader__loader-container img {
+	width: 100px;
+}
+
+.content-container.LogInView {
+	margin-top: 20px;
+}
+
+.LogInView__logo {
+	display: block;
+	margin: 0 auto 50px auto;
+	width: 340px;
+}
+
+.LogInView p {
+	text-align: center;
+	font-size: 18px;
+}
+
+.LogInView p span {
+	display: block;
+	font-size: 16px;
+	margin-top: 12px;
+}
+
+.LogInView__form {
+	margin-top: 40px;
+}
+
+.LogInView__form h2 {
+	text-align: center;
+	font-weight: bold;
+	color: #222722;
+}
+
+.LogInView__form form {
+	width: 40%;
+	margin: 40px auto;
+}
+
+.LogInView__form form label {
+	margin-bottom: 3px;
+}
+
+.LogInView__form form button {
+	display: block;
+	margin: 0 auto;
+	width: 100%;
+	background-color: #08ae23;
+	color: white;
+	padding: 8px 20px;
+	border-radius: 3px;
+	border: none;
+	cursor: pointer;
+}
+
+.LogInView__form form button:hover {
+	background-color: #039b1c;
+}
+
+.LogInView__form form input {
+	border-radius: 3px;
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	color: #222722;
+	display: block;
+	width: 100%;
+	padding: 6px 14px;
+}
+
+.LogInView__form form input:focus {
+	border-color: #08ae23;
+	box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.LogInView__form--loader {
+	width: 110px;
+	margin: 26px auto 48px auto;
+	display: block;
+}
+
+.LogInView__form--switch {
+	display: block;
+	text-align: center;
+}
+
+.LogInView__form--switch span {
+	color: #079b1f;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.LogInView__form--switch span:hover {
+	text-decoration: none;
+}
+
+.LogInView__logout-confirm {
+	display: block;
+	width: 70%;
+	margin: 20px auto;
+	padding: 20px 0 20px 30px;
+	background-color: rgba(3, 155, 28, 0.1);
+	border: 2px solid #039b1c;
+	border-radius: 5px;
+	color: #222722;
+}
+
+.LogInView__error {
+	display: block;
+	width: 70%;
+	margin: 20px auto;
+	padding: 20px 0 20px 30px;
+	background-color: rgba(191, 35, 23, 0.1);
+	border: 2px solid #c22317;
+	border-radius: 5px;
+	color: #222722;
 }
 
 .Header {
@@ -19,7 +152,7 @@ body {
 	left: 0;
 	width: 100%;
 	background: white;
-	z-index: 1000;
+	z-index: 999;
 }
 
 .Header img {
@@ -99,7 +232,7 @@ body {
 
 .content-container {
 	width: 950px;
-	margin: 0 auto;
+	margin: 114px auto 0 auto;
 }
 
 .DaySelect {
@@ -584,6 +717,7 @@ span.ActivityInput__calslabel.active {
 .NetCalories {
 	padding: 0;
 	color: #222722;
+	height: 126px;
 }
 
 .NetCalories__number {
@@ -692,6 +826,15 @@ span.ActivityInput__calslabel.active {
 	float: right;
 	font-size: 20px;
 	color: #6c6c6c;
+}
+
+.MacroTotals__caloriesgoal a {
+	text-decoration: underline;
+	color: #2F822F;
+}
+
+.MacroTotals__caloriesgoal a:hover {
+	text-decoration: none;
 }
 
 h1.page-title {
@@ -879,6 +1022,12 @@ span.FoodsPanel__edit-foods--done-link:hover {
 
 .FoodsPanel__cancel-link a {
 	color: #c22317;
+}
+
+.MyFoods__no-foods {
+	display: block;
+	text-align: center;
+	margin-top: 80px;
 }
 
 .CreateFoodView__form {
@@ -1239,4 +1388,23 @@ span.FoodsPanel__edit-foods--done-link:hover {
 #save-success-message {
 	animation-duration: 1.8s;
 	-moz-animation-duration: 1.8s;
+}
+
+.MyAccountView__account-functions {
+	margin-top: 70px;
+}
+
+.MyAccountView__account-functions p:first-child {
+	margin-bottom: 0;
+}
+
+.MyAccountView__logout-link {
+	cursor: pointer;
+	text-decoration: underline;
+	color: #c22317;
+	display: inline-block;
+}
+
+.MyAccountView__logout-link:hover {
+	text-decoration: none;
 }

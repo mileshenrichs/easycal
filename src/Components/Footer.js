@@ -8,11 +8,13 @@ class Footer extends Component {
       <div className="Footer container">
         <img src={logo} alt="EasyCal" />
         <p>&copy; EasyCal 2018</p>
-        <span className="Footer__links">
+
+        {!this.props.onLogin && <span className="Footer__links">
         	<Link to="/">Today's Log</Link><span className="Footer__link-separator">·</span>
         	<Link to="/stats">Stats</Link><span className="Footer__link-separator">·</span>
         	<Link to="/me">My Account</Link>
-        </span>
+        </span>}
+
         <div className="clearfix"></div>
       </div>
     );

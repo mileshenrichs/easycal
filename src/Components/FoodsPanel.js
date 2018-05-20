@@ -36,7 +36,8 @@ class FoodsPanel extends Component {
 	}
 
   shouldDisplayPanelHeader() {
-    if(this.props.currentTab === 0 && this.props.searchError) {
+    if(this.props.currentTab === 0 && this.props.searchError
+      || this.props.currentTab === 2 && !this.props.myFoods.length) {
       return false;
     }
     return true;
@@ -46,6 +47,14 @@ class FoodsPanel extends Component {
     this.setState(prevState => ({
       myFoodsEditMode: !prevState.myFoodsEditMode
     }));
+  }
+
+  getUserFoods() {
+    this.props.getUserFoods();
+  }
+
+  deleteUserFoodItem(foodItemId) {
+    this.props.deleteUserFoodItem(foodItemId);
   }
 
   render() {
@@ -110,6 +119,9 @@ class FoodsPanel extends Component {
           <MyFoods 
             mealName={this.props.mealName} 
             day={this.props.day}
+            getFoods={this.getUserFoods.bind(this)}
+            foods={this.props.myFoods}
+            deleteUserFoodItem={this.deleteUserFoodItem.bind(this)}
             editMode={this.state.myFoodsEditMode}
           />}
       </div>

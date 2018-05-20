@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import decodeToken from '../Auth/authUtil';
 import moment from 'moment';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
-import {formatDate, parseDate} from 'react-day-picker/moment';
+import { formatDate, parseDate } from 'react-day-picker/moment';
 import StatsTable from './StatsTable';
 import WeekAverages from './WeekAverages';
 import ExerciseGraph from './ExerciseGraph';
@@ -30,7 +31,8 @@ class StatisticsView extends Component {
   componentDidMount() {
     document.title = 'EasyCal: Statistics';
     window.scrollTo(0, 0);
-    fetch('/api/goals/1')
+    const userId = decodeToken(localStorage.getItem('token')).userId;
+    fetch('/api/goals/' + userId)
       .then((resp) => resp.json())
       .then(goals => {
         for(var goalCategory in goals) {
@@ -44,8 +46,10 @@ class StatisticsView extends Component {
   }
 
   refreshStats() {
+    const userId = decodeToken(localStorage.getItem('token')).userId;
+
     this.setState({refreshing: true});
-    fetch('/api/stats?userId=1&dateFrom=' + this.state.dayFrom.toISOString() + '&dateTo=' + this.state.dayTo.toISOString())
+    fetch('/api/stats?userId=' + userId + '&dateFrom=' + this.state.dayFrom.toISOString() + '&dateTo=' + this.state.dayTo.toISOString())
       .then((resp) => resp.json())
       .then(res => {
         this.setState({

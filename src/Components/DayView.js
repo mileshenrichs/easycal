@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import decodeToken from '../Auth/authUtil';
 import update from 'immutability-helper';
 import queryString from 'query-string';
 import DaySelect from './DaySelect';
@@ -46,14 +47,16 @@ class DayView extends Component {
       this.setState({selectedDay: this.convertQueryStringToDate(dayParam)});
     }
     let selectedDay = dayParam ? this.convertQueryStringToDate(dayParam) : this.state.selectedDay;
-    this.getConsumptions(selectedDay);
-    this.getActivity(selectedDay);
-    this.getGoals();
+
+    const userId = decodeToken(localStorage.getItem('token')).userId;
+    this.getConsumptions(selectedDay, userId);
+    this.getActivity(selectedDay, userId);
+    this.getGoals(userId);
   }
 
-  getConsumptions(day) {
+  getConsumptions(day, userId) {
     let date = day.toISOString().split('T')[0];
-    fetch('/api/consumptions?type=day&userId=1&date=' + date)
+    fetch('/api/consumptions?type=day&userId=' + userId + '&date=' + date)
       .then((resp) => resp.json())
       .then(meals => {
         this.setState({
@@ -63,9 +66,9 @@ class DayView extends Component {
       });
   }
 
-  getActivity(day) {
+  getActivity(day, userId) {
     let date = day.toISOString().split('T')[0];
-    fetch('/api/exercise?userId=1&date=' + date)
+    fetch('/api/exercise?userId=' + userId + '&date=' + date)
       .then((resp) => resp.json())
       .then(activity => {
         if(activity.caloriesBurned === 0) {
@@ -76,8 +79,8 @@ class DayView extends Component {
       });
   }
 
-  getGoals() {
-    fetch('/api/goals/1')
+  getGoals(userId) {
+    fetch('/api/goals/' + userId)
       .then((resp) => resp.json())
       .then(goals => {
         this.setState({goals: goals});
@@ -213,13 +216,15 @@ class DayView extends Component {
     if(this.apiPostTimeout) {
       clearTimeout(this.apiPostTimeout);
     }
-    this.apiPostTimeout = setTimeout(() => this.postActivityChange(calories), 500);
+
+    const userId = decodeToken(localStorage.getItem('token')).userId;
+    this.apiPostTimeout = setTimeout(() => this.postActivityChange(calories, userId), 500);
   }
 
-  postActivityChange(calories) {
+  postActivityChange(calories, userId) {
     let calsBurned = calories ? calories : 0;
     let activityObj = {
-      userId: 1,
+      userId: userId,
       caloriesBurned: calsBurned,
       day: this.state.selectedDay
     }

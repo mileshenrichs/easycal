@@ -28,7 +28,7 @@ class NetCalories extends Component {
         </span>
         <div className="clearfix"></div>
 
-        {calsDifference}
+        {this.props.caloriesGoal > -1 && calsDifference}
         <div className="clearfix"></div>
       </div>
     );

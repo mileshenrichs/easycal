@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import carbsIcon from '../resources/bread-emoji.png';
 import fatIcon from '../resources/bacon-strip-emoji.png';
 import proteinIcon from '../resources/steak-emoji.png';
@@ -44,25 +45,37 @@ class MacroTotals extends Component {
       );
     }
 
+    let caloriesGoalText;
+    if(this.props.goals.calories > -1) {
+      caloriesGoalText = (
+        <span className="MacroTotals__caloriesgoal">GOAL: {this.props.goals.calories}</span>
+      );
+    } else {
+      caloriesGoalText = (
+        <span className="MacroTotals__caloriesgoal">You haven't <Link to='/me'>set your goals</Link> yet.</span>
+      );
+    }
+
     return (
       <div className="MacroTotals">
   		  <span className="MacroTotals__label">Macros:</span>
   		  <span className="MacroTotals__macro">
   		  	<img src={carbsIcon} alt="Carbs" />
   		  	<span className="MacroTotals__macro--value">{this.props.totalCarbs} g</span>
-  		  	{carbsDifference}
+  		  	{this.props.goals.carbs > -1 && carbsDifference}
   		  </span>
   		  <span className="MacroTotals__macro">
   		  	<img src={fatIcon} alt="Fat" />
   		  	<span className="MacroTotals__macro--value">{this.props.totalFat} g</span>
-  		  	{fatDifference}
+  		  	{this.props.goals.fat > -1 && fatDifference}
   		  </span>
   		  <span className="MacroTotals__macro protein">
   		  	<img src={proteinIcon} alt="Protein" />
   		  	<span className="MacroTotals__macro--value">{this.props.totalProtein} g</span>
-  		  	{proteinDifference}
+  		  	{this.props.goals.protein > -1 && proteinDifference}
   		  </span>
-  		  <span className="MacroTotals__caloriesgoal">GOAL: {this.props.goals.calories}</span>
+  		  
+        {caloriesGoalText}
       </div>
     );
   }

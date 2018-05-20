@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import decodeToken from '../Auth/authUtil';
 import update from 'immutability-helper';
 import ServingSelect from './ServingSelect';
 import ItemDeleteButton from './ItemDeleteButton';
@@ -98,8 +99,10 @@ class AddableFoodItem extends Component {
   }
 
   addConsumption() {
+    const userId = decodeToken(localStorage.getItem('token')).userId;
+
     let consumption = JSON.parse(JSON.stringify(this.state.item));
-    consumption.userId = 1;
+    consumption.userId = userId;
     consumption.meal = this.props.mealName;
     consumption.day = this.props.day;
     fetch('/api/consumptions', {

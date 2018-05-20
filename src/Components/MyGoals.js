@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import decodeToken from '../Auth/authUtil';
 
 class MyGoals extends Component {
 
@@ -20,7 +21,9 @@ class MyGoals extends Component {
   }
 
   componentDidMount() {
-    fetch('/api/goals/1')
+    const userId = decodeToken(localStorage.getItem('token')).userId;
+
+    fetch('/api/goals/' + userId)
       .then((resp) => resp.json())
       .then(goals => {
         for(var goalCategory in goals) {
@@ -33,10 +36,12 @@ class MyGoals extends Component {
   }
 
   handleSubmit(e) {
+    const userId = decodeToken(localStorage.getItem('token')).userId;
+
     e.preventDefault();
     this.setState({saving: true})
     let reqObj = {
-      userId: 1
+      userId: userId
     };
 
     if(e.target[0].value) {
