@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import decodeToken from '../Auth/authUtil';
-import queryString from 'query-string';
+import qs from 'qs';
 import carbsIcon from '../resources/bread-emoji.png';
 import fatIcon from '../resources/bacon-strip-emoji.png';
 import proteinIcon from '../resources/steak-emoji.png';
@@ -16,8 +16,9 @@ class CreateFoodView extends Component {
 	}
 
   handleSubmit(e) {
-    let meal = queryString.parse(this.props.location.search).for;
-    let day = queryString.parse(this.props.location.search).from;
+    const qsParsed = qs.parse(this.props.location.search.slice(1));
+    let meal = qsParsed.for;
+    let day = qsParsed.from;
 
     e.preventDefault();
     const userId = decodeToken(localStorage.getItem('token')).userId;
@@ -53,8 +54,9 @@ class CreateFoodView extends Component {
   }
 
   render() {
-    let meal = queryString.parse(this.props.location.search).for;
-    let day = queryString.parse(this.props.location.search).from;
+    const qsParsed = qs.parse(this.props.location.search.slice(1));
+    let meal = qsParsed.for;
+    let day = qsParsed.from;
     
     return (
       <div className="CreateFoodView content-container">

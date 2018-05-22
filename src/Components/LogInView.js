@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import queryString from 'query-string'
+import qs from 'qs';
 import logo from '../resources/login-logo.png';
 import loader from '../resources/loader.gif';
 
@@ -107,8 +107,9 @@ class LogInView extends Component {
 
   render() {
     let welcomeText;
-    let justLoggedOut = queryString.parse(this.props.location.search).logout;
-    let sessionExpired = queryString.parse(this.props.location.search).midreq;
+    const qsParsed = qs.parse(this.props.location.search.slice(1));
+    let justLoggedOut = qsParsed.logout;
+    let sessionExpired = qsParsed.midreq;
 
     if(justLoggedOut) {
       welcomeText = (
@@ -118,8 +119,7 @@ class LogInView extends Component {
       welcomeText = (
         <span className="LogInView__notify LogInView__session-expired"><span role="img" aria-label="Clock">⏲️</span> &nbsp;Your session expired.  To keep things secure, please log back in.</span>
       );
-    }
-    else {
+    } else {
       welcomeText = (
         <p>
           <b>Welcome!</b> EasyCal is a simple nutrition app that helps you keep track of your diet and exercise. <br />

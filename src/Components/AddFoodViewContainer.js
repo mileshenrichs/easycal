@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import queryString from 'query-string';
+import qs from 'qs';
 import AddFoodView from './AddFoodView';
 
 class AddFoodViewContainer extends Component {
@@ -11,9 +11,10 @@ class AddFoodViewContainer extends Component {
 	}
 
   render() {
-    let mealName = queryString.parse(this.props.location.search).m;
-    let day = queryString.parse(this.props.location.search).day;
-    let tab = parseInt(queryString.parse(this.props.location.search).t, 10);
+    const qsParsed = qs.parse(this.props.location.search.slice(1));
+    let mealName = qsParsed.m;
+    let day = qsParsed.day;
+    let tab = parseInt(qsParsed.t, 10);
     return (
       <div className="AddFoodViewContainer">
         <AddFoodView mealName={mealName} day={day} tab={tab} />

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import decodeToken from '../Auth/authUtil';
 import update from 'immutability-helper';
-import queryString from 'query-string';
+import qs from 'qs';
 import DaySelect from './DaySelect';
 import Calotron from './Calotron';
 import MealGroup from './MealGroup';
@@ -43,7 +43,8 @@ class DayView extends Component {
 
   componentDidMount() {
     document.title = 'EasyCal';
-    let dayParam = queryString.parse(this.props.location.search).day;
+    const qsParsed = qs.parse(this.props.location.search.slice(1));
+    let dayParam = qsParsed.day;
     if(dayParam) {
       this.setState({selectedDay: this.convertQueryStringToDate(dayParam)});
     }
@@ -286,7 +287,8 @@ class DayView extends Component {
   render() {
     let mealTotals = this.calculateMealTotals();
     let dayTotals = this.calculateDayTotals(mealTotals);
-    let onboarding = queryString.parse(this.props.location.search).onboard;
+    const qsParsed = qs.parse(this.props.location.search.slice(1));
+    let onboarding = qsParsed.onboard;
 
     return (
       <div className="DayView content-container">
