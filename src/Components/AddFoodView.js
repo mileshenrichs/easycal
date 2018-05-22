@@ -22,7 +22,7 @@ class AddFoodView extends Component {
 	componentDidMount() {
 		const userId = decodeToken(localStorage.getItem('token')).userId;
 		// get recent consumptions
-		fetch('/api/consumptions?type=recent&userId=' + userId)
+		fetch('/api/consumptions?type=recent&userId=' + userId + '&token=' + localStorage.getItem('token'))
 			.then((resp) => resp.json())
 			.then(recentFoods => {
 				this.setState({
@@ -76,7 +76,7 @@ class AddFoodView extends Component {
 		const userId = decodeToken(localStorage.getItem('token')).userId;
 
 		// get user foods
-    fetch('/api/foods/user/' + userId)
+    fetch('/api/foods/user/' + userId + '?token=' + localStorage.getItem('token'))
       .then((resp) => resp.json())
       .then(userFoods => {
         this.setState({myFoods: userFoods});
@@ -84,7 +84,7 @@ class AddFoodView extends Component {
 	}
 
 	deleteUserFoodItem(foodItemId) {
-		fetch('/api/foods/' + foodItemId, {method: 'DELETE'})
+		fetch('/api/foods/' + foodItemId + '?token=' + localStorage.getItem('token'), {method: 'DELETE'})
       .then(res => {
         if(res.ok) {
           let foodItem = this.state.myFoods.find(food => food.foodItemId === foodItemId);

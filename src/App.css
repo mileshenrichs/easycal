@@ -121,26 +121,28 @@ body {
 	text-decoration: none;
 }
 
-.LogInView__logout-confirm {
+.LogInView__notify {
 	display: block;
 	width: 70%;
 	margin: 20px auto;
 	padding: 20px 0 20px 30px;
-	background-color: rgba(3, 155, 28, 0.1);
-	border: 2px solid #039b1c;
 	border-radius: 5px;
 	color: #222722;
 }
 
+.LogInView__logout-confirm {
+	background-color: rgba(3, 155, 28, 0.1);
+	border: 2px solid #039b1c;
+}
+
+.LogInView__session-expired {
+	background-color: rgba(242, 198, 52, 0.1);
+	border: 2px solid #F2C634;
+}
+
 .LogInView__error {
-	display: block;
-	width: 70%;
-	margin: 20px auto;
-	padding: 20px 0 20px 30px;
 	background-color: rgba(191, 35, 23, 0.1);
 	border: 2px solid #c22317;
-	border-radius: 5px;
-	color: #222722;
 }
 
 .Header {
@@ -834,6 +836,26 @@ span.ActivityInput__calslabel.active {
 }
 
 .MacroTotals__caloriesgoal a:hover {
+	text-decoration: none;
+}
+
+.OnboardingMessage {
+	margin-bottom: 60px;
+	border-bottom: 3px solid #08ae23;
+	padding: 6px 30px;
+}
+
+.OnboardingMessage h3 {
+	font-weight: bold;
+	margin-bottom: 16px;
+}
+
+.OnboardingMessage p a {
+	color: #079b1f;
+	text-decoration: underline;
+}
+
+.OnboardingMessage p a:hover {
 	text-decoration: none;
 }
 

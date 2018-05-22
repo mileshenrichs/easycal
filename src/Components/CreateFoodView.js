@@ -21,7 +21,7 @@ class CreateFoodView extends Component {
 
     e.preventDefault();
     const userId = decodeToken(localStorage.getItem('token')).userId;
-    let newFood = {
+    const newFood = {
       userId: userId,
       name: e.target[0].value,
       servingsize: e.target[1].value,
@@ -32,13 +32,20 @@ class CreateFoodView extends Component {
       sugar: e.target[6].value,
       sodium: e.target[7].value
     };
+    const reqObj = {
+      foodItem: newFood,
+      token: localStorage.getItem('token')
+    };
     fetch('/api/foods', {
       method: 'POST',
-      body: JSON.stringify(newFood)
+      body: JSON.stringify(reqObj)
     })
       .then(res => {
         if(res.ok) {
           window.location = '/add?m=' + meal + '&day=' + day + '&t=2';
+        } else if(res.status === 403) {
+          localStorage.removeItem('token');
+          window.location = '/login?midreq=true';
         } else {
           alert('For some reason, this food could not be created.');
         }

@@ -36,8 +36,8 @@ class FoodsPanel extends Component {
 	}
 
   shouldDisplayPanelHeader() {
-    if(this.props.currentTab === 0 && this.props.searchError
-      || this.props.currentTab === 2 && !this.props.myFoods.length) {
+    if((this.props.currentTab === 0 && this.props.searchError)
+      || (this.props.currentTab === 2 && !this.props.myFoods.length)) {
       return false;
     }
     return true;

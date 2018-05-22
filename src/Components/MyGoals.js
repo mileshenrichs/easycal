@@ -23,15 +23,22 @@ class MyGoals extends Component {
   componentDidMount() {
     const userId = decodeToken(localStorage.getItem('token')).userId;
 
-    fetch('/api/goals/' + userId)
-      .then((resp) => resp.json())
-      .then(goals => {
-        for(var goalCategory in goals) {
-          if(goals[goalCategory] === -1) {
-            goals[goalCategory] = '';
-          }
+    fetch('/api/goals/' + userId + '?token=' + localStorage.getItem('token'))
+      .then(res => {
+        if(res.ok) {
+          return res.json()
+          .then(goals => {
+            for(var goalCategory in goals) {
+              if(goals[goalCategory] === -1) {
+                goals[goalCategory] = '';
+              }
+            }
+            this.setState({goals: goals});
+          });
+        } else if(res.status === 403) {
+          localStorage.removeItem('token');
+          window.location = '/login';
         }
-        this.setState({goals: goals});
       });
   }
 
@@ -40,30 +47,35 @@ class MyGoals extends Component {
 
     e.preventDefault();
     this.setState({saving: true})
-    let reqObj = {
+    let goalsObj = {
       userId: userId
     };
 
     if(e.target[0].value) {
-      reqObj.calories = parseInt(e.target[0].value, 10);
+      goalsObj.calories = parseInt(e.target[0].value, 10);
     }
     if(e.target[1].value) {
-      reqObj.carbs = parseInt(e.target[1].value, 10);
+      goalsObj.carbs = parseInt(e.target[1].value, 10);
     }
     if(e.target[2].value) {
-      reqObj.fat = parseInt(e.target[2].value, 10);
+      goalsObj.fat = parseInt(e.target[2].value, 10);
     }
     if(e.target[3].value) {
-      reqObj.protein = parseInt(e.target[3].value, 10);
+      goalsObj.protein = parseInt(e.target[3].value, 10);
     }
     if(e.target[4].value) {
-      reqObj.fiber = parseInt(e.target[4].value, 10);
+      goalsObj.fiber = parseInt(e.target[4].value, 10);
     }
     if(e.target[5].value) {
-      reqObj.sugar = parseInt(e.target[5].value, 10);
+      goalsObj.sugar = parseInt(e.target[5].value, 10);
     }
     if(e.target[6].value) {
-      reqObj.sodium = parseInt(e.target[6].value, 10);
+      goalsObj.sodium = parseInt(e.target[6].value, 10);
+    }
+
+    const reqObj = {
+      goals: goalsObj,
+      token: localStorage.getItem('token')
     }
 
     fetch('/api/goals', {
@@ -78,6 +90,9 @@ class MyGoals extends Component {
           })
         } else {
           alert('Goals could not be saved.');
+          this.setState({
+            saving: false
+          });
         }
       });
   }

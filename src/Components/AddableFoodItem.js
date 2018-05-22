@@ -105,13 +105,21 @@ class AddableFoodItem extends Component {
     consumption.userId = userId;
     consumption.meal = this.props.mealName;
     consumption.day = this.props.day;
+
+    const reqObj = {
+      consumption: consumption,
+      token: localStorage.getItem('token')
+    }
     fetch('/api/consumptions', {
       method: 'POST',
-      body: JSON.stringify(consumption)
+      body: JSON.stringify(reqObj)
     })
     .then(res => {
       if(res.ok) {
         window.location = '/?day=' + this.props.day;
+      } else if(res.status === 403) {
+        localStorage.removeItem('token');
+        window.location = '/login?midreq=true';
       } else {
         alert('There was a problem adding this food to your log.');
       }

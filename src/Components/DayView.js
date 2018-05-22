@@ -8,6 +8,7 @@ import MealGroup from './MealGroup';
 import ActivityInput from './ActivityInput';
 import NetCalories from './NetCalories';
 import MacroTotals from './MacroTotals';
+import OnboardingMessage from './OnboardingMessage';
 
 class DayView extends Component {
 
@@ -48,27 +49,40 @@ class DayView extends Component {
     }
     let selectedDay = dayParam ? this.convertQueryStringToDate(dayParam) : this.state.selectedDay;
 
-    const userId = decodeToken(localStorage.getItem('token')).userId;
-    this.getConsumptions(selectedDay, userId);
-    this.getActivity(selectedDay, userId);
-    this.getGoals(userId);
+    const token = localStorage.getItem('token');
+    if(token) {
+      this.getConsumptions(selectedDay);
+      this.getActivity(selectedDay);
+      this.getGoals();
+    }
   }
 
-  getConsumptions(day, userId) {
+  getConsumptions(day) {
+    const userId = decodeToken(localStorage.getItem('token')).userId;
+
     let date = day.toISOString().split('T')[0];
-    fetch('/api/consumptions?type=day&userId=' + userId + '&date=' + date)
-      .then((resp) => resp.json())
-      .then(meals => {
-        this.setState({
-          meals: meals,
-          loadingItems: false
-        });
+    fetch('/api/consumptions?type=day&userId=' + userId + '&date=' + date + '&token=' + localStorage.getItem('token'))
+      .then(res => {
+        if(res.ok) {
+          return res.json()
+          .then(meals => {
+            this.setState({
+              meals: meals,
+              loadingItems: false
+            });
+          });
+        } else if(res.status === 403) {
+          localStorage.removeItem('token');
+          window.location = '/login?midreq=true';
+        }
       });
   }
 
-  getActivity(day, userId) {
+  getActivity(day) {
+    const userId = decodeToken(localStorage.getItem('token')).userId;
+
     let date = day.toISOString().split('T')[0];
-    fetch('/api/exercise?userId=' + userId + '&date=' + date)
+    fetch('/api/exercise?userId=' + userId + '&date=' + date + '&token=' + localStorage.getItem('token'))
       .then((resp) => resp.json())
       .then(activity => {
         if(activity.caloriesBurned === 0) {
@@ -79,8 +93,10 @@ class DayView extends Component {
       });
   }
 
-  getGoals(userId) {
-    fetch('/api/goals/' + userId)
+  getGoals() {
+    const userId = decodeToken(localStorage.getItem('token')).userId;
+
+    fetch('/api/goals/' + userId + '?token=' + localStorage.getItem('token'))
       .then((resp) => resp.json())
       .then(goals => {
         this.setState({goals: goals});
@@ -96,7 +112,7 @@ class DayView extends Component {
 
   removeItem(consumptionId) {
     this.setState({removingItem: true});
-    fetch('/api/consumptions/' + consumptionId, {method: 'DELETE'})
+    fetch('/api/consumptions/' + consumptionId + '?token=' + localStorage.getItem('token'), {method: 'DELETE'})
       .then(res => {
         if(res.ok) {
           let mealItemIndex, meal;
@@ -118,6 +134,9 @@ class DayView extends Component {
             }
           });
           this.setState(newState);
+        } else if(res.status === 403) {
+          localStorage.removeItem('token');
+          window.location = '/login?midreq=true';
         } else {
           alert('This item couldn\'t be removed :(');
         }
@@ -189,9 +208,13 @@ class DayView extends Component {
       }
     });
     if(updatedConsumption) {
+      let reqObj = {
+        consumption: updatedConsumption,
+        token: localStorage.getItem('token')
+      }
       fetch('/api/consumptions/' + updatedConsumption.consumptionId, {
         method: 'PUT',
-        body: JSON.stringify(updatedConsumption)
+        body: JSON.stringify(reqObj)
       })
         .then(res => {
           if(res.ok) {
@@ -223,14 +246,18 @@ class DayView extends Component {
 
   postActivityChange(calories, userId) {
     let calsBurned = calories ? calories : 0;
-    let activityObj = {
+    const activityObj = {
       userId: userId,
       caloriesBurned: calsBurned,
       day: this.state.selectedDay
-    }
+    };
+    const reqObj = {
+      activity: activityObj,
+      token: localStorage.getItem('token')
+    };
     fetch('/api/exercise', {
       method: 'POST',
-      body: JSON.stringify(activityObj)
+      body: JSON.stringify(reqObj)
     })
     .then(res => {
       if(!res.ok) {
@@ -259,9 +286,12 @@ class DayView extends Component {
   render() {
     let mealTotals = this.calculateMealTotals();
     let dayTotals = this.calculateDayTotals(mealTotals);
+    let onboarding = queryString.parse(this.props.location.search).onboard;
 
     return (
       <div className="DayView content-container">
+        {onboarding && <OnboardingMessage />}
+
         <DaySelect 
           selectedDay={this.state.selectedDay}
           changeSelectedDay={this.changeSelectedDay.bind(this)}

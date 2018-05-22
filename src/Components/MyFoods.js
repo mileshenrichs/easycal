@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import decodeToken from '../Auth/authUtil';
 import AddableFoodItem from './AddableFoodItem';
 
 class MyFoods extends Component {

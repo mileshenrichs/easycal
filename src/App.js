@@ -50,12 +50,12 @@ class App extends Component {
           }
         } else { // auth invalid
           localStorage.removeItem('token');
-          window.location = '/login';
+          window.location = '/login?midreq=true';
         }
       });
     } else { // no token = no auth
       if(!document.location.href.includes('login')) {
-        window.location = '/login';
+        window.location = '/login?midreq=true';
       }
     }
 

@@ -32,7 +32,7 @@ class StatisticsView extends Component {
     document.title = 'EasyCal: Statistics';
     window.scrollTo(0, 0);
     const userId = decodeToken(localStorage.getItem('token')).userId;
-    fetch('/api/goals/' + userId)
+    fetch('/api/goals/' + userId + '?token=' + localStorage.getItem('token'))
       .then((resp) => resp.json())
       .then(goals => {
         for(var goalCategory in goals) {
@@ -49,17 +49,25 @@ class StatisticsView extends Component {
     const userId = decodeToken(localStorage.getItem('token')).userId;
 
     this.setState({refreshing: true});
-    fetch('/api/stats?userId=' + userId + '&dateFrom=' + this.state.dayFrom.toISOString() + '&dateTo=' + this.state.dayTo.toISOString())
-      .then((resp) => resp.json())
+    fetch('/api/stats?userId=' + userId + '&dateFrom=' + this.state.dayFrom.toISOString() 
+      + '&dateTo=' + this.state.dayTo.toISOString() + '&token=' + localStorage.getItem('token'))
       .then(res => {
-        this.setState({
-          totals: res.totals,
-          overallTotals: res.overallTotals,
-          averages: res.averages,
-          exercise: res.exercise,
-          refreshing: false,
-          refreshButtonActive: false
-        });
+        if(res.ok) {
+          return res.json()
+          .then(res => {
+            this.setState({
+              totals: res.totals,
+              overallTotals: res.overallTotals,
+              averages: res.averages,
+              exercise: res.exercise,
+              refreshing: false,
+              refreshButtonActive: false
+            });
+          });
+        } else if(res.status === 403) {
+          localStorage.removeItem('token');
+          window.location = '/login?midreq=true';
+        }
       });
   }
 

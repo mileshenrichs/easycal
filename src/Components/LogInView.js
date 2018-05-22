@@ -51,7 +51,7 @@ class LogInView extends Component {
         } else { // if no error, collect token and log user in
           const userToken = res.token;
           localStorage.setItem('token', userToken);
-          window.location = '/';
+          window.location = '/?onboard=true';
         }
       });
     } else { // user is logging in (as opposed to registering)
@@ -65,7 +65,7 @@ class LogInView extends Component {
           if(res.message === 'user doesn\'t exist') {
             this.setState({
               waiting: false,
-              errorMessage: 'There isn\'t an account registered to this email address.'
+              errorMessage: 'There isn\'t an account registered to that email address.'
             });
           } else if(res.message === 'incorrect pass') {
             this.setState({
@@ -108,16 +108,23 @@ class LogInView extends Component {
   render() {
     let welcomeText;
     let justLoggedOut = queryString.parse(this.props.location.search).logout;
-    if(!justLoggedOut) {
+    let sessionExpired = queryString.parse(this.props.location.search).midreq;
+
+    if(justLoggedOut) {
+      welcomeText = (
+        <span className="LogInView__notify LogInView__logout-confirm"><span role="img" aria-label="Success!">👍🏼</span> &nbsp;You have successfully logged out.</span>
+      );
+    } else if(sessionExpired) {
+      welcomeText = (
+        <span className="LogInView__notify LogInView__session-expired"><span role="img" aria-label="Clock">⏲️</span> &nbsp;Your session expired.  To keep things secure, please log back in.</span>
+      );
+    }
+    else {
       welcomeText = (
         <p>
           <b>Welcome!</b> EasyCal is a simple nutrition app that helps you keep track of your diet and exercise. <br />
           <span>Please log in or register to continue.</span>
         </p>
-      );
-    } else {
-      welcomeText = (
-        <span className="LogInView__logout-confirm"><span role="img" aria-label="Success!">👍🏼</span> &nbsp;You have successfully logged out.</span>
       );
     }
 
@@ -170,7 +177,7 @@ class LogInView extends Component {
           </form>
         </div>
 
-        {this.state.errorMessage && <span className="LogInView__error"><span role="img" aria-label="Oops!">😨</span> &nbsp;{this.state.errorMessage}</span>}
+        {this.state.errorMessage && <span className="LogInView__notify LogInView__error"><span role="img" aria-label="Oops!">😨</span> &nbsp;{this.state.errorMessage}</span>}
 
         {switchText}
       </div>
