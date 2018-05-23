@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Switch } from 'react-router-dom';
 import ProtectedRoute from './Auth/ProtectedRoute';
 import AuthLoader from './Auth/AuthLoader';
+import baseUrl from './Deployment/deploymentConfig';
 import './App.css';
 import Header from './Components/Header';
 import Favicon from 'react-favicon';
@@ -29,6 +30,7 @@ class App extends Component {
    */
   checkAuth() {
     let userLoggedIn = false;
+    localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImVtYWlsQWRkcmVzcyI6Im1pbGVzaGVucmljaHMyMUBnbWFpbC5jb20iLCJleHAiOjE1Mjc1NTk4MjF9.g5UBRT_exrjGsfnakznuoQaANjRtFaqXe2KUwYOXsHM');
     const token = localStorage.getItem('token');
 
     // check if there's a token in storage
@@ -50,12 +52,12 @@ class App extends Component {
           }
         } else { // auth invalid
           localStorage.removeItem('token');
-          window.location = '/login?midreq=true';
+          window.location = baseUrl() + '/login?midreq=true';
         }
       });
     } else { // no token = no auth
       if(!document.location.href.includes('login')) {
-        window.location = '/login?midreq=true';
+        window.location = baseUrl() + '/login?midreq=true';
       }
     }
 
@@ -67,41 +69,48 @@ class App extends Component {
     let location = document.location.href;
     let onLoginPage = location.includes('login');
 
+    console.log('location: ' + location);
+    console.log();
+    console.log('hello');
+    console.log();
+    console.log('base url: ' + baseUrl());
+
     return (
       <div className="App">
 
-      {location === 'http://localhost:3000/' && !this.state.userLoggedIn && <AuthLoader />}
+      {(location.substring(location.length - baseUrl().length) === baseUrl() || location.substring(location.length - (baseUrl().length + 1)) === baseUrl() + '/') 
+          && !this.state.userLoggedIn && <AuthLoader />}
 
         <Favicon url={appFavicon} />
         {!onLoginPage && <Header />}
         <Switch>
 
-          <ProtectedRoute path="/login" exact={true}
+          <ProtectedRoute path={baseUrl() + "/login"} exact={true}
               trueComponent={LogInView}
               decisionFunc={this.checkAuth.bind(this)}
           />
 
-          <ProtectedRoute path="/" exact={true}
+          <ProtectedRoute path={baseUrl() + "/"} exact={true}
             trueComponent={DayView}
             decisionFunc={this.checkAuth.bind(this)}
           />
 
-          <ProtectedRoute path="/add" exact={true}
+          <ProtectedRoute path={baseUrl() + "/add"} exact={true}
             trueComponent={AddFoodViewContainer}
             decisionFunc={this.checkAuth.bind(this)}
           />
 
-          <ProtectedRoute path="/createfood" exact={true}
+          <ProtectedRoute path={baseUrl() + "/createfood"} exact={true}
             trueComponent={CreateFoodView}
             decisionFunc={this.checkAuth.bind(this)}
           />
 
-          <ProtectedRoute path="/stats" exact={true}
+          <ProtectedRoute path={baseUrl() + "/stats"} exact={true}
             trueComponent={StatisticsView}
             decisionFunc={this.checkAuth.bind(this)}
           />
 
-          <ProtectedRoute path="/me" exact={true}
+          <ProtectedRoute path={baseUrl() + "/me"} exact={true}
             trueComponent={MyAccountView}
             decisionFunc={this.checkAuth.bind(this)}
           />

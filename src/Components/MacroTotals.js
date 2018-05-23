@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import baseUrl from '../Deployment/deploymentConfig';
 import carbsIcon from '../resources/bread-emoji.png';
 import fatIcon from '../resources/bacon-strip-emoji.png';
 import proteinIcon from '../resources/steak-emoji.png';
@@ -52,7 +53,7 @@ class MacroTotals extends Component {
       );
     } else {
       caloriesGoalText = (
-        <span className="MacroTotals__caloriesgoal">You haven't <Link to='/me'>set your goals</Link> yet.</span>
+        <span className="MacroTotals__caloriesgoal">You haven't <Link to={baseUrl() + '/me'}>set your goals</Link> yet.</span>
       );
     }
 

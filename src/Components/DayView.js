@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import decodeToken from '../Auth/authUtil';
+import baseUrl from '../Deployment/deploymentConfig';
 import update from 'immutability-helper';
 import qs from 'qs';
 import DaySelect from './DaySelect';
@@ -74,7 +75,7 @@ class DayView extends Component {
           });
         } else if(res.status === 403) {
           localStorage.removeItem('token');
-          window.location = '/login?midreq=true';
+          window.location = baseUrl() + '/login?midreq=true';
         }
       });
   }
@@ -137,7 +138,7 @@ class DayView extends Component {
           this.setState(newState);
         } else if(res.status === 403) {
           localStorage.removeItem('token');
-          window.location = '/login?midreq=true';
+          window.location = baseUrl() + '/login?midreq=true';
         } else {
           alert('This item couldn\'t be removed :(');
         }

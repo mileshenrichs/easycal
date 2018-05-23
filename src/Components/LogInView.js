@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import baseUrl from '../Deployment/deploymentConfig';
 import qs from 'qs';
 import logo from '../resources/login-logo.png';
 import loader from '../resources/loader.gif';
@@ -51,7 +52,7 @@ class LogInView extends Component {
         } else { // if no error, collect token and log user in
           const userToken = res.token;
           localStorage.setItem('token', userToken);
-          window.location = '/?onboard=true';
+          window.location = baseUrl() + '/?onboard=true';
         }
       });
     } else { // user is logging in (as opposed to registering)
@@ -81,7 +82,7 @@ class LogInView extends Component {
         } else { // if no error, collect token and log user in
           const userToken = res.token;
           localStorage.setItem('token', userToken);
-          window.location = '/';
+          window.location = baseUrl + '/';
         }
       });
     }

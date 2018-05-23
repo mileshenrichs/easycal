@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import decodeToken from '../Auth/authUtil';
+import baseUrl from '../Deployment/deploymentConfig';
 
 class MyGoals extends Component {
 
@@ -37,7 +38,7 @@ class MyGoals extends Component {
           });
         } else if(res.status === 403) {
           localStorage.removeItem('token');
-          window.location = '/login';
+          window.location = baseUrl() + '/login';
         }
       });
   }

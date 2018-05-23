@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import decodeToken from '../Auth/authUtil';
+import baseUrl from '../Deployment/deploymentConfig';
 import moment from 'moment';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
@@ -66,7 +67,7 @@ class StatisticsView extends Component {
           });
         } else if(res.status === 403) {
           localStorage.removeItem('token');
-          window.location = '/login?midreq=true';
+          window.location = baseUrl() + '/login?midreq=true';
         }
       });
   }

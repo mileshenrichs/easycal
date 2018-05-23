@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import decodeToken from '../Auth/authUtil';
+import baseUrl from '../Deployment/deploymentConfig';
 import update from 'immutability-helper';
 import ServingSelect from './ServingSelect';
 import ItemDeleteButton from './ItemDeleteButton';
@@ -116,10 +117,10 @@ class AddableFoodItem extends Component {
     })
     .then(res => {
       if(res.ok) {
-        window.location = '/?day=' + this.props.day;
+        window.location = baseUrl() + '/?day=' + this.props.day;
       } else if(res.status === 403) {
         localStorage.removeItem('token');
-        window.location = '/login?midreq=true';
+        window.location = baseUrl() + '/login?midreq=true';
       } else {
         alert('There was a problem adding this food to your log.');
       }

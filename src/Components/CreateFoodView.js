@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import decodeToken from '../Auth/authUtil';
+import baseUrl from '../Deployment/deploymentConfig';
 import qs from 'qs';
 import carbsIcon from '../resources/bread-emoji.png';
 import fatIcon from '../resources/bacon-strip-emoji.png';
@@ -43,10 +44,10 @@ class CreateFoodView extends Component {
     })
       .then(res => {
         if(res.ok) {
-          window.location = '/add?m=' + meal + '&day=' + day + '&t=2';
+          window.location = baseUrl() + '/add?m=' + meal + '&day=' + day + '&t=2';
         } else if(res.status === 403) {
           localStorage.removeItem('token');
-          window.location = '/login?midreq=true';
+          window.location = baseUrl() + '/login?midreq=true';
         } else {
           alert('For some reason, this food could not be created.');
         }
@@ -117,7 +118,7 @@ class CreateFoodView extends Component {
             </div>
           </div>
           <button className="CreateFoodView__submit-button" type="submit">Create Food</button>
-          <Link to={'/add?m=' + meal + '&day=' + day + '&t=2'} className="cancel-link">Cancel</Link>
+          <Link to={baseUrl() + '/add?m=' + meal + '&day=' + day + '&t=2'} className="cancel-link">Cancel</Link>
         </form>
         <div className="clearfix"></div>
       </div>
