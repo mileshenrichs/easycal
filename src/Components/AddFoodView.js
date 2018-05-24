@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import decodeToken from '../Auth/authUtil';
+import deploymentConfig from '../Deployment/deploymentConfig';
 import update from 'immutability-helper';
 import SearchFood from './SearchFood';
 import FoodsPanel from './FoodsPanel';
@@ -22,7 +23,7 @@ class AddFoodView extends Component {
 	componentDidMount() {
 		const userId = decodeToken(localStorage.getItem('token')).userId;
 		// get recent consumptions
-		fetch('/api/consumptions?type=recent&userId=' + userId + '&token=' + localStorage.getItem('token'))
+		fetch(deploymentConfig().apiUrl + '/api/consumptions?type=recent&userId=' + userId + '&token=' + localStorage.getItem('token'))
 			.then((resp) => resp.json())
 			.then(recentFoods => {
 				this.setState({
@@ -56,7 +57,7 @@ class AddFoodView extends Component {
 
 	getSearchResults(searchTerm) {
 		let term = searchTerm.replace(/\s/g, "_");
-			fetch('/api/foods?q=' + term)
+			fetch(deploymentConfig().apiUrl + '/api/foods?q=' + term)
 			.then((resp) => {
 				if(resp.ok) {
 					resp.json()
@@ -76,7 +77,7 @@ class AddFoodView extends Component {
 		const userId = decodeToken(localStorage.getItem('token')).userId;
 
 		// get user foods
-    fetch('/api/foods/user/' + userId + '?token=' + localStorage.getItem('token'))
+    fetch(deploymentConfig().apiUrl + '/api/foods/user/' + userId + '?token=' + localStorage.getItem('token'))
       .then((resp) => resp.json())
       .then(userFoods => {
         this.setState({myFoods: userFoods});
@@ -84,7 +85,7 @@ class AddFoodView extends Component {
 	}
 
 	deleteUserFoodItem(foodItemId) {
-		fetch('/api/foods/' + foodItemId + '?token=' + localStorage.getItem('token'), {method: 'DELETE'})
+		fetch(deploymentConfig().apiUrl + '/api/foods/' + foodItemId + '?token=' + localStorage.getItem('token'), {method: 'DELETE'})
       .then(res => {
         if(res.ok) {
           let foodItem = this.state.myFoods.find(food => food.foodItemId === foodItemId);

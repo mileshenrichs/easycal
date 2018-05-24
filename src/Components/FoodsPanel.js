@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import baseUrl from '../Deployment/deploymentConfig';
+import deploymentConfig from '../Deployment/deploymentConfig';
 import SearchResults from './SearchResults';
 import MyFoods from './MyFoods';
 import RecentFoods from './RecentFoods';
@@ -86,7 +86,7 @@ class FoodsPanel extends Component {
         	<span 
         		className={'FoodsPanel__tab--myfoods' + (this.props.currentTab === 2 ? ' current' : '')}
         		onClick={this.handleSwitchTab.bind(this)}>My Foods</span>
-      		<Link to={baseUrl() + '/createfood?from=' + this.props.day + '&for=' + this.props.mealName + ''}>
+      		<Link to={deploymentConfig().baseUrl + '/createfood?from=' + this.props.day + '&for=' + this.props.mealName + ''}>
           	<span className={'FoodsPanel__tab--createfoodbutton small-button' + (this.props.currentTab === 2 ? ' current' : '')}>+ New</span>
         	</Link>
           {editLink}

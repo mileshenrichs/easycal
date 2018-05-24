@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import decodeToken from '../Auth/authUtil';
+import deploymentConfig from '../Deployment/deploymentConfig';
 import MyGoals from './MyGoals';
 
 class MyAccountView extends Component {
@@ -14,7 +15,7 @@ class MyAccountView extends Component {
 
     // redirect to login page
     this.props.history.push({
-      pathname: '/login',
+      pathname: deploymentConfig().baseUrl() + '/login',
       search: '?logout=true'
     });
   }

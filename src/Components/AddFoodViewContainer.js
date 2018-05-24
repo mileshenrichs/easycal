@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import baseUrl from '../Deployment/deploymentConfig';
+import deploymentConfig from '../Deployment/deploymentConfig';
 import qs from 'qs';
 import AddFoodView from './AddFoodView';
 
@@ -21,7 +21,7 @@ class AddFoodViewContainer extends Component {
         <AddFoodView mealName={mealName} day={day} tab={tab} />
         <div className="FoodsPanel__cancel-link">
           <div className="container">
-            <Link to={baseUrl() + "/"}>Cancel</Link>
+            <Link to={deploymentConfig().baseUrl + "/"}>Cancel</Link>
           </div>
         </div>
       </div>

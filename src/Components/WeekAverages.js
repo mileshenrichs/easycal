@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import baseUrl from '../Deployment/deploymentConfig';
+import deploymentConfig from '../Deployment/deploymentConfig';
 import carbsIcon from '../resources/bread-emoji.png';
 import fatIcon from '../resources/bacon-strip-emoji.png';
 import proteinIcon from '../resources/steak-emoji.png';
@@ -34,7 +34,7 @@ class WeekAverages extends Component {
             {goalDifferences.calories && 
               <span className="WeekAverages__difference">({(goalDifferences.calories >= 0 ? '+' : '') + goalDifferences.calories})</span>}
           </span>
-          <Link to={baseUrl() + "/me"}><span className="WeekAverages__goals-button small-button">my goals</span></Link>
+          <Link to={deploymentConfig().baseUrl + "/me"}><span className="WeekAverages__goals-button small-button">my goals</span></Link>
         </div>
 
         <div className="WeekAverages__table">

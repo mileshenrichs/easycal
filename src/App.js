@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Switch } from 'react-router-dom';
 import ProtectedRoute from './Auth/ProtectedRoute';
 import AuthLoader from './Auth/AuthLoader';
-import baseUrl from './Deployment/deploymentConfig';
+import deploymentConfig from './Deployment/deploymentConfig';
 import './App.css';
 import Header from './Components/Header';
 import Favicon from 'react-favicon';
@@ -30,7 +30,7 @@ class App extends Component {
    */
   checkAuth() {
     let userLoggedIn = false;
-    localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImVtYWlsQWRkcmVzcyI6Im1pbGVzaGVucmljaHMyMUBnbWFpbC5jb20iLCJleHAiOjE1Mjc1NTk4MjF9.g5UBRT_exrjGsfnakznuoQaANjRtFaqXe2KUwYOXsHM');
+    //localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImVtYWlsQWRkcmVzcyI6Im1pbGVzaGVucmljaHMyMUBnbWFpbC5jb20iLCJleHAiOjE1Mjc1NTk4MjF9.g5UBRT_exrjGsfnakznuoQaANjRtFaqXe2KUwYOXsHM');
     const token = localStorage.getItem('token');
 
     // check if there's a token in storage
@@ -39,7 +39,7 @@ class App extends Component {
         token: token
       };
 
-      fetch('/api/auth/check', {
+      fetch(deploymentConfig().apiUrl + '/api/auth/check', {
         method: 'POST',
         body: JSON.stringify(reqObj)
       })
@@ -52,12 +52,12 @@ class App extends Component {
           }
         } else { // auth invalid
           localStorage.removeItem('token');
-          window.location = baseUrl() + '/login?midreq=true';
+          window.location.href = deploymentConfig().baseUrl + '/login?midreq=true';
         }
       });
     } else { // no token = no auth
       if(!document.location.href.includes('login')) {
-        window.location = baseUrl() + '/login?midreq=true';
+        window.location.href = deploymentConfig().baseUrl + '/login?midreq=true';
       }
     }
 
@@ -69,48 +69,46 @@ class App extends Component {
     let location = document.location.href;
     let onLoginPage = location.includes('login');
 
+    console.log('deploymentConfig().baseUrl: ' + deploymentConfig().baseUrl);
     console.log('location: ' + location);
-    console.log();
-    console.log('hello');
-    console.log();
-    console.log('base url: ' + baseUrl());
+    console.log('location.substring(location.length - deploymentConfig().baseUrl.length: ' + location.substring(location.length - deploymentConfig().baseUrl.length));
 
     return (
       <div className="App">
 
-      {(location.substring(location.length - baseUrl().length) === baseUrl() || location.substring(location.length - (baseUrl().length + 1)) === baseUrl() + '/') 
+      {(location.substring(location.length - deploymentConfig().baseUrl.length) === deploymentConfig().baseUrl || location.substring(location.length - (deploymentConfig().baseUrl.length + 1)) === deploymentConfig().baseUrl + '/') 
           && !this.state.userLoggedIn && <AuthLoader />}
 
         <Favicon url={appFavicon} />
         {!onLoginPage && <Header />}
         <Switch>
 
-          <ProtectedRoute path={baseUrl() + "/login"} exact={true}
+          <ProtectedRoute path={deploymentConfig().baseUrl + "/login"} exact={true}
               trueComponent={LogInView}
               decisionFunc={this.checkAuth.bind(this)}
           />
 
-          <ProtectedRoute path={baseUrl() + "/"} exact={true}
+          <ProtectedRoute path={deploymentConfig().baseUrl + "/"} exact={true}
             trueComponent={DayView}
             decisionFunc={this.checkAuth.bind(this)}
           />
 
-          <ProtectedRoute path={baseUrl() + "/add"} exact={true}
+          <ProtectedRoute path={deploymentConfig().baseUrl + "/add"} exact={true}
             trueComponent={AddFoodViewContainer}
             decisionFunc={this.checkAuth.bind(this)}
           />
 
-          <ProtectedRoute path={baseUrl() + "/createfood"} exact={true}
+          <ProtectedRoute path={deploymentConfig().baseUrl + "/createfood"} exact={true}
             trueComponent={CreateFoodView}
             decisionFunc={this.checkAuth.bind(this)}
           />
 
-          <ProtectedRoute path={baseUrl() + "/stats"} exact={true}
+          <ProtectedRoute path={deploymentConfig().baseUrl + "/stats"} exact={true}
             trueComponent={StatisticsView}
             decisionFunc={this.checkAuth.bind(this)}
           />
 
-          <ProtectedRoute path={baseUrl() + "/me"} exact={true}
+          <ProtectedRoute path={deploymentConfig().baseUrl + "/me"} exact={true}
             trueComponent={MyAccountView}
             decisionFunc={this.checkAuth.bind(this)}
           />

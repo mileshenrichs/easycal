@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import decodeToken from '../Auth/authUtil';
-import baseUrl from '../Deployment/deploymentConfig';
+import deploymentConfig from '../Deployment/deploymentConfig';
 
 class MyGoals extends Component {
 
@@ -24,7 +24,7 @@ class MyGoals extends Component {
   componentDidMount() {
     const userId = decodeToken(localStorage.getItem('token')).userId;
 
-    fetch('/api/goals/' + userId + '?token=' + localStorage.getItem('token'))
+    fetch(deploymentConfig().apiUrl + '/api/goals/' + userId + '?token=' + localStorage.getItem('token'))
       .then(res => {
         if(res.ok) {
           return res.json()
@@ -38,7 +38,7 @@ class MyGoals extends Component {
           });
         } else if(res.status === 403) {
           localStorage.removeItem('token');
-          window.location = baseUrl() + '/login';
+          window.location = deploymentConfig().baseUrl + '/login';
         }
       });
   }
@@ -79,7 +79,7 @@ class MyGoals extends Component {
       token: localStorage.getItem('token')
     }
 
-    fetch('/api/goals', {
+    fetch(deploymentConfig().apiUrl + '/api/goals', {
       method: 'POST',
       body: JSON.stringify(reqObj)
     })

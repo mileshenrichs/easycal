@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import decodeToken from '../Auth/authUtil';
-import baseUrl from '../Deployment/deploymentConfig';
+import deploymentConfig from '../Deployment/deploymentConfig';
 import update from 'immutability-helper';
 import qs from 'qs';
 import DaySelect from './DaySelect';
@@ -63,7 +63,7 @@ class DayView extends Component {
     const userId = decodeToken(localStorage.getItem('token')).userId;
 
     let date = day.toISOString().split('T')[0];
-    fetch('/api/consumptions?type=day&userId=' + userId + '&date=' + date + '&token=' + localStorage.getItem('token'))
+    fetch(deploymentConfig().apiUrl + '/api/consumptions?type=day&userId=' + userId + '&date=' + date + '&token=' + localStorage.getItem('token'))
       .then(res => {
         if(res.ok) {
           return res.json()
@@ -75,7 +75,7 @@ class DayView extends Component {
           });
         } else if(res.status === 403) {
           localStorage.removeItem('token');
-          window.location = baseUrl() + '/login?midreq=true';
+          window.location = deploymentConfig().baseUrl + '/login?midreq=true';
         }
       });
   }
@@ -84,7 +84,7 @@ class DayView extends Component {
     const userId = decodeToken(localStorage.getItem('token')).userId;
 
     let date = day.toISOString().split('T')[0];
-    fetch('/api/exercise?userId=' + userId + '&date=' + date + '&token=' + localStorage.getItem('token'))
+    fetch(deploymentConfig().apiUrl + '/api/exercise?userId=' + userId + '&date=' + date + '&token=' + localStorage.getItem('token'))
       .then((resp) => resp.json())
       .then(activity => {
         if(activity.caloriesBurned === 0) {
@@ -98,7 +98,7 @@ class DayView extends Component {
   getGoals() {
     const userId = decodeToken(localStorage.getItem('token')).userId;
 
-    fetch('/api/goals/' + userId + '?token=' + localStorage.getItem('token'))
+    fetch(deploymentConfig().apiUrl + '/api/goals/' + userId + '?token=' + localStorage.getItem('token'))
       .then((resp) => resp.json())
       .then(goals => {
         this.setState({goals: goals});
@@ -114,7 +114,7 @@ class DayView extends Component {
 
   removeItem(consumptionId) {
     this.setState({removingItem: true});
-    fetch('/api/consumptions/' + consumptionId + '?token=' + localStorage.getItem('token'), {method: 'DELETE'})
+    fetch(deploymentConfig().apiUrl + '/api/consumptions/' + consumptionId + '?token=' + localStorage.getItem('token'), {method: 'DELETE'})
       .then(res => {
         if(res.ok) {
           let mealItemIndex, meal;
@@ -138,7 +138,7 @@ class DayView extends Component {
           this.setState(newState);
         } else if(res.status === 403) {
           localStorage.removeItem('token');
-          window.location = baseUrl() + '/login?midreq=true';
+          window.location = deploymentConfig().baseUrl + '/login?midreq=true';
         } else {
           alert('This item couldn\'t be removed :(');
         }
@@ -214,7 +214,7 @@ class DayView extends Component {
         consumption: updatedConsumption,
         token: localStorage.getItem('token')
       }
-      fetch('/api/consumptions/' + updatedConsumption.consumptionId, {
+      fetch(deploymentConfig().apiUrl + '/api/consumptions/' + updatedConsumption.consumptionId, {
         method: 'PUT',
         body: JSON.stringify(reqObj)
       })
@@ -257,7 +257,7 @@ class DayView extends Component {
       activity: activityObj,
       token: localStorage.getItem('token')
     };
-    fetch('/api/exercise', {
+    fetch(deploymentConfig().apiUrl + '/api/exercise', {
       method: 'POST',
       body: JSON.stringify(reqObj)
     })

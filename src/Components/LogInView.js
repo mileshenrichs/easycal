@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import baseUrl from '../Deployment/deploymentConfig';
+import deploymentConfig from '../Deployment/deploymentConfig';
 import qs from 'qs';
 import logo from '../resources/login-logo.png';
 import loader from '../resources/loader.gif';
@@ -30,7 +30,7 @@ class LogInView extends Component {
 
     // different requests depending on whether user is registering or logging in
     if(this.state.registering) {
-      fetch('/api/users/register', {
+      fetch(deploymentConfig().apiUrl + '/api/users/register', {
         method: 'POST',
         body: JSON.stringify(reqObj)
       })
@@ -52,11 +52,11 @@ class LogInView extends Component {
         } else { // if no error, collect token and log user in
           const userToken = res.token;
           localStorage.setItem('token', userToken);
-          window.location = baseUrl() + '/?onboard=true';
+          window.location = deploymentConfig().baseUrl + '/?onboard=true';
         }
       });
     } else { // user is logging in (as opposed to registering)
-      fetch('/api/users/login', {
+      fetch(deploymentConfig().apiUrl + '/api/users/login', {
         method: 'POST',
         body: JSON.stringify(reqObj)
       })
@@ -82,7 +82,7 @@ class LogInView extends Component {
         } else { // if no error, collect token and log user in
           const userToken = res.token;
           localStorage.setItem('token', userToken);
-          window.location = baseUrl + '/';
+          window.location = deploymentConfig().baseUrl + '/';
         }
       });
     }

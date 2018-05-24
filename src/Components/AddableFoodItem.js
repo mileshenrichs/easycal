@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import decodeToken from '../Auth/authUtil';
-import baseUrl from '../Deployment/deploymentConfig';
+import deploymentConfig from '../Deployment/deploymentConfig';
 import update from 'immutability-helper';
 import ServingSelect from './ServingSelect';
 import ItemDeleteButton from './ItemDeleteButton';
@@ -48,7 +48,7 @@ class AddableFoodItem extends Component {
     if(!this.props.editMode) { // if not in edit mode, get item details for ServingSelect
       if(!this.state.adding && !this.state.item) {
         this.setState({loading: true});
-        fetch('/api/foods/' + this.props.item.foodItemId)
+        fetch(deploymentConfig().apiUrl + '/api/foods/' + this.props.item.foodItemId)
         .then((resp) => resp.json())
         .then(item => {
           let processedItem = this.setDefaultServingQuantity(item);
@@ -111,16 +111,16 @@ class AddableFoodItem extends Component {
       consumption: consumption,
       token: localStorage.getItem('token')
     }
-    fetch('/api/consumptions', {
+    fetch(deploymentConfig().apiUrl + '/api/consumptions', {
       method: 'POST',
       body: JSON.stringify(reqObj)
     })
     .then(res => {
       if(res.ok) {
-        window.location = baseUrl() + '/?day=' + this.props.day;
+        window.location = deploymentConfig().baseUrl + '/?day=' + this.props.day;
       } else if(res.status === 403) {
         localStorage.removeItem('token');
-        window.location = baseUrl() + '/login?midreq=true';
+        window.location = deploymentConfig().baseUrl + '/login?midreq=true';
       } else {
         alert('There was a problem adding this food to your log.');
       }

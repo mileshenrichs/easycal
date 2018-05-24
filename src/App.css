@@ -9,6 +9,10 @@ body {
 	color: #003300;
 }
 
+a {
+	outline: 0;
+}
+
 .AuthLoader {
 	position: fixed;
 	top: 0;

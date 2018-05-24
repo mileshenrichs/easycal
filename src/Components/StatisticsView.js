@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import decodeToken from '../Auth/authUtil';
-import baseUrl from '../Deployment/deploymentConfig';
+import deploymentConfig from '../Deployment/deploymentConfig';
 import moment from 'moment';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
@@ -33,7 +33,7 @@ class StatisticsView extends Component {
     document.title = 'EasyCal: Statistics';
     window.scrollTo(0, 0);
     const userId = decodeToken(localStorage.getItem('token')).userId;
-    fetch('/api/goals/' + userId + '?token=' + localStorage.getItem('token'))
+    fetch(deploymentConfig().apiUrl + '/api/goals/' + userId + '?token=' + localStorage.getItem('token'))
       .then((resp) => resp.json())
       .then(goals => {
         for(var goalCategory in goals) {
@@ -50,7 +50,7 @@ class StatisticsView extends Component {
     const userId = decodeToken(localStorage.getItem('token')).userId;
 
     this.setState({refreshing: true});
-    fetch('/api/stats?userId=' + userId + '&dateFrom=' + this.state.dayFrom.toISOString() 
+    fetch(deploymentConfig().apiUrl + '/api/stats?userId=' + userId + '&dateFrom=' + this.state.dayFrom.toISOString() 
       + '&dateTo=' + this.state.dayTo.toISOString() + '&token=' + localStorage.getItem('token'))
       .then(res => {
         if(res.ok) {
@@ -67,7 +67,7 @@ class StatisticsView extends Component {
           });
         } else if(res.status === 403) {
           localStorage.removeItem('token');
-          window.location = baseUrl() + '/login?midreq=true';
+          window.location = deploymentConfig().baseUrl + '/login?midreq=true';
         }
       });
   }
