@@ -211,10 +211,9 @@ class DayView extends Component {
     });
     if(updatedConsumption) {
       let reqObj = {
-        consumption: updatedConsumption,
-        token: localStorage.getItem('token')
+        consumption: updatedConsumption
       }
-      fetch(deploymentConfig().apiUrl + '/api/consumptions/' + updatedConsumption.consumptionId, {
+      fetch(deploymentConfig().apiUrl + '/api/consumptions/' + updatedConsumption.consumptionId + '?token=' + localStorage.getItem('token'), {
         method: 'PUT',
         body: JSON.stringify(reqObj)
       })
@@ -254,10 +253,9 @@ class DayView extends Component {
       day: this.state.selectedDay
     };
     const reqObj = {
-      activity: activityObj,
-      token: localStorage.getItem('token')
+      activity: activityObj
     };
-    fetch(deploymentConfig().apiUrl + '/api/exercise', {
+    fetch(deploymentConfig().apiUrl + '/api/exercise?token=' + localStorage.getItem('token'), {
       method: 'POST',
       body: JSON.stringify(reqObj)
     })

@@ -75,11 +75,10 @@ class MyGoals extends Component {
     }
 
     const reqObj = {
-      goals: goalsObj,
-      token: localStorage.getItem('token')
+      goals: goalsObj
     }
 
-    fetch(deploymentConfig().apiUrl + '/api/goals', {
+    fetch(deploymentConfig().apiUrl + '/api/goals?token=' + localStorage.getItem('token'), {
       method: 'POST',
       body: JSON.stringify(reqObj)
     })

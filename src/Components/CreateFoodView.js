@@ -35,10 +35,9 @@ class CreateFoodView extends Component {
       sodium: e.target[7].value
     };
     const reqObj = {
-      foodItem: newFood,
-      token: localStorage.getItem('token')
+      foodItem: newFood
     };
-    fetch(deploymentConfig().apiUrl + '/api/foods', {
+    fetch(deploymentConfig().apiUrl + '/api/foods?token=' + localStorage.getItem('token'), {
       method: 'POST',
       body: JSON.stringify(reqObj)
     })

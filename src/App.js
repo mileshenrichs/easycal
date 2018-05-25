@@ -30,7 +30,7 @@ class App extends Component {
    */
   checkAuth() {
     let userLoggedIn = false;
-    //localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImVtYWlsQWRkcmVzcyI6Im1pbGVzaGVucmljaHMyMUBnbWFpbC5jb20iLCJleHAiOjE1Mjc1NTk4MjF9.g5UBRT_exrjGsfnakznuoQaANjRtFaqXe2KUwYOXsHM');
+    localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImVtYWlsQWRkcmVzcyI6Im1pbGVzaGVucmljaHMyMUBnbWFpbC5jb20iLCJleHAiOjE1Mjc1NTk4MjF9.g5UBRT_exrjGsfnakznuoQaANjRtFaqXe2KUwYOXsHM');
     const token = localStorage.getItem('token');
 
     // check if there's a token in storage
@@ -68,10 +68,6 @@ class App extends Component {
   render() {
     let location = document.location.href;
     let onLoginPage = location.includes('login');
-
-    console.log('deploymentConfig().baseUrl: ' + deploymentConfig().baseUrl);
-    console.log('location: ' + location);
-    console.log('location.substring(location.length - deploymentConfig().baseUrl.length: ' + location.substring(location.length - deploymentConfig().baseUrl.length));
 
     return (
       <div className="App">

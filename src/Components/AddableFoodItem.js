@@ -108,10 +108,9 @@ class AddableFoodItem extends Component {
     consumption.day = this.props.day;
 
     const reqObj = {
-      consumption: consumption,
-      token: localStorage.getItem('token')
-    }
-    fetch(deploymentConfig().apiUrl + '/api/consumptions', {
+      consumption: consumption
+    };
+    fetch(deploymentConfig().apiUrl + '/api/consumptions?token=' + localStorage.getItem('token'), {
       method: 'POST',
       body: JSON.stringify(reqObj)
     })
