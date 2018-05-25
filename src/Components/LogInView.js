@@ -52,7 +52,7 @@ class LogInView extends Component {
         } else { // if no error, collect token and log user in
           const userToken = res.token;
           localStorage.setItem('token', userToken);
-          window.location = deploymentConfig().baseUrl + '/?onboard=true';
+          window.location.hash = deploymentConfig().baseUrl + '#/?onboard=true';
         }
       });
     } else { // user is logging in (as opposed to registering)
@@ -82,7 +82,7 @@ class LogInView extends Component {
         } else { // if no error, collect token and log user in
           const userToken = res.token;
           localStorage.setItem('token', userToken);
-          window.location = deploymentConfig().baseUrl + '/';
+          window.location.hash = deploymentConfig().baseUrl + '#/';
         }
       });
     }

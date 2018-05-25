@@ -75,7 +75,7 @@ class DayView extends Component {
           });
         } else if(res.status === 403) {
           localStorage.removeItem('token');
-          window.location = deploymentConfig().baseUrl + '/login?midreq=true';
+          window.location.hash = deploymentConfig().baseUrl + '#/login?midreq=true';
         }
       });
   }
@@ -138,7 +138,7 @@ class DayView extends Component {
           this.setState(newState);
         } else if(res.status === 403) {
           localStorage.removeItem('token');
-          window.location = deploymentConfig().baseUrl + '/login?midreq=true';
+          window.location.hash = deploymentConfig().baseUrl + '#/login?midreq=true';
         } else {
           alert('This item couldn\'t be removed :(');
         }

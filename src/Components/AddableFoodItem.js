@@ -116,10 +116,10 @@ class AddableFoodItem extends Component {
     })
     .then(res => {
       if(res.ok) {
-        window.location = deploymentConfig().baseUrl + '/?day=' + this.props.day;
+        window.location.hash = deploymentConfig().baseUrl + '#/?day=' + this.props.day;
       } else if(res.status === 403) {
         localStorage.removeItem('token');
-        window.location = deploymentConfig().baseUrl + '/login?midreq=true';
+        window.location.hash = deploymentConfig().baseUrl + '#/login?midreq=true';
       } else {
         alert('There was a problem adding this food to your log.');
       }

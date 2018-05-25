@@ -67,7 +67,7 @@ class StatisticsView extends Component {
           });
         } else if(res.status === 403) {
           localStorage.removeItem('token');
-          window.location = deploymentConfig().baseUrl + '/login?midreq=true';
+          window.location.hash = deploymentConfig().baseUrl + '#/login?midreq=true';
         }
       });
   }

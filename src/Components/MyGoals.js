@@ -38,7 +38,7 @@ class MyGoals extends Component {
           });
         } else if(res.status === 403) {
           localStorage.removeItem('token');
-          window.location = deploymentConfig().baseUrl + '/login';
+          window.location.hash = deploymentConfig().baseUrl + '#/login';
         }
       });
   }

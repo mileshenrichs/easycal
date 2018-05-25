@@ -4,6 +4,6 @@
 export default function deploymentConfig() {
 	return {
 		baseUrl: '',
-		apiUrl: 'https://easycalapi.site'
+		apiUrl: ''
 	};
 }

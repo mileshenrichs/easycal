@@ -43,10 +43,10 @@ class CreateFoodView extends Component {
     })
       .then(res => {
         if(res.ok) {
-          window.location = deploymentConfig().baseUrl + '/add?m=' + meal + '&day=' + day + '&t=2';
+          window.location.hash = deploymentConfig().baseUrl + '#/add?m=' + meal + '&day=' + day + '&t=2';
         } else if(res.status === 403) {
           localStorage.removeItem('token');
-          window.location = deploymentConfig().baseUrl + '/login?midreq=true';
+          window.location.hash = deploymentConfig().baseUrl + '#/login?midreq=true';
         } else {
           alert('For some reason, this food could not be created.');
         }

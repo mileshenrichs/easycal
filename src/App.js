@@ -30,7 +30,7 @@ class App extends Component {
    */
   checkAuth() {
     let userLoggedIn = false;
-    localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImVtYWlsQWRkcmVzcyI6Im1pbGVzaGVucmljaHMyMUBnbWFpbC5jb20iLCJleHAiOjE1Mjc1NTk4MjF9.g5UBRT_exrjGsfnakznuoQaANjRtFaqXe2KUwYOXsHM');
+    //localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImVtYWlsQWRkcmVzcyI6Im1pbGVzaGVucmljaHMyMUBnbWFpbC5jb20iLCJleHAiOjE1Mjc1NTk4MjF9.g5UBRT_exrjGsfnakznuoQaANjRtFaqXe2KUwYOXsHM');
     const token = localStorage.getItem('token');
 
     // check if there's a token in storage
@@ -52,12 +52,12 @@ class App extends Component {
           }
         } else { // auth invalid
           localStorage.removeItem('token');
-          window.location.href = deploymentConfig().baseUrl + '/login?midreq=true';
+          window.location.hash = deploymentConfig().baseUrl + '#/login?midreq=true';
         }
       });
     } else { // no token = no auth
-      if(!document.location.href.includes('login')) {
-        window.location.href = deploymentConfig().baseUrl + '/login?midreq=true';
+      if(!document.location.hash.includes('login')) {
+        window.location.hash = deploymentConfig().baseUrl + '#/login?midreq=true';
       }
     }
 
@@ -66,14 +66,15 @@ class App extends Component {
   }
 
   render() {
-    let location = document.location.href;
+    let location = document.location.hash;
     let onLoginPage = location.includes('login');
+
+    console.log(location);
 
     return (
       <div className="App">
 
-      {(location.substring(location.length - deploymentConfig().baseUrl.length) === deploymentConfig().baseUrl || location.substring(location.length - (deploymentConfig().baseUrl.length + 1)) === deploymentConfig().baseUrl + '/') 
-          && !this.state.userLoggedIn && <AuthLoader />}
+      {location === '#/' && !this.state.userLoggedIn && <AuthLoader />}
 
         <Favicon url={appFavicon} />
         {!onLoginPage && <Header />}
