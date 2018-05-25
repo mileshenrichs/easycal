@@ -85,7 +85,7 @@ class AddFoodView extends Component {
 	}
 
 	deleteUserFoodItem(foodItemId) {
-		fetch(deploymentConfig().apiUrl + '/api/foods/' + foodItemId + '?token=' + localStorage.getItem('token'), {method: 'DELETE'})
+		fetch(deploymentConfig().apiUrl + '/api/foods/' + foodItemId + '?token=' + localStorage.getItem('token'), {method: 'POST'})
       .then(res => {
         if(res.ok) {
           let foodItem = this.state.myFoods.find(food => food.foodItemId === foodItemId);

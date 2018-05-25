@@ -15,7 +15,7 @@ class MyAccountView extends Component {
 
     // redirect to login page
     this.props.history.push({
-      pathname: deploymentConfig().baseUrl() + '/login',
+      pathname: deploymentConfig().baseUrl + '/login',
       search: '?logout=true'
     });
   }

@@ -69,8 +69,6 @@ class App extends Component {
     let location = document.location.hash;
     let onLoginPage = location.includes('login');
 
-    console.log(location);
-
     return (
       <div className="App">
 
