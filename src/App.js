@@ -52,12 +52,12 @@ class App extends Component {
           }
         } else { // auth invalid
           localStorage.removeItem('token');
-          window.location.hash = deploymentConfig().baseUrl + '#/login?midreq=true';
+          window.location.hash = deploymentConfig().baseUrl + '#/login';
         }
       });
     } else { // no token = no auth
       if(!document.location.hash.includes('login')) {
-        window.location.hash = deploymentConfig().baseUrl + '#/login?midreq=true';
+        window.location.hash = deploymentConfig().baseUrl + '#/login';
       }
     }
 
