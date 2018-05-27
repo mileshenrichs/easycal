@@ -214,7 +214,7 @@ class DayView extends Component {
         consumption: updatedConsumption
       }
       fetch(deploymentConfig().apiUrl + '/api/consumptions/' + updatedConsumption.consumptionId + '?token=' + localStorage.getItem('token'), {
-        method: 'PUT',
+        method: 'POST',
         body: JSON.stringify(reqObj)
       })
         .then(res => {
