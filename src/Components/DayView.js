@@ -114,7 +114,7 @@ class DayView extends Component {
 
   removeItem(consumptionId) {
     this.setState({removingItem: true});
-    fetch(deploymentConfig().apiUrl + '/api/consumptions/' + consumptionId + '?token=' + localStorage.getItem('token'), {method: 'POST'})
+    fetch(deploymentConfig().apiUrl + '/api/consumptions/' + consumptionId + '/delete?token=' + localStorage.getItem('token'), {method: 'POST'})
       .then(res => {
         if(res.ok) {
           let mealItemIndex, meal;
