@@ -7,7 +7,7 @@ class Header extends Component {
   render() {
     return (
       <header className="Header">
-      	<div className="container">
+      	<div className="container Header-container">
       		<Link to={deploymentConfig().baseUrl + "/"}>
       			<img src={logo} alt="EasyCal" />
       		</Link>

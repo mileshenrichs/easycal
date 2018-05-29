@@ -161,6 +161,10 @@ a {
 	z-index: 999;
 }
 
+.Header-container {
+	min-width: 900px;
+}
+
 .Header img {
 	width: 160px;
 	display: inline;
@@ -1040,7 +1044,7 @@ span.FoodsPanel__edit-foods--done-link:hover {
 	bottom: 0%;
 	width: 100%;
 	background: white;
-	padding: 22px 0 22px 202px;
+	padding: 22px 0;
 	border-top: 1px solid #b5c4b7;
 	box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.03);
 	z-index: 1;
