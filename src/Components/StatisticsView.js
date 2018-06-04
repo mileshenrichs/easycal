@@ -11,6 +11,7 @@ import ExerciseGraph from './ExerciseGraph';
 import refreshIcon from '../resources/refresh-icon.png';
 import refreshIconInactive from '../resources/refresh-icon-inactive.png';
 import loaderGray from '../resources/loader-gray.gif';
+import plateIcon from '../resources/plate-emoji.png';
 
 class StatisticsView extends Component {
 
@@ -104,6 +105,34 @@ class StatisticsView extends Component {
       }
     }
 
+    let statsComponents;
+    if(Object.keys(this.state.totals).length === 0 && this.state.totals.constructor === Object) {
+      statsComponents = (
+        <div>
+          <StatsTable 
+            totals={this.state.totals}
+            overallTotals={this.state.overallTotals} />
+          <WeekAverages 
+            from={this.state.dayFrom}
+            to={this.state.dayTo}
+            averages={this.state.averages}
+            goals={this.state.goals} />
+          <ExerciseGraph 
+            from={this.state.dayFrom}
+            to={this.state.dayTo}
+            totals={this.state.totals}
+            exercise={this.state.exercise} />
+        </div>
+      );
+    } else {
+      statsComponents = (
+        <span className="StatisticsView__no-consumptions">
+          <img src={plateIcon} alt="" />
+          Looks like you haven't eaten anything during this time period.
+        </span>
+      );
+    }
+
     return (
       <div className="StatisticsView content-container">
         <h1 className="page-title">Nutrition details:</h1>
@@ -114,19 +143,7 @@ class StatisticsView extends Component {
         </div>
         <div className="clearfix"></div>
 
-        <StatsTable 
-          totals={this.state.totals}
-          overallTotals={this.state.overallTotals} />
-        <WeekAverages 
-          from={this.state.dayFrom}
-          to={this.state.dayTo}
-          averages={this.state.averages}
-          goals={this.state.goals} />
-        <ExerciseGraph 
-          from={this.state.dayFrom}
-          to={this.state.dayTo}
-          totals={this.state.totals}
-          exercise={this.state.exercise} />
+        {statsComponents}
       </div>
     );
   }

@@ -30,7 +30,6 @@ class App extends Component {
    */
   checkAuth() {
     let userLoggedIn = false;
-    //localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImVtYWlsQWRkcmVzcyI6Im1pbGVzaGVucmljaHMyMUBnbWFpbC5jb20iLCJleHAiOjE1Mjc1NTk4MjF9.g5UBRT_exrjGsfnakznuoQaANjRtFaqXe2KUwYOXsHM');
     const token = localStorage.getItem('token');
 
     // check if there's a token in storage

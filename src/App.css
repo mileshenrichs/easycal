@@ -1188,6 +1188,19 @@ span.FoodsPanel__edit-foods--done-link:hover {
 	width: 66px;
 }
 
+.StatisticsView__no-consumptions {
+	display: block;
+	margin-top: 60px;
+	text-align: center;
+}
+
+.StatisticsView__no-consumptions img {
+	width: 50px;
+	margin-right: 20px;
+	position: relative;
+	bottom: 2px;
+}
+
 .StatsTable {
 	margin: 30px 0 80px 0;
 }
