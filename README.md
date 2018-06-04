@@ -6,14 +6,19 @@ __EasyCal__ is a modern calorie counting app that makes nutrition tracking easy:
 If you'd like to start counting your calories and tracking your exercise, you can register an account with just an email address and password!  To take it for a test run, try these login credentials:
 
 __Email Address:__ easycal@test.com
+
 __Password__: easycal
 
 ---
 
 [__Technology__](#technology)
+
 [__Libraries Used__](#libraries-used)
+
 [__Features__](#features)
+
 [__Component Hierarchy__](#component-hierarchy)
+
 [__Deployment__](#deployment)
 
 ---
