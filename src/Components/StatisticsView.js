@@ -20,7 +20,7 @@ class StatisticsView extends Component {
     this.state = {
       dayFrom: moment(new Date(Date.now() - (60000 * new Date().getTimezoneOffset()))).subtract(1, 'weeks').toDate(),
       dayTo: new Date(Date.now() - (60000 * new Date().getTimezoneOffset())),
-      totals: [],
+      totals: undefined,
       overallTotals: {},
       averages: {},
       exercise: [],
@@ -106,31 +106,33 @@ class StatisticsView extends Component {
     }
 
     let statsComponents;
-    if(Object.keys(this.state.totals).length === 0 && this.state.totals.constructor === Object) {
-      statsComponents = (
-        <div>
-          <StatsTable 
-            totals={this.state.totals}
-            overallTotals={this.state.overallTotals} />
-          <WeekAverages 
-            from={this.state.dayFrom}
-            to={this.state.dayTo}
-            averages={this.state.averages}
-            goals={this.state.goals} />
-          <ExerciseGraph 
-            from={this.state.dayFrom}
-            to={this.state.dayTo}
-            totals={this.state.totals}
-            exercise={this.state.exercise} />
-        </div>
-      );
-    } else {
-      statsComponents = (
-        <span className="StatisticsView__no-consumptions">
-          <img src={plateIcon} alt="" />
-          Looks like you haven't eaten anything during this time period.
-        </span>
-      );
+    if(this.state.totals) {
+      if(this.state.totals.length) {
+        statsComponents = (
+          <div>
+            <StatsTable 
+              totals={this.state.totals}
+              overallTotals={this.state.overallTotals} />
+            <WeekAverages 
+              from={this.state.dayFrom}
+              to={this.state.dayTo}
+              averages={this.state.averages}
+              goals={this.state.goals} />
+            <ExerciseGraph 
+              from={this.state.dayFrom}
+              to={this.state.dayTo}
+              totals={this.state.totals}
+              exercise={this.state.exercise} />
+          </div>
+        );
+      } else {
+        statsComponents = (
+          <span className="StatisticsView__no-consumptions">
+            <img src={plateIcon} alt="" />
+            Looks like you haven't eaten anything during this time period.
+          </span>
+        );
+      }
     }
 
     return (
@@ -143,7 +145,7 @@ class StatisticsView extends Component {
         </div>
         <div className="clearfix"></div>
 
-        {statsComponents}
+        {this.state.totals && statsComponents}
       </div>
     );
   }
