@@ -51,15 +51,6 @@ class MyMeals extends Component {
     this.setState(newState);
   }
 
-  findMealAndGroupItem(mealId, mealGroupItemId) {
-    const meal = this.state.meals.find(meal => meal.id === mealId);
-    const mealIdx = this.state.meals.indexOf(meal);
-    const mealGroupItem = meal.mealGroupItems.find(groupItem => groupItem.id === mealGroupItemId);
-    const mealGroupItemIdx = meal.mealGroupItems.indexOf(mealGroupItem);
-
-    return {meal, mealIdx, mealGroupItem, mealGroupItemIdx};
-  }
-
   getUserMeals() {
     const userId = decodeToken(localStorage.getItem('token')).userId;
 
@@ -69,6 +60,41 @@ class MyMeals extends Component {
       .then(userMeals => {
         this.setState({meals: userMeals});
       });
+  }
+
+  updateMeal(mealId) {
+    const updatedMeal = this.state.meals.find(meal => meal.id === mealId);
+
+    fetch(deploymentConfig().apiUrl + '/api/food-meal-groups/update?token=' + localStorage.getItem('token'), {
+      method: 'POST',
+      body: JSON.stringify(updatedMeal)
+    }).then(res => {
+      if(!res.ok) {
+        alert('Could not update meal.');
+      }
+    });
+  }
+
+  handleMealItemRemoved(mealId, mealGroupItemId) {
+    const { mealIdx, mealGroupItemIdx } = this.findMealAndGroupItem(mealId, mealGroupItemId);
+
+    const newState = update(this.state, {
+      meals: {
+        [mealIdx]: {
+          mealGroupItems: {$splice: [[mealGroupItemIdx, 1]]}
+        }
+      }
+    });
+    this.setState(newState);
+  }
+
+  findMealAndGroupItem(mealId, mealGroupItemId) {
+    const meal = this.state.meals.find(meal => meal.id === mealId);
+    const mealIdx = this.state.meals.indexOf(meal);
+    const mealGroupItem = meal.mealGroupItems.find(groupItem => groupItem.id === mealGroupItemId);
+    const mealGroupItemIdx = meal.mealGroupItems.indexOf(mealGroupItem);
+
+    return {meal, mealIdx, mealGroupItem, mealGroupItemIdx};
   }
 
   render() {
@@ -81,6 +107,8 @@ class MyMeals extends Component {
             editMode={this.props.editMode}
             handleDefaultQuantityChange={this.handleDefaultQuantityChange.bind(this)}
             handleDefaultServingChange={this.handleDefaultServingChange.bind(this)}
+            handleMealItemRemoved={this.handleMealItemRemoved.bind(this)}
+            updateMeal={this.updateMeal.bind(this)}
           />
         ))}
       </div>
