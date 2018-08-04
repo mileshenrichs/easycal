@@ -948,11 +948,12 @@ span.FoodsPanel__tab--createfoodbutton.current {
 	display: inline-block;
 	font-weight: normal;
 	border: none;
+	margin-right: 34px;
 }
 
 span.FoodsPanel__edit-foods {
 	padding: 0;
-	margin: 0 0 0 34px;
+	margin: 0 20px 0 0;
 	color: #c22317;
 	border-bottom: 0px solid #D9291C;
 	font-size: 15px;
@@ -1010,22 +1011,73 @@ span.FoodsPanel__edit-foods--done-link:hover {
 	margin: 0;
 }
 
-.AddableFoodItem {
+.AddableFoodItem,
+.AddableMealItem {
 	border-bottom: 1px solid #b5c4b7;
 	padding: 17px 30px;
 }
 
-.AddableFoodItem:hover {
+.AddableMealItem {
+	height: 76px;
+}
+
+.AddableMealItem.expanded {
+	height: auto;
+	border-bottom-color: #5794e7;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+	cursor: default;
+}
+
+.AddableMealItem.expanded:hover {
+	background: #ffffff;
+	cursor: default;
+}
+
+.AddableMealItem.expanded .AddableMealItem__meal-name {
+	font-weight: bold;
+	font-size: 1.1em;
+}
+
+.AddableFoodItem:hover,
+.AddableMealItem:hover {
 	background-color: #fafafa;
 	cursor: pointer;
 }
 
-.AddableFoodItem__plus {
+.AddableMealItem__food-items {
+	margin-top: 14px;
+}
+
+.food-item-row {
+	padding: 6px 0 20px 80px;
+}
+
+.food-item-row img {
+	width: 32px;
+	margin-right: 16px;
+	position: relative;
+	bottom: 1px;
+	padding: 4px;
+	cursor: pointer;
+}
+
+.food-item-row .ServingSelect {
+	padding: 8px 0 0 48px;
+}
+
+.addable-item__plus {
 	float: left;
 	width: 36px;
 	margin-right: 38px;
 	position: relative;
 	top: 3px;
+}
+
+.AddableMealItem.expanded .addable-item__plus {
+	cursor: pointer;
+	padding: 8px;
+	width: 52px;
+	margin-right: 30px;
 }
 
 .AddableFoodItem .MealItem__food {
@@ -1036,6 +1088,11 @@ span.FoodsPanel__edit-foods--done-link:hover {
 .AddableFoodItem .MealItem__food--name {
 	display: table-cell;
 	vertical-align: middle;
+}
+
+.AddableMealItem__meal-name {
+	position: relative;
+	top: 8px;
 }
 
 .FoodsPanel__cancel-link {

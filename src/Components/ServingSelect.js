@@ -38,11 +38,10 @@ class ServingSelect extends Component {
   }
 
   render() {
-
     let servingUnitOptions;
     if(this.props.servingSizes) {
       servingUnitOptions = this.props.servingSizes.map(servingSize => {
-        return (<option key={servingSize.id} value={servingSize.id}>{servingSize.label}</option>);
+        return (<option key={servingSize.id} value={servingSize.id}>{servingSize.label.labelValue}</option>);
       });
     }
 
@@ -56,8 +55,11 @@ class ServingSelect extends Component {
           onChange={this.handleSizeChange.bind(this)} onClick={this.handleInputClick.bind(this)}>
           {servingUnitOptions}
         </select> 
-        <button className="ServingSelect__add-button" onClick={this.handleAddClick.bind(this)}>Add</button>
-        <button className={'ServingSelect__remove-button' + (this.props.removingItem ? ' removing' : '')} onClick={this.handleItemRemove.bind(this)}>{removeButtonText}</button>
+        {this.props.showAddRemoveButtons && 
+          <button className="ServingSelect__add-button" onClick={this.handleAddClick.bind(this)}>Add</button>}
+        {this.props.showAddRemoveButtons && 
+          <button className={'ServingSelect__remove-button' + (this.props.removingItem ? ' removing' : '')} 
+                  onClick={this.handleItemRemove.bind(this)}>{removeButtonText}</button>}
       </div>
     );
   }

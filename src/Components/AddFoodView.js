@@ -13,7 +13,7 @@ class AddFoodView extends Component {
 			searchTerm: '',
 			searchResults: [],
 			searchError: false,
-			foodsPanelTab: this.props.tab ? this.props.tab : 1,
+			foodsPanelTab: this.props.tab ? this.props.tab : 3, // todo change back to 1
 			recentFoods: [],
 			myFoods: [],
 			loading: true

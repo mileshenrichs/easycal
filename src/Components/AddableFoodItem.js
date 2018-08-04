@@ -155,7 +155,7 @@ class AddableFoodItem extends Component {
 
     return (
       <div className={'AddableFoodItem' + (this.state.adding ? ' adding' : '') + (this.state.deleting ? ' deleting' : '')} onClick={this.handleItemClick.bind(this)}>
-      	<img src={plusButtonImg} alt="Add" className="AddableFoodItem__plus" />
+      	<img src={plusButtonImg} alt="Add" className="addable-item__plus" />
 			  <span className="MealItem__food">
 	  		 <span className="MealItem__food--name">{foodName}</span>
         </span>
@@ -180,6 +180,7 @@ class AddableFoodItem extends Component {
             handleQuantityChange={this.handleQuantityChange.bind(this)}
             handleSizeChange={this.handleSizeChange.bind(this)}
             handleAddClick={this.addConsumption.bind(this)}
+            showAddRemoveButtons
           /> }
 
         {this.state.deleting && 
