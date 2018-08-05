@@ -88,9 +88,10 @@ class FoodsPanel extends Component {
         	<span 
         		className={'FoodsPanel__tab--myfoods' + (this.props.currentTab === 2 ? ' current' : '')}
         		onClick={this.handleSwitchTab.bind(this)}>My Foods</span>
-          <span 
-        		className={'FoodsPanel__tab--mymeals' + (this.props.currentTab === 3 ? ' current' : '')}
-      			onClick={this.handleSwitchTab.bind(this)}>My Meals</span>
+          {!this.props.mealGroupContext && 
+            <span 
+              className={'FoodsPanel__tab--mymeals' + (this.props.currentTab === 3 ? ' current' : '')}
+              onClick={this.handleSwitchTab.bind(this)}>My Meals</span>}
       		<Link to={deploymentConfig().baseUrl + '/createfood?from=' + this.props.day + '&for=' + this.props.mealName + ''}>
             <span className={'FoodsPanel__tab--createfoodbutton small-button' + (this.props.currentTab === 2 ? ' current' : '')}>+ New</span>
           </Link>
@@ -114,12 +115,14 @@ class FoodsPanel extends Component {
             error={this.props.searchError} 
             mealName={this.props.mealName}
             day={this.props.day}
+            mealGroupContext={this.props.mealGroupContext}
           />}
   			{this.props.currentTab === 1 && 
           <RecentFoods 
             foods={this.props.recentFoods} 
             mealName={this.props.mealName}
             day={this.props.day}
+            mealGroupContext={this.props.mealGroupContext}
           />}
   			{this.props.currentTab === 2 && 
           <MyFoods 
@@ -129,8 +132,9 @@ class FoodsPanel extends Component {
             foods={this.props.myFoods}
             deleteUserFoodItem={this.deleteUserFoodItem.bind(this)}
             editMode={this.state.editMode}
+            mealGroupContext={this.props.mealGroupContext}
           />}
-        {this.props.currentTab === 3 &&
+        {this.props.currentTab === 3 && 
           <MyMeals 
             editMode={this.state.editMode}
           />}

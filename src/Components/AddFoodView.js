@@ -33,6 +33,19 @@ class AddFoodView extends Component {
 			});
 	}
 
+	componentWillReceiveProps(nextProps) {
+		// update tab when new tab is passed down from AddFoodViewContainer
+		if(nextProps.tab) {
+			if(nextProps.tab !== this.state.foodsPanelTab) {
+				this.setState({
+					foodsPanelTab: nextProps.tab
+				}, () => {
+					window.scrollTo(0, 0);
+				});
+			}
+		}
+	}
+
 	switchTabs(tabNumber) {
 		this.setState({foodsPanelTab: tabNumber});
 	}
@@ -106,7 +119,8 @@ class AddFoodView extends Component {
         <SearchFood 
         	mealName={this.props.mealName}
         	searchTerm={this.state.searchTerm}
-        	handleSearchChange={this.handleSearchChange.bind(this)}
+					handleSearchChange={this.handleSearchChange.bind(this)}
+					mealGroupContext={this.props.mealGroupContext}
       	 />
         <FoodsPanel 
         	mealName={this.props.mealName}
@@ -119,7 +133,8 @@ class AddFoodView extends Component {
       		myFoods={this.state.myFoods}
       		deleteUserFoodItem={this.deleteUserFoodItem.bind(this)}
       		loading={this.state.loading}
-      		day={this.props.day}
+					day={this.props.day}
+					mealGroupContext={this.props.mealGroupContext}
     		/>
       </div>
     );

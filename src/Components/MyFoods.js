@@ -22,7 +22,8 @@ class MyFoods extends Component {
             mealName={this.props.mealName}
             day={this.props.day} 
             editMode={this.props.editMode}
-            deleteUserFoodItem={this.deleteUserFoodItem.bind(this)} />
+            deleteUserFoodItem={this.deleteUserFoodItem.bind(this)} 
+            mealGroupContext={this.props.mealGroupContext} />
         );
       });
     } else {

@@ -16,7 +16,8 @@ class AddableFoodItem extends Component {
       adding: false,
       item: this.props.completeItem ? this.props.completeItem : undefined,
       loading: false,
-      deleting: false
+      deleting: false,
+      hasBeenAddedToCurrentMealGroup: false
     }
   }
 
@@ -44,7 +45,7 @@ class AddableFoodItem extends Component {
     this.setState(newState);
   }
 
-  handleItemClick(e) {
+  handleItemClick() {
     if(!this.props.editMode) { // if not in edit mode, get item details for ServingSelect
       if(!this.state.adding && !this.state.item) {
         this.setState({loading: true});
@@ -99,6 +100,14 @@ class AddableFoodItem extends Component {
     };
   }
 
+  handleAddClick() {
+    if(!this.props.mealGroupContext) {
+      this.addConsumption();
+    } else {
+      this.addFoodToMeal();
+    }
+  }
+
   addConsumption() {
     const userId = decodeToken(localStorage.getItem('token')).userId;
 
@@ -124,6 +133,27 @@ class AddableFoodItem extends Component {
         alert('There was a problem adding this food to your log.');
       }
     })
+  }
+
+  addFoodToMeal() {
+    const { item } = this.state;
+    const reqObj = {
+      foodItemId: item.foodItemId,
+      selectedServingSizeId: item.selectedServing.servingSize.id,
+      servingQuantity: item.selectedServing.quantity
+    }
+
+    fetch(deploymentConfig().apiUrl + '/api/food-meal-groups/' + this.props.mealGroupContext.id + '/add?token=' + localStorage.getItem('token'), {
+      method: 'POST',
+      body: JSON.stringify(reqObj)
+    })
+    .then(res => {
+      if(!res.ok) {
+        alert('There was an error adding this food to ' + this.props.mealGroupContext.name);
+      } else {
+        this.setState({hasBeenAddedToCurrentMealGroup: true});
+      }
+    });
   }
 
   deleteUserFoodItem() {
@@ -153,8 +183,15 @@ class AddableFoodItem extends Component {
       plusButtonImg = this.state.loading ? loadingSpinner : plusIcon
     }
 
+    // don't display food item once it's been added to a meal
+    let hiddenStyle = {};
+    if(this.state.hasBeenAddedToCurrentMealGroup) {
+      hiddenStyle.display = 'none';
+    }
+
     return (
-      <div className={'AddableFoodItem' + (this.state.adding ? ' adding' : '') + (this.state.deleting ? ' deleting' : '')} onClick={this.handleItemClick.bind(this)}>
+      <div className={'AddableFoodItem' + (this.state.adding ? ' adding' : '') + (this.state.deleting ? ' deleting' : '')} 
+            onClick={this.handleItemClick.bind(this)} style={hiddenStyle}>
       	<img src={plusButtonImg} alt="Add" className="addable-item__plus" />
 			  <span className="MealItem__food">
 	  		 <span className="MealItem__food--name">{foodName}</span>
@@ -179,7 +216,8 @@ class AddableFoodItem extends Component {
             itemId={this.state.item.foodItemId}
             handleQuantityChange={this.handleQuantityChange.bind(this)}
             handleSizeChange={this.handleSizeChange.bind(this)}
-            handleAddClick={this.addConsumption.bind(this)}
+            handleAddClick={this.handleAddClick.bind(this)}
+            mealGroupContext={this.props.mealGroupContext}
             showAddRemoveButtons
           /> }
 

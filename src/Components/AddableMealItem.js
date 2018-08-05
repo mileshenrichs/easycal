@@ -70,9 +70,12 @@ class AddableMealItem extends Component {
 
   handleFoodRemoved(mealItemId) {
     this.props.handleMealItemRemoved(this.props.mealItem.id, mealItemId);
+    this.setState({hasBeenEdited: true});
   }
 
   render() {
+    const currentLocation = window.location.hash.substring(1);
+
     let mealItemIcon;
     if(this.props.editMode) {
       mealItemIcon = this.state.isExpanded ? checkmarkIcon : editIcon;
@@ -124,16 +127,16 @@ class AddableMealItem extends Component {
     }
 
     return (
-      <div className={'AddableMealItem' + (this.state.isExpanded || this.props.creatingNewItem ? ' expanded' : '')} 
+      <div className={'AddableMealItem' + ((this.props.editMode && this.state.isExpanded) || this.props.creatingNewItem ? ' expanded' : '')} 
             onClick={this.handleItemClick.bind(this)}>
         <img src={mealItemIcon} alt="Add" className="addable-item__plus" onClick={this.handleCheckmarkClick.bind(this)} />
         {showOrSetMealName}
         <div className="clearfix"></div>
 
-        {this.state.isExpanded && 
+        {this.props.editMode && this.state.isExpanded && 
           <div className="AddableMealItem__food-items">
             {foodItemsList}
-            <Link to="/" className="AddableMealItem__add-foods-button">
+            <Link to={currentLocation + '&mealgroupctx=' + this.props.mealItem.id} className="AddableMealItem__add-foods-button">
               <img src={plusIcon} alt="" />
               <span>Add Foods</span>
             </Link>

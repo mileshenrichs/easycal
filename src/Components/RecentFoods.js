@@ -11,7 +11,8 @@ class RecentFoods extends Component {
   					key={food.foodItemId} 
   					completeItem={food}
   					mealName={this.props.mealName}
-            day={this.props.day} />
+						day={this.props.day}
+						mealGroupContext={this.props.mealGroupContext} />
 				);
   		});
   	}

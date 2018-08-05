@@ -20,6 +20,7 @@ class SearchResults extends Component {
             item={result} 
             mealName={this.props.mealName}
             day={this.props.day}
+            mealGroupContext={this.props.mealGroupContext}
           />
 				);	
   		});

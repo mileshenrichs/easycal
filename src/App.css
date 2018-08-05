@@ -896,6 +896,10 @@ h1.page-title {
 	box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.05);
 }
 
+.SearchFood.with-meal-context input {
+	width: 50%;
+}
+
 .SearchResults__error {
 	margin-top: 60px;
 	text-align: center;
@@ -1140,7 +1144,7 @@ span.FoodsPanel__edit-foods--done-link:hover {
 	color: #003300;
 	padding: 16px 20px;
 	transition: color .1s ease-in-out;
-	margin-left: 62px;
+	margin-left: 64px;
 }
 
 .AddableMealItem__add-foods-button:hover {
@@ -1149,8 +1153,10 @@ span.FoodsPanel__edit-foods--done-link:hover {
 }
 
 .AddableMealItem__add-foods-button img {
-	width: 30px;
-	margin-right: 18px;
+	width: 26px;
+	margin-right: 22px;
+	position: relative;
+	bottom: 1px;
 }
 
 .FoodsPanel__cancel-link {
@@ -1167,6 +1173,31 @@ span.FoodsPanel__edit-foods--done-link:hover {
 
 .FoodsPanel__cancel-link a {
 	color: #c22317;
+}
+
+.FoodsPanel__cancel-link .FoodsPanel__context {
+	margin-right: 30px;
+}
+
+.FoodsPanel__done-button {
+	background-color: #08ae23;
+	color: white;
+	padding: 6px 20px;
+	border-radius: 3px;
+	border: none;
+	cursor: pointer;
+	transition: background-color .2s ease-in-out;
+}
+
+.FoodsPanel__done-button:hover {
+	background-color: #039b1c;
+}
+
+.FoodsPanel__done-button img {
+	width: 18px;
+	margin-right: 10px;
+	position: relative;
+	bottom: 1px;
 }
 
 .MyFoods__no-foods {

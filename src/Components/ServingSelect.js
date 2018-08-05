@@ -37,15 +37,21 @@ class ServingSelect extends Component {
     this.props.handleAddClick(this.props.itemId);
   }
 
+  getServingLabel(servingSize) {
+    return typeof servingSize.label === 'string' ? servingSize.label : servingSize.label.labelValue;
+  }
+
   render() {
     let servingUnitOptions;
     if(this.props.servingSizes) {
       servingUnitOptions = this.props.servingSizes.map(servingSize => {
-        return (<option key={servingSize.id} value={servingSize.id}>{servingSize.label.labelValue}</option>);
+        return (<option key={servingSize.id} value={servingSize.id}>{this.getServingLabel(servingSize)}</option>);
       });
     }
 
     let removeButtonText = this.props.removingItem ? 'Removing...' : 'Remove'
+
+    let addButtonText = this.props.mealGroupContext ? 'Add to ' + this.props.mealGroupContext.name : 'Add';
 
     return (
       <div className="ServingSelect animated fadeInDown" id="ServingSelect">
@@ -56,7 +62,7 @@ class ServingSelect extends Component {
           {servingUnitOptions}
         </select> 
         {this.props.showAddRemoveButtons && 
-          <button className="ServingSelect__add-button" onClick={this.handleAddClick.bind(this)}>Add</button>}
+          <button className="ServingSelect__add-button" onClick={this.handleAddClick.bind(this)}>{addButtonText}</button>}
         {this.props.showAddRemoveButtons && 
           <button className={'ServingSelect__remove-button' + (this.props.removingItem ? ' removing' : '')} 
                   onClick={this.handleItemRemove.bind(this)}>{removeButtonText}</button>}
