@@ -1033,6 +1033,12 @@ span.FoodsPanel__edit-foods--done-link:hover {
 	cursor: default;
 }
 
+.AddableMealItem.expanded img.addable-item__plus {
+	position: relative;
+	right: 6px;
+	top: -2px;
+}
+
 .AddableMealItem.expanded .AddableMealItem__meal-name {
 	font-weight: bold;
 	font-size: 1.1em;
@@ -1046,6 +1052,25 @@ span.FoodsPanel__edit-foods--done-link:hover {
 
 .AddableMealItem__food-items {
 	margin-top: 14px;
+	padding-bottom: 10px;
+}
+
+.AddableMealItem__food-items .items {
+	margin-bottom: 14px;
+}
+
+.AddableMealItem__meal-name--input {
+	border-radius: 3px;
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	height: 36px;
+	width: 280px;
+	padding: 0 10px;
+	font-weight: bold;
+}
+
+.AddableMealItem__meal-name--input:focus {
+	border-color: #5794e7;
+	box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .food-item-row {
@@ -1095,6 +1120,39 @@ span.FoodsPanel__edit-foods--done-link:hover {
 	top: 8px;
 }
 
+.MyMeals:not(.edit-mode) .AddableMealItem:not(.expanded) .AddableMealItem__meal-name {
+	left: 9px;
+}
+
+.CreateMealItem .AddableMealItem__meal-name {
+	top: 3px;
+}
+
+.AddableMealItem__no-food-items-message {
+	display: block;
+	font-size: 0.9em;
+	padding-left: 82px;
+	margin: 36px 0;
+}
+
+.AddableMealItem__add-foods-button {
+	font-size: 1.1em;
+	color: #003300;
+	padding: 16px 20px;
+	transition: color .1s ease-in-out;
+	margin-left: 62px;
+}
+
+.AddableMealItem__add-foods-button:hover {
+	color: #009200;
+	text-decoration: none;
+}
+
+.AddableMealItem__add-foods-button img {
+	width: 30px;
+	margin-right: 18px;
+}
+
 .FoodsPanel__cancel-link {
 	display: block;
 	position: fixed;
@@ -1115,6 +1173,27 @@ span.FoodsPanel__edit-foods--done-link:hover {
 	display: block;
 	text-align: center;
 	margin-top: 80px;
+}
+
+.CreateMealItem__create-button {
+	margin-top: 26px;
+	background-color: #ffffff;
+	border: 2px solid #08ae23;
+	border-radius: 10px;
+	padding: 16px 40px;
+	cursor: pointer;
+	transition: background-color .2s ease-in-out, border .2s ease-in-out, box-shadow .2s ease-in-out, color .2s ease-in-out;
+}
+
+.CreateMealItem__create-button:hover {
+	background-color: #08ae23;
+	border-color: #046213;
+	color: #ffffff;
+}
+
+.CreateMealItem__create-button img {
+	width: 36px;
+	margin-right: 24px;
 }
 
 .CreateFoodView__form {

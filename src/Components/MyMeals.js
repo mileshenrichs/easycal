@@ -3,12 +3,17 @@ import update from 'immutability-helper';
 import decodeToken from '../Auth/authUtil';
 import deploymentConfig from '../Deployment/deploymentConfig';
 import AddableMealItem from './AddableMealItem';
+import CreateMealItem from './CreateMealItem';
 
 class MyMeals extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      meals: []
+      meals: [],
+      mealItemToCreate: {
+        name: '',
+        mealGroupItems: []
+      }
     }
   }
 
@@ -97,9 +102,18 @@ class MyMeals extends Component {
     return {meal, mealIdx, mealGroupItem, mealGroupItemIdx};
   }
 
+  handleNewMealItemNameChange(itemName) {
+    this.setState({
+      mealItemToCreate: {
+        ...this.state.mealItemToCreate,
+        name: itemName
+      }
+    });
+  }
+
   render() {
     return (
-      <div className="MyMeals">
+      <div className={'MyMeals' + (this.props.editMode ? ' edit-mode' : '')}>
         {this.state.meals.map(meal => (
           <AddableMealItem
             key={meal.id}
@@ -111,6 +125,15 @@ class MyMeals extends Component {
             updateMeal={this.updateMeal.bind(this)}
           />
         ))}
+
+        <CreateMealItem 
+          mealItem={this.state.mealItemToCreate}
+          handleDefaultQuantityChange={this.handleDefaultQuantityChange.bind(this)}
+          handleDefaultServingChange={this.handleDefaultServingChange.bind(this)}
+          handleMealItemRemoved={this.handleMealItemRemoved.bind(this)}
+          handleNewMealItemNameChange={this.handleNewMealItemNameChange.bind(this)}
+          updateMeal={this.updateMeal.bind(this)}
+        />
       </div>
     );
   }
