@@ -138,7 +138,7 @@ class AddableFoodItem extends Component {
   addFoodToMeal() {
     const { item } = this.state;
     const reqObj = {
-      foodItemId: item.foodItemId,
+      foodItem: item,
       selectedServingSizeId: item.selectedServing.servingSize.id,
       servingQuantity: item.selectedServing.quantity
     }
