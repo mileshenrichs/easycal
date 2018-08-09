@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import plusIcon from '../resources/plus-icon.png';
 import editIcon from '../resources/blue-edit-icon.png';
 import minusIcon from '../resources/minus-icon.png';
+import trashIcon from '../resources/trash-icon.png';
 import checkmarkIcon from '../resources/checkmark-icon-blue.png';
 
 class AddableMealItem extends Component {
@@ -77,6 +78,12 @@ class AddableMealItem extends Component {
     return mealItemName ? mealItemName : '(unnamed meal)';
   }
 
+  handleDeleteClick() {
+    if(window.confirm('Are you sure you want to delete this meal?')) {
+      this.props.deleteMealItem(this.props.mealItem.id);
+    }
+  }
+
   render() {
     const currentLocation = window.location.hash.substring(1);
 
@@ -144,6 +151,8 @@ class AddableMealItem extends Component {
       <div className={'AddableMealItem' + ((this.props.editMode && this.state.isExpanded) || this.props.creatingNewItem ? ' expanded' : '')} 
             onClick={this.handleItemClick.bind(this)}>
         <img src={mealItemIcon} alt="Add" className="addable-item__plus" onClick={this.handleCheckmarkClick.bind(this)} />
+        {this.state.isExpanded && this.props.editMode && 
+          <img src={trashIcon} alt="Delete" className="addable-item__delete" onClick={this.handleDeleteClick.bind(this)} />}
         {showOrSetMealName}
         <div className="clearfix"></div>
 

@@ -151,6 +151,41 @@ class MyMeals extends Component {
     });
   }
 
+  deleteMealItem(mealItemId) {
+    fetch(deploymentConfig().apiUrl + '/api/food-meal-groups/' + mealItemId + '/delete?token=' + localStorage.getItem('token'), {
+      method: 'POST'
+    }).then(res => {
+      if(res.status === 204) {
+        const meal = this.state.meals.find(meal => meal.id === mealItemId);
+        const mealIdx = this.state.meals.indexOf(meal);
+
+        const newState = update(this.state, {
+          meals: {$splice: [[mealIdx, 1]]}
+        });
+        this.setState(newState);
+      } else {
+        alert('An error occurred while deleting this meal item.');
+      }
+    })
+  }
+
+  deleteNewlyCreatedMealItem() {
+    fetch(deploymentConfig().apiUrl + '/api/food-meal-groups/' + this.state.mealItemToCreate.id + '/delete?token=' + localStorage.getItem('token'), {
+      method: 'POST'
+    }).then(res => {
+      if(res.status === 204) {
+        this.setState({
+          mealItemToCreate: {
+            name: '',
+            mealGroupItems: []
+          }
+        });
+      } else {
+        alert('An error occurred while deleting this meal item.');
+      }
+    })
+  }
+
   render() {
     return (
       <div className={'MyMeals' + (this.props.editMode ? ' edit-mode' : '')}>
@@ -163,6 +198,7 @@ class MyMeals extends Component {
             handleDefaultServingChange={this.handleDefaultServingChange.bind(this)}
             handleMealItemRemoved={this.handleMealItemRemoved.bind(this)}
             handleExistingMealItemNameChange={this.handleExistingMealItemNameChange.bind(this)}
+            deleteMealItem={this.deleteMealItem.bind(this)}
             updateMeal={this.updateMeal.bind(this)}
           />
         ))}
@@ -175,6 +211,7 @@ class MyMeals extends Component {
           handleNewMealItemNameChange={this.handleNewMealItemNameChange.bind(this)}
           updateMeal={this.updateMeal.bind(this)}
           onCreateMealItemClicked={this.handleCreateMealItemClicked.bind(this)}
+          deleteNewlyCreatedMealItem={this.deleteNewlyCreatedMealItem.bind(this)}
         />
       </div>
     );

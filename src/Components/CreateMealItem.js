@@ -17,6 +17,13 @@ class CreateMealItem extends Component {
     this.props.onCreateMealItemClicked();
   }
 
+  handleDeleteNewItem() {
+    this.props.deleteNewlyCreatedMealItem();
+    this.setState({
+      createItemMode: false
+    });
+  }
+
   render() {
     return (
       <div className="CreateMealItem">
@@ -35,6 +42,7 @@ class CreateMealItem extends Component {
             handleDefaultServingChange={this.props.handleDefaultServingChange}
             handleMealItemRemoved={this.props.handleMealItemRemoved}
             handleNewMealItemNameChange={this.props.handleNewMealItemNameChange}
+            deleteMealItem={this.handleDeleteNewItem.bind(this)}
             updateMeal={this.props.updateMeal}
           />}
       </div>

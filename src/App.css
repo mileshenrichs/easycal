@@ -1023,6 +1023,7 @@ span.FoodsPanel__edit-foods--done-link:hover {
 
 .AddableMealItem {
 	height: 76px;
+	position: relative;
 }
 
 .AddableMealItem.expanded {
@@ -1041,6 +1042,15 @@ span.FoodsPanel__edit-foods--done-link:hover {
 	position: relative;
 	right: 6px;
 	top: -2px;
+}
+
+img.addable-item__delete {
+	cursor: pointer;
+	padding: 16px;
+	position: absolute;
+	top: 64px;
+	left: 18px;
+	width: 64px;
 }
 
 .AddableMealItem.expanded .AddableMealItem__meal-name {
