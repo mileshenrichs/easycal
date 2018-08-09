@@ -10,11 +10,18 @@ class CreateMealItem extends Component {
     };
   }
 
+  onCreateButtonClicked() {
+    this.setState({
+      createItemMode: true
+    });
+    this.props.onCreateMealItemClicked();
+  }
+
   render() {
     return (
       <div className="CreateMealItem">
         {!this.state.createItemMode && 
-          <button className="CreateMealItem__create-button" onClick={() => this.setState({createItemMode: true})}>
+          <button className="CreateMealItem__create-button" onClick={this.onCreateButtonClicked.bind(this)}>
             <img src={tacoEmoji} alt="" />
             <span>Create a new meal</span>
           </button>}

@@ -102,12 +102,52 @@ class MyMeals extends Component {
     return {meal, mealIdx, mealGroupItem, mealGroupItemIdx};
   }
 
+  handleExistingMealItemNameChange(mealItemId, newName) {
+    const meal = this.state.meals.find(meal => meal.id === mealItemId);
+    const mealIdx = this.state.meals.indexOf(meal);
+
+    const newState = update(this.state, {
+      meals: {
+        [mealIdx]: {
+          name: {$set: newName}
+        }
+      }
+    });
+    this.setState(newState, () => {
+      this.updateMealItemName(mealItemId, newName);
+    });
+  }
+
   handleNewMealItemNameChange(itemName) {
     this.setState({
       mealItemToCreate: {
         ...this.state.mealItemToCreate,
         name: itemName
       }
+    }, () => {
+      this.updateMealItemName(this.state.mealItemToCreate.id, this.state.mealItemToCreate.name);
+    });
+  }
+
+  updateMealItemName(foodMealGroupId, newName) {
+    fetch(deploymentConfig().apiUrl + '/api/food-meal-groups/' + foodMealGroupId + 
+              '?newName=' + newName + '&token=' + localStorage.getItem('token'), {
+        method: 'POST'
+      }).then(res => {
+        if(!res.ok) {
+          alert('There was a problem updating the name of this meal.');
+        }
+      })
+  }
+
+  handleCreateMealItemClicked() {
+    const userId = decodeToken(localStorage.getItem('token')).userId;
+
+    fetch(deploymentConfig().apiUrl + '/api/food-meal-groups?userId=' + userId + '&token=' + localStorage.getItem('token'), {
+      method: 'POST'
+    }).then((resp) => resp.json())
+    .then(mealItemToCreate => {
+      this.setState({mealItemToCreate});
     });
   }
 
@@ -122,6 +162,7 @@ class MyMeals extends Component {
             handleDefaultQuantityChange={this.handleDefaultQuantityChange.bind(this)}
             handleDefaultServingChange={this.handleDefaultServingChange.bind(this)}
             handleMealItemRemoved={this.handleMealItemRemoved.bind(this)}
+            handleExistingMealItemNameChange={this.handleExistingMealItemNameChange.bind(this)}
             updateMeal={this.updateMeal.bind(this)}
           />
         ))}
@@ -133,6 +174,7 @@ class MyMeals extends Component {
           handleMealItemRemoved={this.handleMealItemRemoved.bind(this)}
           handleNewMealItemNameChange={this.handleNewMealItemNameChange.bind(this)}
           updateMeal={this.updateMeal.bind(this)}
+          onCreateMealItemClicked={this.handleCreateMealItemClicked.bind(this)}
         />
       </div>
     );

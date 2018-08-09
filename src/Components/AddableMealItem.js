@@ -73,6 +73,10 @@ class AddableMealItem extends Component {
     this.setState({hasBeenEdited: true});
   }
 
+  getMealNameText(mealItemName) {
+    return mealItemName ? mealItemName : '(unnamed meal)';
+  }
+
   render() {
     const currentLocation = window.location.hash.substring(1);
 
@@ -84,17 +88,27 @@ class AddableMealItem extends Component {
     }
 
     let showOrSetMealName;
-    if(!this.props.creatingNewItem) {
+    if(!this.props.creatingNewItem && !(this.state.isExpanded && this.props.editMode)) {
       showOrSetMealName = (
-        <span className="AddableMealItem__meal-name">{this.props.mealItem.name}</span>
+        <span className="AddableMealItem__meal-name">{this.getMealNameText(this.props.mealItem.name)}</span>
       );
     } else {
-      showOrSetMealName = (
-        <span className="AddableMealItem__meal-name">
-          <input type="text" className="AddableMealItem__meal-name--input" placeholder="Meal name"
-                  value={this.props.mealItem.name} onChange={(e) => this.props.handleNewMealItemNameChange(e.target.value)} />
-        </span>
-      );
+      if(this.props.creatingNewItem) {
+        showOrSetMealName = (
+          <span className="AddableMealItem__meal-name">
+            <input type="text" className="AddableMealItem__meal-name--input" placeholder="Meal name"
+                    value={this.props.mealItem.name} onChange={(e) => this.props.handleNewMealItemNameChange(e.target.value)} />
+          </span>
+        );
+      } else {
+        showOrSetMealName = (
+          <span className="AddableMealItem__meal-name">
+            <input type="text" className="AddableMealItem__meal-name--input" placeholder="Meal name"
+                    value={this.props.mealItem.name} 
+                    onChange={(e) => this.props.handleExistingMealItemNameChange(this.props.mealItem.id, e.target.value)} />
+          </span>
+        );
+      }
     }
 
     let foodItemsList;
