@@ -30,7 +30,7 @@ class AddFoodViewContainer extends Component {
 
   handleDoneAddingFoodsClick() {
     const currentLocation = window.location.hash.substring(1);
-    const nextLocation = currentLocation.substring(0, currentLocation.indexOf('&mealgroupctx=')) + '&tab=3';
+    const nextLocation = currentLocation.substring(0, currentLocation.indexOf('&mealgroupctx=')) + '&t=3';
     window.location.hash = nextLocation;
     window.location.reload(false);
   }
