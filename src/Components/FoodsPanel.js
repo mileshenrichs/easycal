@@ -137,6 +137,8 @@ class FoodsPanel extends Component {
         {this.props.currentTab === 3 && 
           <MyMeals 
             editMode={this.state.editMode}
+            mealName={this.props.mealName}
+            day={this.props.day}
           />}
       </div>
     );

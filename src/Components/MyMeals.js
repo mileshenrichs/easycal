@@ -193,6 +193,8 @@ class MyMeals extends Component {
           <AddableMealItem
             key={meal.id}
             mealItem={meal}
+            day={this.props.day}
+            mealName={this.props.mealName}
             editMode={this.props.editMode}
             handleDefaultQuantityChange={this.handleDefaultQuantityChange.bind(this)}
             handleDefaultServingChange={this.handleDefaultServingChange.bind(this)}

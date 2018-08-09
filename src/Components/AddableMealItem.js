@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import ServingSelect from './ServingSelect';
+import decodeToken from '../Auth/authUtil';
+import deploymentConfig from '../Deployment/deploymentConfig';
 import { Link } from 'react-router-dom';
+import ServingSelect from './ServingSelect';
 import plusIcon from '../resources/plus-icon.png';
 import editIcon from '../resources/blue-edit-icon.png';
 import minusIcon from '../resources/minus-icon.png';
@@ -30,7 +32,35 @@ class AddableMealItem extends Component {
       this.setState({
         isExpanded: true
       });
+    } else {
+      this.addFoodItemsAsConsumptions();
     }
+  }
+
+  addFoodItemsAsConsumptions() {
+    const userId = decodeToken(localStorage.getItem('token')).userId;
+    const consumption = {
+      mealGroupId: this.props.mealItem.id,
+      userId,
+      meal: this.props.mealName,
+      day: this.props.day
+    }
+    const reqObj = {consumption};
+
+    fetch(deploymentConfig().apiUrl + '/api/consumptions/food-meal-group?token=' + localStorage.getItem('token'), {
+      method: 'POST',
+      body: JSON.stringify(reqObj)
+    })
+    .then(res => {
+      if(res.ok) {
+        window.location.hash = deploymentConfig().baseUrl + '#/?day=' + this.props.day;
+      } else if(res.status === 403) {
+        localStorage.removeItem('token');
+        window.location.hash = deploymentConfig().baseUrl + '#/login?midreq=true';
+      } else {
+        alert('There was a problem adding this meal to your log.');
+      }
+    })
   }
 
   getServingAsObject(mealGroupItem) {
@@ -64,7 +94,7 @@ class AddableMealItem extends Component {
       if(this.state.hasBeenEdited) {
         this.props.updateMeal(this.props.mealItem.id);
       }
-      // reset edited state once meal's been updated
+      // reset edited state once meal has been updated
       this.setState({hasBeenEdited: false});
     }
   }
