@@ -7,7 +7,7 @@
     "immutability-helper": "^2.6.6",
     "jwt-decode": "^2.2.0",
     "moment": "^2.22.1",
-    "npm": "^6.4.1",
+    "npm": "^6.14.6",
     "query-string": "^6.0.0",
     "react": "^16.3.1",
     "react-day-picker": "^7.1.5",
