@@ -69,7 +69,7 @@ class AddFoodView extends Component {
 	}
 
 	getSearchResults(searchTerm) {
-		let term = searchTerm.replace(/\s/g, "_");
+		let term = encodeURIComponent(searchTerm);
 			fetch(deploymentConfig().apiUrl + '/api/foods?q=' + term)
 			.then((resp) => {
 				if(resp.ok) {
@@ -90,11 +90,11 @@ class AddFoodView extends Component {
 		const userId = decodeToken(localStorage.getItem('token')).userId;
 
 		// get user foods
-    fetch(deploymentConfig().apiUrl + '/api/foods/user/' + userId + '?token=' + localStorage.getItem('token'))
-      .then((resp) => resp.json())
-      .then(userFoods => {
-        this.setState({myFoods: userFoods});
-      });
+		fetch(deploymentConfig().apiUrl + '/api/foods/user/' + userId + '?token=' + localStorage.getItem('token'))
+		.then((resp) => resp.json())
+		.then(userFoods => {
+			this.setState({myFoods: userFoods});
+		});
 	}
 
 	deleteUserFoodItem(foodItemId) {
